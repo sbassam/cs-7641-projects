@@ -1,6 +1,7 @@
 from sklearn.model_selection import learning_curve, validation_curve
 import numpy as np
 import matplotlib.pyplot as plt
+from datetime import datetime
 from sklearn.preprocessing import StandardScaler
 
 
@@ -61,9 +62,10 @@ def plot_learning_curve(clf, features_train, labels_train, clf_name, train_sizes
     return plt
 
 
-def plot_validation_curve(clf, features_train, labels_train, clf_name, param_name, param_range, cv=5):
+def plot_validation_curve(clf, features_train, labels_train, clf_name, param_name, param_range, x_arr=None, cv=5):
     """
 
+    :param x_arr: array of x coordinate
     :param clf: estimator
     :param features_train: training vector
     :param labels_train: target vector
@@ -75,8 +77,11 @@ def plot_validation_curve(clf, features_train, labels_train, clf_name, param_nam
     source: https://scikit-learn.org/stable/auto_examples/model_selection/plot_validation_curve.html#sphx-glr-auto-examples-model-selection-plot-validation-curve-py
     """
 
-    train_scores, validation_scores = validation_curve(clf, features_train, labels_train, param_name, param_range, cv,
-                                                     scoring='f1')
+    if x_arr is None:
+        x_arr = param_range
+
+
+    train_scores, validation_scores = validation_curve(clf, features_train, labels_train, param_name, param_range)
 
     train_scores_mean = np.mean(train_scores, axis=1)
     train_scores_std = np.std(train_scores, axis=1)
@@ -85,24 +90,24 @@ def plot_validation_curve(clf, features_train, labels_train, clf_name, param_nam
 
     plt.style.use('seaborn')
 
-    plt.fill_between(param_range, train_scores_mean - train_scores_std,
+    plt.fill_between(x_arr, train_scores_mean - train_scores_std,
                      train_scores_mean + train_scores_std, alpha=0.1,
                      color="r")
-    plt.fill_between(param_range, validation_scores_mean - validation_scores_std,
+    plt.fill_between(x_arr, validation_scores_mean - validation_scores_std,
                      validation_scores_mean + validation_scores_std, alpha=0.1, color="g")
-    plt.plot(param_range, train_scores_mean, 'o-', color="r",
+    plt.plot(x_arr, train_scores_mean, 'o-', color="r",
              label="Training score")
-    plt.plot(param_range, validation_scores_mean, 'o-', color="g",
+    plt.plot(x_arr, validation_scores_mean, 'o-', color="g",
              label="Cross-validation score")
 
     # plt.plot(train_sizes_abs, train_scores.mean(axis = 1), label = 'Training error')
     # plt.plot(train_sizes_abs, validation_scores.mean(axis = 1), label = 'Validation error')
-    plt.ylabel('f1 Score', fontsize=14)
-    plt.xlabel('Training set size', fontsize=14)
-    plt.title('Validation Curve for ' + clf_name + ' classifier, parameter: ' + param_name, fontsize=18)
+    plt.ylabel('Score', fontsize=14)
+    plt.xlabel(param_name, fontsize=14)
+    plt.title('Validation Curve for ' + clf_name + ' classifier, parameter: ' + param_name, fontsize=14)
     plt.legend()
     plt.ylim(0, 1.1)
-    plt.savefig('images/validation-curve-' + clf_name + '-' + param_name+ '.png')
+    plt.savefig('images/validation-curve-' + clf_name + '-' + param_name+ str(datetime.now()) +'.png')
     plt.close()
     return plt
 

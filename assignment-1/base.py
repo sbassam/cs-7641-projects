@@ -98,14 +98,32 @@ features_test = scaler.transform(features_test)
 
 
 print('##################### Neural Network ######################')
-a = np.arange(1, 3, 1)
-param_range = np.array([(i, i, i) for i in a])
+# abalone
+#hidden_layer_size_arr_ax = np.arange(32, 52, 4)
+#hidden_layer_size_arr = np.array([(i, i, i) for i in hidden_layer_size_arr_ax])
 
+#num_hidden_layers_arr = np.array([(40, 40), (40, 40, 40), (40, 40, 40, 40), (40, 40, 40, 40, 40), (40, 40, 40, 40, 40, 40)])
+#num_hidden_layers_arr_ax = np.arange(2, 7, 1)
+
+#learning_rate = 0
+#momentum = 0
+
+# wine
+hidden_layer_size_arr_ax = np.arange(1, 20, 4)
+hidden_layer_size_arr = np.array([(i, i, i) for i in hidden_layer_size_arr_ax])
+
+num_hidden_layers_arr = np.array([(6), (6, 6), (6, 6, 6), (6, 6, 6, 6), (6, 6, 6, 6, 6)])
+num_hidden_layers_arr_ax = np.arange(1, 6, 1)
+
+learning_rate = 0
+momentum = 0
 
 clf = ann.setup_ann(features_train, labels_train, features_test, labels_test)
 #plot_learning_curve(clf, features_train, labels_train, 'Neural-Network', np.linspace(0.01, 1.0, 10), 8)
 plot_validation_curve(clf, features_train, labels_train, 'Neural-Network', 'hidden_layer_sizes',
-                      param_range)
+                      hidden_layer_size_arr, hidden_layer_size_arr_ax)
+plot_validation_curve(clf, features_train, labels_train, 'Neural-Network', 'hidden_layer_sizes',
+                      num_hidden_layers_arr, num_hidden_layers_arr_ax)
 ann.fit_ann(clf, features_train, labels_train)
 pred = ann.predict_ann(clf, features_test)
 ann_precision, ann_recall, ann_f1 = ann.get_performance_ann(clf, pred, features_test, labels_test)

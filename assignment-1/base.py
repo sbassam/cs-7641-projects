@@ -12,9 +12,10 @@ from sklearn.metrics import recall_score
 import graphviz
 import matplotlib.pyplot as plt
 import seaborn as sns
+
 import seaborn as sns
 
-from algorithms import ann
+from algorithms import ann, knn
 from plotting import plot_learning_curve, plot_validation_curve
 
 iris = datasets.load_iris()
@@ -22,13 +23,19 @@ digits = datasets.load_digits()
 wine = datasets.load_wine()
 breast = datasets.load_breast_cancer()
 abalone = loader.process_abalone()
+white_wine_quality = loader.process_white_wine_quality()
+red_wine_quality = loader.process_red_wine_quality()
+wine_quality = loader.process_wine_quality()
 from sklearn.model_selection import train_test_split
 import math
 import matplotlib as mplt
 
 #iris = digits
 #iris = abalone #good
-iris = wine
+iris = wine_quality
+
+
+
 
 
 
@@ -109,47 +116,54 @@ print('##################### Neural Network ######################')
 #momentum = 0
 
 # wine
-hidden_layer_size_arr_ax = np.arange(1, 20, 4)
-hidden_layer_size_arr = np.array([(i, i, i) for i in hidden_layer_size_arr_ax])
-
-num_hidden_layers_arr = np.array([(6), (6, 6), (6, 6, 6), (6, 6, 6, 6), (6, 6, 6, 6, 6)])
-num_hidden_layers_arr_ax = np.arange(1, 6, 1)
-
-learning_rate = 0
-momentum = 0
-
-clf = ann.setup_ann(features_train, labels_train, features_test, labels_test)
-#plot_learning_curve(clf, features_train, labels_train, 'Neural-Network', np.linspace(0.01, 1.0, 10), 8)
-plot_validation_curve(clf, features_train, labels_train, 'Neural-Network', 'hidden_layer_sizes',
-                      hidden_layer_size_arr, hidden_layer_size_arr_ax)
-plot_validation_curve(clf, features_train, labels_train, 'Neural-Network', 'hidden_layer_sizes',
-                      num_hidden_layers_arr, num_hidden_layers_arr_ax)
-ann.fit_ann(clf, features_train, labels_train)
-pred = ann.predict_ann(clf, features_test)
-ann_precision, ann_recall, ann_f1 = ann.get_performance_ann(clf, pred, features_test, labels_test)
+# hidden_layer_size_arr_ax = np.arange(1, 20, 4)
+# hidden_layer_size_arr = np.array([(i, i, i) for i in hidden_layer_size_arr_ax])
+#
+# num_hidden_layers_arr = np.array([(6), (6, 6), (6, 6, 6), (6, 6, 6, 6), (6, 6, 6, 6, 6)])
+# num_hidden_layers_arr_ax = np.arange(1, 6, 1)
+#
+# learning_rate = 0
+# momentum = 0
+#
+# clf = ann.setup_ann(features_train, labels_train, features_test, labels_test)
+# #plot_learning_curve(clf, features_train, labels_train, 'Neural-Network', np.linspace(0.01, 1.0, 10), 8)
+# plot_validation_curve(clf, features_train, labels_train, 'Neural-Network', 'hidden_layer_sizes',
+#                       hidden_layer_size_arr, hidden_layer_size_arr_ax)
+# plot_validation_curve(clf, features_train, labels_train, 'Neural-Network', 'hidden_layer_sizes',
+#                       num_hidden_layers_arr, num_hidden_layers_arr_ax)
+# ann.fit_ann(clf, features_train, labels_train)
+# pred = ann.predict_ann(clf, features_test)
+# ann_precision, ann_recall, ann_f1 = ann.get_performance_ann(clf, pred, features_test, labels_test)
 
 
 
 print('##################### Boosting ######################')
 
 
-# print('##################### kNN ######################')
-# from sklearn.neighbors import KNeighborsClassifier
-# clf = KNeighborsClassifier(3, weights='uniform')
-# clf.fit(features_train, labels_train)
-#
-# # predict:
-# pred = clf.predict(features_test)
-#
-# # score:
-# kNN_score = clf.score(features_test, labels_test)
-# print(kNN_score)
-#
-# kNN_precision = precision_score(labels_test, pred, average='micro')
-# print('precision for kNN: ', kNN_precision)
-# kNN_recall = recall_score(labels_test, pred, average='weighted')
-# print('recall for kNN: ', kNN_recall)
-# plot_learning_curve(clf, features_train, labels_train, 'kNN', np.linspace(0.01, 1.0, 10), 8)
+print('##################### kNN ######################')
+
+n_neighbors_arr = np.arange(1, 100, 5)
+distance_metric_arr = np.array(['euclidean', 'manhattan', 'chebyshev', 'minkowski',
+                                  'wminkowski', 'seuclidean', 'mahalanobis'])
+
+
+clf = knn.setup_knn(features_train, labels_train, features_test, labels_test)
+
+# plot learning curve
+#plot_learning_curve(clf, features_train, labels_train, 'kNN', np.linspace(.1, 1., 10), 8)
+
+# plot validation curve
+# plot_validation_curve(clf, features_train, labels_train, 'kNN', 'n_neighbors', n_neighbors_arr)
+plot_validation_curve(clf, features_train, labels_train, 'kNN', 'metric', n_neighbors_arr)
+
+# fit
+
+knn.fit_knn(clf, features_train, labels_train)
+
+# predict testing set
+pred = knn.predict_knn(clf, features_test)
+
+knn_precision, knn_recall, knn_f1 = knn.get_performance_knn(clf, pred, features_test, labels_test)
 
 
 

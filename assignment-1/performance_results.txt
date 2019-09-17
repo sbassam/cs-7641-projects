@@ -1,0 +1,36 @@
+
+Decision Tree Score: 0.20351157222665603
+Decision Tree Precision: 0.20351157222665603Decision Tree Recall: 0.20351157222665603
+Decision Tree F1: 0.20649294222219744
+-------------------
+
+Decision Tree Score: 0.1923383878691141
+Decision Tree Precision: 0.1923383878691141
+Decision Tree Recall: 0.1923383878691141
+
+Decision Tree F1: 0.19296795674407452
+-------------------
+
+Decision Tree Score: 0.5738461538461539
+Decision Tree Precision: 0.5738461538461539
+Decision Tree Recall: 0.5738461538461539
+
+Decision Tree F1: 0.5709594696834974
+-------------------
+
+Decision Tree Score: 0.5769230769230769
+Decision Tree Precision: 0.5769230769230769
+Decision Tree Recall: 0.5769230769230769
+
+Decision Tree F1: 0.5738006949259393
+-------------------
+
+----------Performance Summary----------
+   Dataset: wine-quality
+   Learner: decision tree
+Score: 0.5769230769230769
+Precision: 0.5769230769230769
+Recall: 0.5769230769230769
+F1: 0.5738006949259393
+
+--------------------------------------------

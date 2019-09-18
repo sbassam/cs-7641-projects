@@ -23,6 +23,7 @@ digits = datasets.load_digits()
 wine = datasets.load_wine()
 breast = datasets.load_breast_cancer()
 abalone = loader.process_abalone()
+abalone_ternary = loader.process_abalone_ternary()
 white_wine_quality = loader.process_white_wine_quality()
 red_wine_quality = loader.process_red_wine_quality()
 wine_quality = loader.process_wine_quality()
@@ -33,6 +34,7 @@ import matplotlib as mplt
 # iris = digits
 # iris = abalone #good
 iris = wine_quality
+ds_name = 'wine_quality'
 
 
 def log_performance(dataset_name, learner, score, precision, recall, f1):
@@ -82,10 +84,10 @@ max_depth_arr = np.arange(1, 50, 5)
 clf = dt.setup_dt(features_train, labels_train, features_test, labels_test)
 #
 # plot learning curve
-plot_learning_curve(clf, features_train, labels_train, 'dt', np.linspace(.1, 1., 10), 8)
+plot_learning_curve(clf, features_train, labels_train, 'Decision Tree', ds_name, np.linspace(.1, 1., 10), 8)
 
 # plot validation curve
-plot_validation_curve(clf, features_train, labels_train, 'dt', 'max_depth', max_depth_arr)
+plot_validation_curve(clf, features_train, labels_train, 'Decision Tree', ds_name, 'max_depth', max_depth_arr)
 
 # fit
 
@@ -96,7 +98,7 @@ pred = dt.predict_dt(clf, features_test)
 
 dt_score, dt_precision, dt_recall, dt_f1 = dt.get_performance_dt(clf, pred, features_test, labels_test)
 
-log_performance("wine-quality", "decision tree", dt_score, dt_precision, dt_recall, dt_f1)
+log_performance(ds_name, "decision tree", dt_score, dt_precision, dt_recall, dt_f1)
 
 # plotting
 # dot_data = tree.export_graphviz(clf, out_file=None)

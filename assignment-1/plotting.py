@@ -8,7 +8,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.neural_network import MLPClassifier
 
 
-def plot_learning_curve(clf, features_train, labels_train, clf_name, train_sizes=np.linspace(0.01, 1.0, 5),
+def plot_learning_curve(clf, features_train, labels_train, clf_name, dataset_name, train_sizes=np.linspace(0.01, 1.0, 5),
                         cv=5, shuffle=True):
     """
 
@@ -16,6 +16,7 @@ def plot_learning_curve(clf, features_train, labels_train, clf_name, train_sizes
     :param features_train: training set
     :param labels_train: labels for training set
     :param clf_name: string
+    :param dataset_name: string the name of the dataset
     :param train_sizes: array of set sizes.
     :param cv: cross validation folds
     :param shuffle: whether or not to shuffle for the cross validation operation
@@ -54,7 +55,7 @@ def plot_learning_curve(clf, features_train, labels_train, clf_name, train_sizes
     # plt.plot(train_sizes_abs, validation_scores.mean(axis = 1), label = 'Validation error')
     plt.ylabel('Score', fontsize=14)
     plt.xlabel('Training set size', fontsize=14)
-    plt.title('Learning curves for '+ clf_name + ' classifier', fontsize=18)
+    plt.title('Learning curves for '+ clf_name + ' classifier on '+ dataset_name, fontsize=14)
     plt.legend()
     plt.ylim(0, 1.1)
     plt.savefig('images/learning-curve-' + clf_name + '.png')
@@ -62,9 +63,11 @@ def plot_learning_curve(clf, features_train, labels_train, clf_name, train_sizes
     return plt
 
 
-def plot_validation_curve(clf, features_train, labels_train, clf_name, param_name, param_range, x_arr=None, cv=5):
+def plot_validation_curve(clf, features_train, labels_train, clf_name, dataset_name, param_name, param_range, x_arr=None, cv=5):
     """
 
+    :param dataset_name: string name of the dataset
+    :param clf_name: string name of the classifier
     :param x_arr: array of x coordinate
     :param clf: estimator
     :param features_train: training vector
@@ -104,10 +107,10 @@ def plot_validation_curve(clf, features_train, labels_train, clf_name, param_nam
     # plt.plot(train_sizes_abs, validation_scores.mean(axis = 1), label = 'Validation error')
     plt.ylabel('Score', fontsize=14)
     plt.xlabel(param_name, fontsize=14)
-    plt.title('Validation Curve for ' + clf_name + ' classifier, parameter: ' + param_name, fontsize=14)
+    plt.title(dataset_name + '- ' + 'Validation Curve for ' + clf_name + ' classifier, parameter: ' + param_name, fontsize=14)
     plt.legend()
     plt.ylim(0, 1.1)
-    plt.savefig('images/validation-curve-' + clf_name + '-' + param_name+ str(datetime.now()) +'.png')
+    plt.savefig('images/' + dataset_name + 'validation-curve-' + clf_name + '-' + param_name+ str(datetime.now()) +'.png')
     plt.close()
     return plt
 

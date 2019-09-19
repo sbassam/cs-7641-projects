@@ -57,8 +57,7 @@ def plot_learning_curve(clf, features_train, labels_train, clf_name, dataset_nam
     plt.xlabel('Training set size', fontsize=14)
     plt.title('Learning curves for '+ clf_name + ' classifier on '+ dataset_name, fontsize=14)
     plt.legend()
-    plt.ylim(0, 1.1)
-    plt.savefig('images/learning-curve-' + clf_name + '.png')
+    plt.savefig('images/' + dataset_name + '-learning-curve-' + clf_name + '-' + str(datetime.now()) + '.png')
     plt.close()
     return plt
 
@@ -84,7 +83,7 @@ def plot_validation_curve(clf, features_train, labels_train, clf_name, dataset_n
         x_arr = param_range
 
 
-    train_scores, validation_scores = validation_curve(clf, features_train, labels_train, param_name, param_range)
+    train_scores, validation_scores = validation_curve(clf, features_train, labels_train, param_name, param_range, cv=cv)
 
     train_scores_mean = np.mean(train_scores, axis=1)
     train_scores_std = np.std(train_scores, axis=1)
@@ -109,7 +108,6 @@ def plot_validation_curve(clf, features_train, labels_train, clf_name, dataset_n
     plt.xlabel(param_name, fontsize=14)
     plt.title(dataset_name + '- ' + 'Validation Curve for ' + clf_name + ' classifier, parameter: ' + param_name, fontsize=14)
     plt.legend()
-    plt.ylim(0, 1.1)
     plt.savefig('images/' + dataset_name + 'validation-curve-' + clf_name + '-' + param_name+ str(datetime.now()) +'.png')
     plt.close()
     return plt

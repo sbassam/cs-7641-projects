@@ -1,51 +1,110 @@
 
-Decision Tree Score: 0.19632881085395051
-Decision Tree Precision: 0.19632881085395051
-Decision Tree Recall: 0.19632881085395051
-
-Decision Tree F1: 0.19707646466403894
--------------------
-
 ----------Performance Summary----------
-   Dataset: abalone
+   Dataset: Abalone Ternary
    Learner: decision tree
-Score: 0.19632881085395051
-Precision: 0.19632881085395051
-Recall: 0.19632881085395051
-F1: 0.19707646466403894
+Score: 0.7007182761372706
+Precision: 0.7007182761372706
+Recall: 0.7007182761372706
+F1: 0.699848972243637
 
 --------------------------------------------
 
-Decision Tree Score: 0.6005128205128205
-Decision Tree Precision: 0.6005128205128205
-Decision Tree Recall: 0.6005128205128205
-
-Decision Tree F1: 0.6003032322555863
--------------------
-
 ----------Performance Summary----------
-   Dataset: wine-quality
-   Learner: decision tree
-Score: 0.6005128205128205
-Precision: 0.6005128205128205
-Recall: 0.6005128205128205
-F1: 0.6003032322555863
+   Dataset: Abalone Ternary
+   Learner: kNN
+Score: 0.7573822825219473
+Precision: 0.7573822825219473
+Recall: 0.7573822825219473
+F1: 0.7424676965816096
 
 --------------------------------------------
 
-Decision Tree Score: 0.5748717948717949
-Decision Tree Precision: 0.5748717948717949
-Decision Tree Recall: 0.5748717948717949
+----------Performance Summary----------
+   Dataset: Abalone Ternary
+   Learner: decision tree
+Score: 0.6911412609736632
+Precision: 0.6911412609736632
+Recall: 0.6911412609736632
+F1: 0.6950152685368712
 
-Decision Tree F1: 0.5723773383913217
--------------------
+--------------------------------------------
 
 ----------Performance Summary----------
-   Dataset: wine_quality
+   Dataset: Abalone Ternary
+   Learner: kNN
+Score: 0.7557861133280128
+Precision: 0.7557861133280128
+Recall: 0.7557861133280128
+F1: 0.7442568446225554
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: Abalone Ternary
    Learner: decision tree
-Score: 0.5748717948717949
-Precision: 0.5748717948717949
-Recall: 0.5748717948717949
-F1: 0.5723773383913217
+Score: 0.7039106145251397
+Precision: 0.7039106145251397
+Recall: 0.7039106145251397
+F1: 0.7059510942783879
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: Abalone Ternary
+   Learner: kNN
+Score: 0.7797286512370312
+Precision: 0.7797286512370312
+Recall: 0.7797286512370312
+F1: 0.7701208872129178
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: Wine Quality
+   Learner: decision tree
+Score: 0.5774358974358974
+Precision: 0.5774358974358974
+Recall: 0.5774358974358974
+F1: 0.579243280492084
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: Wine Quality
+   Learner: decision tree
+Score: 0.5856410256410256
+Precision: 0.5856410256410256
+Recall: 0.5856410256410256
+F1: 0.5849025991186285
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: Wine Quality
+   Learner: kNN
+Score: 0.6225641025641026
+Precision: 0.6225641025641026
+Recall: 0.6225641025641026
+F1: 0.6207952547608813
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: Abalone Ternary
+   Learner: decision tree
+Score: 0.7262569832402235
+Precision: 0.7262569832402235
+Recall: 0.7262569832402235
+F1: 0.7291677673930997
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: Abalone Ternary
+   Learner: kNN
+Score: 0.753391859537111
+Precision: 0.753391859537111
+Recall: 0.753391859537111
+F1: 0.737035250365044
 
 --------------------------------------------

@@ -4,11 +4,11 @@ import matplotlib.pyplot as plt
 from datetime import datetime
 from sklearn.preprocessing import StandardScaler
 
-
 from sklearn.neural_network import MLPClassifier
 
 
-def plot_learning_curve(clf, features_train, labels_train, clf_name, dataset_name, train_sizes=np.linspace(0.01, 1.0, 5),
+def plot_learning_curve(clf, features_train, labels_train, clf_name, dataset_name,
+                        train_sizes=np.linspace(0.01, 1.0, 5),
                         cv=5, shuffle=True):
     """
 
@@ -28,8 +28,6 @@ def plot_learning_curve(clf, features_train, labels_train, clf_name, dataset_nam
 
     """
 
-
-
     train_sizes_abs, train_scores, validation_scores = learning_curve(clf, features_train, labels_train,
                                                                       train_sizes=train_sizes, cv=cv, shuffle=shuffle)
 
@@ -37,7 +35,6 @@ def plot_learning_curve(clf, features_train, labels_train, clf_name, dataset_nam
     train_scores_std = np.std(train_scores, axis=1)
     validation_scores_mean = np.mean(validation_scores, axis=1)
     validation_scores_std = np.std(validation_scores, axis=1)
-
 
     plt.style.use('seaborn')
 
@@ -55,14 +52,15 @@ def plot_learning_curve(clf, features_train, labels_train, clf_name, dataset_nam
     # plt.plot(train_sizes_abs, validation_scores.mean(axis = 1), label = 'Validation error')
     plt.ylabel('Score', fontsize=14)
     plt.xlabel('Training set size', fontsize=14)
-    plt.title('Learning curves for '+ clf_name + ' classifier on '+ dataset_name, fontsize=14)
+    plt.title('Learning curves for ' + clf_name + ' classifier on ' + dataset_name, fontsize=14)
     plt.legend()
     plt.savefig('images/' + dataset_name + '-learning-curve-' + clf_name + '-' + str(datetime.now()) + '.png')
     plt.close()
     return plt
 
 
-def plot_validation_curve(clf, features_train, labels_train, clf_name, dataset_name, param_name, param_range, x_arr=None, cv=5):
+def plot_validation_curve(clf, features_train, labels_train, clf_name, dataset_name, param_name, param_range,
+                          x_arr=None, cv=5):
     """
 
     :param dataset_name: string name of the dataset
@@ -82,8 +80,8 @@ def plot_validation_curve(clf, features_train, labels_train, clf_name, dataset_n
     if x_arr is None:
         x_arr = param_range
 
-
-    train_scores, validation_scores = validation_curve(clf, features_train, labels_train, param_name, param_range, cv=cv)
+    train_scores, validation_scores = validation_curve(clf, features_train, labels_train, param_name, param_range,
+                                                       cv=cv)
 
     train_scores_mean = np.mean(train_scores, axis=1)
     train_scores_std = np.std(train_scores, axis=1)
@@ -106,10 +104,28 @@ def plot_validation_curve(clf, features_train, labels_train, clf_name, dataset_n
     # plt.plot(train_sizes_abs, validation_scores.mean(axis = 1), label = 'Validation error')
     plt.ylabel('Score', fontsize=14)
     plt.xlabel(param_name, fontsize=14)
-    plt.title(dataset_name + '- ' + 'Validation Curve for ' + clf_name + ' classifier, parameter: ' + param_name, fontsize=14)
+    plt.title(dataset_name + '- ' + 'Validation Curve for ' + clf_name + ' classifier, parameter: ' + param_name,
+              fontsize=14)
     plt.legend()
-    plt.savefig('images/' + dataset_name + 'validation-curve-' + clf_name + '-' + param_name+ str(datetime.now()) +'.png')
+    plt.savefig(
+        'images/' + dataset_name + 'validation-curve-' + clf_name + '-' + param_name + str(datetime.now()) + '.png')
     plt.close()
     return plt
 
-    return plt
+
+def plot_iterations():
+    pass
+
+
+# plotting
+# dot_data = tree.export_graphviz(clf, out_file=None)
+# graph = graphviz.Source(dot_data)
+# graph.render("iris-")
+#
+# dot_data = tree.export_graphviz(clf, out_file=None,
+#                                 feature_names=iris.feature_names,
+#                                 class_names=iris.target_names,
+#                                 filled=True,
+#                                 rounded=True,
+#                                 special_characters=True)
+# graph = graphviz.Source(dot_data)

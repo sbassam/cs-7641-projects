@@ -36,12 +36,11 @@ import matplotlib as mplt
 
 # iris = digits
 # iris = abalone #good
-iris = abalone_ternary
-ds_name = 'Abalone Ternary'
+iris = wine_quality
+ds_name = 'Wine Quality'
 
 
-
-#ds_name = 'abalone_ternary'
+# ds_name = 'abalone_ternary'
 
 def write_performance(dataset_name, learner, score, precision, recall, f1):
     """
@@ -99,6 +98,46 @@ StandardScaler(copy=True, with_mean=True, with_std=True)
 features_train = scaler.transform(features_train)
 features_test = scaler.transform(features_test)
 
+###########baseline stats##############
+# determine the baseline performance (out of the box performance)
+# initialize
+dt_baseline = dt.setup_dt(features_train, labels_train)
+ann_baseline = ann.setup_ann(features_train, labels_train)
+# bst_baseline = bst.setup_bst(features_train, labels_train)
+# svm_baseline = svm.setup_svm(features_train, labels_train)
+#knn_baseline = knn.setup_knn(features_train, labels_train)
+# fit
+dt.fit_dt(dt_baseline, features_train, labels_train)
+ann.fit_ann(ann_baseline, features_train, labels_train)
+# bst.fit_bst(bst_basline, features_train, labels_train)
+# svm.fit_svm(svm_basline, features_train, labels_train)
+#knn.fit_knn(knn_baseline, features_train, labels_train)
+# predict
+bl_dt_pred = dt.predict_dt(dt_baseline, features_test)
+bl_ann_pred = ann.predict_ann(ann_baseline, features_test)
+# bl_bst_pred = bst.predict_bst(bst_baseline, features_test)
+# bl_svm_pred = svm.predict_svm(svm_baseline, features_test)
+# bl_knn_pred = knn.predict_knn(knn_baseline, features_test)
+
+# performance
+bl_dt_score, bl_dt_precision, bl_dt_recall, bl_dt_f1 = dt.get_performance_dt(dt_baseline, bl_dt_pred, features_test,
+                                                                             labels_test)
+bl_ann_score, bl_ann_precision, bl_ann_recall, bl_ann_f1 = ann.get_performance_ann(ann_baseline, bl_ann_pred,
+                                                                                   features_test, labels_test)
+# bl_bst_score, bl_bst_precision, bl_bst_recall, bl_bst_f1 = bst.get_performance_bst(bst_baseline, bl_bst_pred,
+#                                                                                    features_test, labels_test)
+# bl_svm_score, bl_svm_precision, bl_svm_recall, bl_svm_f1 = svm.get_performance_svm(svm_baseline, bl_svm_pred,
+#                                                                                    features_test, labels_test)
+#bl_knn_score, bl_knn_precision, bl_knn_recall, bl_knn_f1 = knn.get_performance_knn(knn_baseline, bl_knn_pred,
+#                                                                                   features_test, labels_test)
+# write
+write_performance(ds_name, 'Base Line Decision Tree', bl_dt_score, bl_dt_precision, bl_dt_recall, bl_dt_f1)
+write_performance(ds_name, 'Base Line Neural Network', bl_ann_score, bl_ann_precision, bl_ann_recall, bl_ann_f1)
+# write_performance(ds_name, 'Base Line Boosting', bl_bst_score, bl_bst_precision, bl_bst_recall, bl_bst_f1)
+# write_performance(ds_name, 'Base Line SVM', bl_svm_score, bl_svm_precision, bl_svm_recall, bl_svm_f1)
+#write_performance(ds_name, 'Base Line kNN', bl_knn_score, bl_knn_precision, bl_knn_recall, bl_knn_f1)
+#################################################
+
 #
 # print('##################### Decision tree ######################')
 #
@@ -107,6 +146,7 @@ clf_name = 'Decision Tree'
 #
 #
 clf = dt.setup_dt(features_train, labels_train)
+
 #
 
 # find optimal parameters
@@ -132,33 +172,102 @@ max_leaf_nodes_arr = np.arange(2, 100, 5)
 min_samples_leaf_arr = np.arange(1, 100, 5)
 criterion_arr = np.array(['gini', 'entropy'])
 
-plot_validation_curve(tuned_clf, features_train, labels_train, clf_name, ds_name, 'max_depth', max_depth_arr)
-plot_validation_curve(tuned_clf, features_train, labels_train, clf_name, ds_name, 'min_samples_leaf',
+plot_validation_curve(clf, features_train, labels_train, clf_name, ds_name, 'max_depth', max_depth_arr)
+plot_validation_curve(clf, features_train, labels_train, clf_name, ds_name, 'min_samples_leaf',
                       min_samples_leaf_arr)
 
 # fit
 
-dt.fit_dt(clf, features_train, labels_train)
+dt.fit_dt(tuned_clf, features_train, labels_train)
 
 # predict testing set
-pred = dt.predict_dt(clf, features_test)
+pred = dt.predict_dt(tuned_clf, features_test)
 
-dt_score, dt_precision, dt_recall, dt_f1 = dt.get_performance_dt(clf, pred, features_test, labels_test)
+dt_score, dt_precision, dt_recall, dt_f1 = dt.get_performance_dt(tuned_clf, pred, features_test, labels_test)
 
-write_performance(ds_name, "decision tree", dt_score, dt_precision, dt_recall, dt_f1)
+write_performance(ds_name, clf_name, dt_score, dt_precision, dt_recall, dt_f1)
 
-# plotting
-# dot_data = tree.export_graphviz(clf, out_file=None)
-# graph = graphviz.Source(dot_data)
-# graph.render("iris-")
+
+
+
+
+print('##################### Neural Network ######################')
+
+clf_name = 'Neural Network'
+clf = ann.setup_ann(features_train, labels_train)
+
+# find optimal parameters
+activation_arr = np.array(['identity', 'logistic', 'tanh', 'relu'])
+solver = np.array(['lbfgs', 'sgd', 'adam'])
+hidden_layer_size_arr_ax = np.arange(32, 52, 4)
+hidden_layer_size_arr = np.array([(i, i, i) for i in hidden_layer_size_arr_ax])
+
+num_hidden_layers_arr = np.array([(40, 40), (40, 40, 40), (40, 40, 40, 40), (40, 40, 40, 40, 40), (40, 40, 40, 40, 40, 40)])
+num_hidden_layers_arr_ax = np.arange(2, 7, 1)
+
+parameters = {'activation': activation_arr}
+gc_clf = GridSearchCV(clf, parameters, cv=5)
+gc_clf.fit(features_train, labels_train)
+gc_best_params = gc_clf.best_params_
+write_gridsearch_results(ds_name, clf_name, gc_best_params)
 #
-# dot_data = tree.export_graphviz(clf, out_file=None,
-#                                 feature_names=iris.feature_names,
-#                                 class_names=iris.target_names,
-#                                 filled=True,
-#                                 rounded=True,
-#                                 special_characters=True)
-# graph = graphviz.Source(dot_data)
+
+# set up a tuned clf
+tuned_clf = ann.setup_ann(features_train, labels_train, gc_best_params)
+
+# plot learning curve
+
+plot_learning_curve(tuned_clf, features_train, labels_train, clf_name, ds_name, np.linspace(.01, 1., 10), 8)
+
+# plot validation curve
+
+
+learning_rate = 0
+momentum = 0
+
+if ds_name == 'Wine Quality':
+    hidden_layer_size_arr_ax = np.arange(1, 20, 4)
+    hidden_layer_size_arr = np.array([(i, i, i) for i in hidden_layer_size_arr_ax])
+
+    num_hidden_layers_arr = np.array([(6), (6, 6), (6, 6, 6), (6, 6, 6, 6), (6, 6, 6, 6, 6)])
+    num_hidden_layers_arr_ax = np.arange(1, 6, 1)
+
+    learning_rate = 0
+    momentum = 0
+
+# # set up a classifier for the validation curve
+# clf = ann.setup_ann(features_train, labels_train)
+
+plot_validation_curve(tuned_clf, features_train, labels_train, clf_name, ds_name, 'hidden_layer_sizes',
+                      hidden_layer_size_arr)
+plot_validation_curve(tuned_clf, features_train, labels_train, clf_name, ds_name, 'num_hidden_layers',
+                      num_hidden_layers_arr)
+
+
+# fit
+
+ann.fit_ann(tuned_clf, features_train, labels_train)
+
+# predict testing set
+pred = ann.predict_ann(tuned_clf, features_test)
+
+ann_score, ann_precision, ann_recall, ann_f1 = ann.get_performance_ann(tuned_clf, pred, features_test, labels_test)
+
+write_performance(ds_name, clf_name, ann_score, ann_precision, ann_recall, ann_f1)
+
+
+clf = ann.setup_ann(features_train, labels_train, features_test, labels_test)
+#plot_learning_curve(clf, features_train, labels_train, 'Neural-Network', np.linspace(0.01, 1.0, 10), 8)
+plot_validation_curve(clf, features_train, labels_train, 'Neural-Network', 'hidden_layer_sizes',
+                      hidden_layer_size_arr, hidden_layer_size_arr_ax)
+plot_validation_curve(clf, features_train, labels_train, 'Neural-Network', 'hidden_layer_sizes',
+                      num_hidden_layers_arr, num_hidden_layers_arr_ax)
+ann.fit_ann(clf, features_train, labels_train)
+pred = ann.predict_ann(clf, features_test)
+ann_precision, ann_recall, ann_f1 = ann.get_performance_ann(clf, pred, features_test, labels_test)
+
+
+print('##################### Boosting ######################')
 
 # print('##################### SVM ######################')
 # from sklearn.svm import SVC
@@ -178,41 +287,6 @@ write_performance(ds_name, "decision tree", dt_score, dt_precision, dt_recall, d
 # SVM_recall = recall_score(labels_test, pred, average='weighted')
 # print('recall for SVM: ', SVM_recall)
 # plot_learning_curve(clf, features_train, labels_train, 'SVM', np.linspace(0.01, 1.0, 10), 8)
-
-
-print('##################### Neural Network ######################')
-# abalone
-# hidden_layer_size_arr_ax = np.arange(32, 52, 4)
-# hidden_layer_size_arr = np.array([(i, i, i) for i in hidden_layer_size_arr_ax])
-
-# num_hidden_layers_arr = np.array([(40, 40), (40, 40, 40), (40, 40, 40, 40), (40, 40, 40, 40, 40), (40, 40, 40, 40, 40, 40)])
-# num_hidden_layers_arr_ax = np.arange(2, 7, 1)
-
-# learning_rate = 0
-# momentum = 0
-
-# wine
-# hidden_layer_size_arr_ax = np.arange(1, 20, 4)
-# hidden_layer_size_arr = np.array([(i, i, i) for i in hidden_layer_size_arr_ax])
-#
-# num_hidden_layers_arr = np.array([(6), (6, 6), (6, 6, 6), (6, 6, 6, 6), (6, 6, 6, 6, 6)])
-# num_hidden_layers_arr_ax = np.arange(1, 6, 1)
-#
-# learning_rate = 0
-# momentum = 0
-#
-# clf = ann.setup_ann(features_train, labels_train, features_test, labels_test)
-# #plot_learning_curve(clf, features_train, labels_train, 'Neural-Network', np.linspace(0.01, 1.0, 10), 8)
-# plot_validation_curve(clf, features_train, labels_train, 'Neural-Network', 'hidden_layer_sizes',
-#                       hidden_layer_size_arr, hidden_layer_size_arr_ax)
-# plot_validation_curve(clf, features_train, labels_train, 'Neural-Network', 'hidden_layer_sizes',
-#                       num_hidden_layers_arr, num_hidden_layers_arr_ax)
-# ann.fit_ann(clf, features_train, labels_train)
-# pred = ann.predict_ann(clf, features_test)
-# ann_precision, ann_recall, ann_f1 = ann.get_performance_ann(clf, pred, features_test, labels_test)
-
-
-print('##################### Boosting ######################')
 
 print('##################### kNN ######################')
 clf_name = 'kNN'
@@ -241,7 +315,6 @@ plot_learning_curve(tuned_clf, features_train, labels_train, clf_name, ds_name, 
 
 plot_validation_curve(clf, features_train, labels_train, 'kNN', ds_name, 'n_neighbors', n_neighbors_arr)
 plot_validation_curve(clf, features_train, labels_train, 'kNN', ds_name, 'metric', distance_metric_arr)
-
 
 # fit
 

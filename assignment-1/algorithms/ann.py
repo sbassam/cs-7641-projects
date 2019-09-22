@@ -1,4 +1,4 @@
-from sklearn.metrics import precision_score, recall_score, f1_score
+from sklearn.metrics import precision_score, recall_score, f1_score, balanced_accuracy_score
 from sklearn.neural_network import MLPClassifier
 
 
@@ -42,12 +42,12 @@ def predict_ann(clf, features_test):
 
 
 def get_performance_ann(clf, pred, features_test, labels_test):
-    ann_score = clf.score(features_test, labels_test)
+    ann_score = balanced_accuracy_score(labels_test, pred)
 
     ann_precision = precision_score(labels_test, pred, average='micro')
 
     ann_recall = recall_score(labels_test, pred, average='weighted')
 
-    ann_f1 = f1_score(labels_test, pred, average='weighted')
+    ann_f1 = f1_score(labels_test, pred, average='micro')
 
     return ann_score, ann_precision, ann_recall, ann_f1

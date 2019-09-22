@@ -1,4 +1,4 @@
-from sklearn.model_selection import learning_curve, validation_curve
+from sklearn.model_selection import learning_curve, validation_curve, train_test_split
 import numpy as np
 import matplotlib.pyplot as plt
 from datetime import datetime
@@ -6,12 +6,15 @@ from sklearn.preprocessing import StandardScaler
 
 from sklearn.neural_network import MLPClassifier
 
+from sklearn.model_selection import GridSearchCV
+import pandas as pd
+
 
 def plot_learning_curve(clf, features_train, labels_train, clf_name, dataset_name,
-                        train_sizes=np.linspace(0.01, 1.0, 5),
-                        cv=5, shuffle=True):
+                        train_sizes=np.linspace(0.01, 1.0, 5), cv=5, shuffle=True, scoring='balanced_accuracy'):
     """
 
+    :param scoring:
     :param clf: estimator
     :param features_train: training set
     :param labels_train: labels for training set
@@ -29,7 +32,8 @@ def plot_learning_curve(clf, features_train, labels_train, clf_name, dataset_nam
     """
 
     train_sizes_abs, train_scores, validation_scores = learning_curve(clf, features_train, labels_train,
-                                                                      train_sizes=train_sizes, cv=cv, shuffle=shuffle)
+                                                                      train_sizes=train_sizes, cv=cv,
+                                                                      shuffle=shuffle, scoring=scoring)
 
     train_scores_mean = np.mean(train_scores, axis=1)
     train_scores_std = np.std(train_scores, axis=1)
@@ -50,7 +54,7 @@ def plot_learning_curve(clf, features_train, labels_train, clf_name, dataset_nam
 
     # plt.plot(train_sizes_abs, train_scores.mean(axis = 1), label = 'Training error')
     # plt.plot(train_sizes_abs, validation_scores.mean(axis = 1), label = 'Validation error')
-    plt.ylabel('Score', fontsize=14)
+    plt.ylabel('Balanced Accuracy Score', fontsize=14)
     plt.xlabel('Training set size', fontsize=14)
     plt.title('Learning curves for ' + clf_name + ' classifier on ' + dataset_name, fontsize=14)
     plt.legend()
@@ -60,9 +64,11 @@ def plot_learning_curve(clf, features_train, labels_train, clf_name, dataset_nam
 
 
 def plot_validation_curve(clf, features_train, labels_train, clf_name, dataset_name, param_name, param_range,
-                          x_arr=None, cv=5):
+                          x_arr=None, cv=5, scoring='balanced_accuracy'):
     """
 
+    :param scoring:
+    :param scoring:
     :param dataset_name: string name of the dataset
     :param clf_name: string name of the classifier
     :param x_arr: array of x coordinate
@@ -81,7 +87,7 @@ def plot_validation_curve(clf, features_train, labels_train, clf_name, dataset_n
         x_arr = param_range
 
     train_scores, validation_scores = validation_curve(clf, features_train, labels_train, param_name, param_range,
-                                                       cv=cv)
+                                                       cv=cv, scoring=scoring)
 
     train_scores_mean = np.mean(train_scores, axis=1)
     train_scores_std = np.std(train_scores, axis=1)
@@ -102,7 +108,7 @@ def plot_validation_curve(clf, features_train, labels_train, clf_name, dataset_n
 
     # plt.plot(train_sizes_abs, train_scores.mean(axis = 1), label = 'Training error')
     # plt.plot(train_sizes_abs, validation_scores.mean(axis = 1), label = 'Validation error')
-    plt.ylabel('Score', fontsize=14)
+    plt.ylabel('Balanced Accuracy Score', fontsize=14)
     plt.xlabel(param_name, fontsize=14)
     plt.title(dataset_name + '- ' + 'Validation Curve for ' + clf_name + ' classifier, parameter: ' + param_name,
               fontsize=14)
@@ -113,8 +119,72 @@ def plot_validation_curve(clf, features_train, labels_train, clf_name, dataset_n
     return plt
 
 
-def plot_iterations():
-    pass
+def plot_time_vs_iterations(features_train, labels_train, clf, clf_name, dataset_name, gc_params):
+    x_arr = []
+    iter_data = pd.DataFrame()
+    for size in np.arange(.01, 1., .05):
+        iter_train, iter_test, iter_y_train, iter_y_test = train_test_split(features_train, labels_train,
+                                                                            train_size=size)
+
+        # gc_params = {'max_iter': np.array([5000])}  # {'max_iter': np.arange(200, 800, 100) }
+        gc_clf = GridSearchCV(clf, gc_params, cv=5, scoring='balanced_accuracy')
+        gc_clf.fit(iter_train, iter_y_train)
+        x_arr.append(iter_train.shape[0])
+        #     fit_time_list[iter_train.shape[0]]=gc_clf.cv_results_['mean_fit_time'][0]
+        #     accuracy_list[iter_train.shape[0]]=gc_clf.cv_results_['mean_test_score'][0]
+        iter_data = pd.concat([iter_data, pd.DataFrame(gc_clf.cv_results_)])
+
+    plt.style.use('seaborn')
+
+    plt.fill_between(x_arr, iter_data.mean_fit_time - iter_data.std_fit_time,
+                     iter_data.mean_fit_time + iter_data.std_fit_time, alpha=0.1,
+                     color="r")
+
+    plt.plot(x_arr, iter_data.mean_fit_time, 'o-', color="r",
+             label="Iteration time")
+
+    plt.ylabel('Mean Fit time (sec)', fontsize=14)
+    plt.xlabel('Training Size', fontsize=14)
+    plt.title(dataset_name + '- ' + 'Validation Curve for ' + clf_name + ' classifier, parameter: ',
+              fontsize=14)
+    plt.legend()
+    plt.savefig(
+        'images/' + dataset_name + 'time-vs-iteration-' + clf_name + '-'  + str(datetime.now()) + '.png')
+    plt.close()
+    return plt
+
+def plot_accuracy_vs_iterations(features_train, labels_train, clf, clf_name, dataset_name, gc_params):
+    x_arr = []
+    iter_data = pd.DataFrame()
+    for size in np.arange(.01, 1., .05):
+        iter_train, iter_test, iter_y_train, iter_y_test = train_test_split(features_train, labels_train,
+                                                                            train_size=size)
+
+        # gc_params = {'max_iter': np.array([5000])}  # {'max_iter': np.arange(200, 800, 100) }
+        gc_clf = GridSearchCV(clf, gc_params, cv=5, scoring='balanced_accuracy')
+        gc_clf.fit(iter_train, iter_y_train)
+        x_arr.append(iter_train.shape[0])
+        #     fit_time_list[iter_train.shape[0]]=gc_clf.cv_results_['mean_fit_time'][0]
+        #     accuracy_list[iter_train.shape[0]]=gc_clf.cv_results_['mean_test_score'][0]
+        iter_data = pd.concat([iter_data, pd.DataFrame(gc_clf.cv_results_)])
+
+    plt.style.use('seaborn')
+
+    plt.fill_between(x_arr, iter_data.mean_test_score - iter_data.std_test_score,
+                     iter_data.mean_test_score + iter_data.std_test_score, alpha=0.1,
+                     color="r")
+
+    plt.plot(x_arr, iter_data.mean_test_score, 'o-', color="r")
+
+    plt.ylabel('Balanced Accuracy Score', fontsize=14)
+    plt.xlabel('Training Size', fontsize=14)
+    plt.title(dataset_name + '- ' + 'Validation Curve for ' + clf_name + ' classifier, parameter: ',
+              fontsize=14)
+    plt.legend()
+    plt.savefig(
+        'images/' + dataset_name + 'accuracy-vs-iteration-' + clf_name + '-'  + str(datetime.now()) + '.png')
+    plt.close()
+    return plt
 
 
 # plotting

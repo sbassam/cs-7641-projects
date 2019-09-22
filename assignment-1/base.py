@@ -8,7 +8,7 @@ from sklearn import datasets
 from sklearn.preprocessing import StandardScaler
 from sklearn import tree
 import pandas as pd
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score, make_scorer, f1_score
 from sklearn.metrics import precision_score
 from sklearn.metrics import recall_score
 import graphviz
@@ -17,8 +17,8 @@ import seaborn as sns
 
 import seaborn as sns
 
-from algorithms import ann, knn, dt
-from plotting import plot_learning_curve, plot_validation_curve
+from algorithms import ann, knn, dt, bst
+from plotting import plot_learning_curve, plot_validation_curve, plot_time_vs_iterations, plot_accuracy_vs_iterations
 from sklearn.model_selection import GridSearchCV
 
 iris = datasets.load_iris()
@@ -58,7 +58,7 @@ def write_performance(dataset_name, learner, score, precision, recall, f1):
     statement = "\n----------Performance Summary----------\n" \
                 "   Dataset: %s\n" \
                 "   Learner: %s\n" \
-                "Score: %s\n" \
+                "Balanced Accuracy Score: %s\n" \
                 "Precision: %s\n" \
                 "Recall: %s\n" \
                 "F1: %s\n" \
@@ -81,7 +81,7 @@ def write_gridsearch_results(dataset_name, learner, best_params):
     statement = "\n----------Grid Search Results----------\n" \
                 "   Dataset: %s\n" \
                 "   Learner: %s\n" \
-                "Best Paramters: %s\n" \
+                "Best Parameters: %s\n" \
                 "\n--------------------------------------------\n"
     f.write(statement % (dataset_name, learner, best_params))
     f.close()
@@ -102,172 +102,240 @@ features_test = scaler.transform(features_test)
 # determine the baseline performance (out of the box performance)
 # initialize
 dt_baseline = dt.setup_dt(features_train, labels_train)
-ann_baseline = ann.setup_ann(features_train, labels_train)
-# bst_baseline = bst.setup_bst(features_train, labels_train)
+#ann_baseline = ann.setup_ann(features_train, labels_train)
+bst_baseline = bst.setup_bst(features_train, labels_train)
 # svm_baseline = svm.setup_svm(features_train, labels_train)
-#knn_baseline = knn.setup_knn(features_train, labels_train)
+# knn_baseline = knn.setup_knn(features_train, labels_train)
 # fit
 dt.fit_dt(dt_baseline, features_train, labels_train)
-ann.fit_ann(ann_baseline, features_train, labels_train)
-# bst.fit_bst(bst_basline, features_train, labels_train)
-# svm.fit_svm(svm_basline, features_train, labels_train)
-#knn.fit_knn(knn_baseline, features_train, labels_train)
+#ann.fit_ann(ann_baseline, features_train, labels_train)
+bst.fit_bst(bst_baseline, features_train, labels_train)
+# svm.fit_svm(svm_baseline, features_train, labels_train)
+# knn.fit_knn(knn_baseline, features_train, labels_train)
 # predict
 bl_dt_pred = dt.predict_dt(dt_baseline, features_test)
-bl_ann_pred = ann.predict_ann(ann_baseline, features_test)
-# bl_bst_pred = bst.predict_bst(bst_baseline, features_test)
+#bl_ann_pred = ann.predict_ann(ann_baseline, features_test)
+bl_bst_pred = bst.predict_bst(bst_baseline, features_test)
 # bl_svm_pred = svm.predict_svm(svm_baseline, features_test)
 # bl_knn_pred = knn.predict_knn(knn_baseline, features_test)
 
 # performance
 bl_dt_score, bl_dt_precision, bl_dt_recall, bl_dt_f1 = dt.get_performance_dt(dt_baseline, bl_dt_pred, features_test,
                                                                              labels_test)
-bl_ann_score, bl_ann_precision, bl_ann_recall, bl_ann_f1 = ann.get_performance_ann(ann_baseline, bl_ann_pred,
-                                                                                   features_test, labels_test)
-# bl_bst_score, bl_bst_precision, bl_bst_recall, bl_bst_f1 = bst.get_performance_bst(bst_baseline, bl_bst_pred,
+# bl_ann_score, bl_ann_precision, bl_ann_recall, bl_ann_f1 = ann.get_performance_ann(ann_baseline, bl_ann_pred,
 #                                                                                    features_test, labels_test)
+bl_bst_score, bl_bst_precision, bl_bst_recall, bl_bst_f1 = bst.get_performance_bst(bst_baseline, bl_bst_pred,
+                                                                                   features_test, labels_test)
 # bl_svm_score, bl_svm_precision, bl_svm_recall, bl_svm_f1 = svm.get_performance_svm(svm_baseline, bl_svm_pred,
 #                                                                                    features_test, labels_test)
-#bl_knn_score, bl_knn_precision, bl_knn_recall, bl_knn_f1 = knn.get_performance_knn(knn_baseline, bl_knn_pred,
+# bl_knn_score, bl_knn_precision, bl_knn_recall, bl_knn_f1 = knn.get_performance_knn(knn_baseline, bl_knn_pred,
 #                                                                                   features_test, labels_test)
 # write
 write_performance(ds_name, 'Base Line Decision Tree', bl_dt_score, bl_dt_precision, bl_dt_recall, bl_dt_f1)
-write_performance(ds_name, 'Base Line Neural Network', bl_ann_score, bl_ann_precision, bl_ann_recall, bl_ann_f1)
-# write_performance(ds_name, 'Base Line Boosting', bl_bst_score, bl_bst_precision, bl_bst_recall, bl_bst_f1)
+# write_performance(ds_name, 'Base Line Neural Network', bl_ann_score, bl_ann_precision, bl_ann_recall, bl_ann_f1)
+write_performance(ds_name, 'Base Line Boosting', bl_bst_score, bl_bst_precision, bl_bst_recall, bl_bst_f1)
 # write_performance(ds_name, 'Base Line SVM', bl_svm_score, bl_svm_precision, bl_svm_recall, bl_svm_f1)
-#write_performance(ds_name, 'Base Line kNN', bl_knn_score, bl_knn_precision, bl_knn_recall, bl_knn_f1)
+# write_performance(ds_name, 'Base Line kNN', bl_knn_score, bl_knn_precision, bl_knn_recall, bl_knn_f1)
 #################################################
 
 #
-# print('##################### Decision tree ######################')
+# # print('##################### Decision tree ######################')
+# #
+# clf_name = 'Decision Tree'
 #
-clf_name = 'Decision Tree'
+# #
+# #
+# clf = dt.setup_dt(features_train, labels_train)
+#
+# #
+#
+# # find optimal parameters
+# parameters = {'max_depth': np.arange(1, 20, 2), 'min_samples_leaf': np.arange(2, 50, 2)}
+# gc_clf = GridSearchCV(clf, parameters, cv=5)
+# gc_clf.fit(features_train, labels_train)
+# gc_best_params = gc_clf.best_params_
+# write_gridsearch_results(ds_name, clf_name, gc_best_params)
+# #
+#
+# # set up a tuned clf
+# tuned_clf = dt.setup_dt(features_train, labels_train, gc_best_params)
+#
+# # plot learning curve
+#
+# plot_learning_curve(tuned_clf, features_train, labels_train, clf_name, ds_name, np.linspace(.01, 1., 10), 8)
+#
+# # plot validation curve
+#
+# # n_neighbors_arr = np.arange(1, 100, 5)
+# max_depth_arr = np.arange(1, 100, 5)
+# max_leaf_nodes_arr = np.arange(2, 100, 5)
+# min_samples_leaf_arr = np.arange(1, 100, 5)
+# criterion_arr = np.array(['gini', 'entropy'])
+#
+# plot_validation_curve(clf, features_train, labels_train, clf_name, ds_name, 'max_depth', max_depth_arr)
+# plot_validation_curve(clf, features_train, labels_train, clf_name, ds_name, 'min_samples_leaf',
+#                       min_samples_leaf_arr)
+#
+# # fit
+#
+# dt.fit_dt(tuned_clf, features_train, labels_train)
+#
+# # predict testing set
+# pred = dt.predict_dt(tuned_clf, features_test)
+#
+# dt_score, dt_precision, dt_recall, dt_f1 = dt.get_performance_dt(tuned_clf, pred, features_test, labels_test)
+#
+# write_performance(ds_name, clf_name, dt_score, dt_precision, dt_recall, dt_f1)
 
+
+# print('##################### Neural Network ######################')
+# scoring = {'f1': make_scorer(f1_score, average='macro'), 'balanced_accuracy': 'balanced_accuracy'}
+# refit = 'balanced_accuracy'
+#
+# clf_name = 'Neural Network'
+# clf = ann.setup_ann(features_train, labels_train)
+#
+# # find optimal parameters
+# activation_arr = np.array(['identity', 'logistic', 'tanh', 'relu'])
+# solver_arr = np.array(['lbfgs', 'sgd', 'adam'])
+#
+# # parameters = {'activation': activation_arr, 'solver': solver_arr,
+# #               'hidden_layer_sizes': [(10, 10), (50, 50, 50), (100,)]}
+# # ---------Grid Search Results----------
+# #    Dataset: Wine Quality
+# #    Learner: Neural Network
+# # Best Paramters: {'activation': 'tanh', 'hidden_layer_sizes': (50, 50, 50), 'solver': 'lbfgs'}
+# #
+# # --------------------------------------------
+#
+# # parameters:
+# #   1. the size of hidden layers
+# hidden_layer_size_arr_ax = np.arange(50, 1000, 50)
+# hidden_layer_size_arr = np.array([(i, i, i, i, i) for i in hidden_layer_size_arr_ax])
+#
+# #   2. number of layers
+# num_hidden_layers_arr = []
+# for i in range(5, 20):
+#     temp = (200,) * i
+#     num_hidden_layers_arr.append(temp)
+# num_hidden_layers_arr = np.array(num_hidden_layers_arr)
+# num_hidden_layers_arr_ax = np.arange(5, 20, 1)
+#
+# #   3. alpha
+# alpha_arr = np.arange(.00001, .01, .0005)
+#
+# # grid search
+# # parameters = {'hidden_layer_sizes' : [(200), (200, 200), (200, 200, 200), (200, 200, 200, 200)]}
+# # gc_clf = GridSearchCV(clf, parameters, cv=5, scoring=scoring, refit= refit)
+# # gc_clf.fit(features_train, labels_train)
+# # gc_best_params = gc_clf.best_params_
+# # write_gridsearch_results(ds_name, clf_name, gc_best_params)
+# #
+#
+# # set up a tuned clf
+# # since grid search takes forever:
+# tuned_clf = ann.setup_ann(features_train, labels_train, {'hidden_layer_sizes': (300, 300, 300, 300, 300, 300, 300, 300)})
+# # for grid search use: tuned_clf = ann.setup_ann(features_train, labels_train, gc_best_params)
+#
+# # plot learning curve
+#
+# plot_learning_curve(tuned_clf, features_train, labels_train, clf_name, ds_name, np.linspace(.01, 1., 10), 8)
+#
+# # plot validation curve
+#
+# # # set up a classifier for the validation curve
+# # clf = ann.setup_ann(features_train, labels_train)
 #
 #
-clf = dt.setup_dt(features_train, labels_train)
-
+# # plot_validation_curve(tuned_clf, features_train, labels_train, clf_name, ds_name, 'hidden_layer_sizes',
+# #                       hidden_layer_size_arr, hidden_layer_size_arr_ax)
+# plot_validation_curve(tuned_clf, features_train, labels_train, clf_name, ds_name, 'hidden_layer_sizes',
+#                       num_hidden_layers_arr, num_hidden_layers_arr_ax)
 #
-
-# find optimal parameters
-parameters = {'max_depth': np.arange(1, 20, 2), 'min_samples_leaf': np.arange(2, 50, 2)}
-gc_clf = GridSearchCV(clf, parameters, cv=5)
-gc_clf.fit(features_train, labels_train)
-gc_best_params = gc_clf.best_params_
-write_gridsearch_results(ds_name, clf_name, gc_best_params)
 #
+# # Time vs Iterations
+# plot_time_vs_iterations(features_train, labels_train, tuned_clf, clf_name, ds_name,
+#                         gc_params={'max_iter': np.array([5000])})
+#
+# plot_accuracy_vs_iterations(features_train, labels_train, tuned_clf, clf_name, ds_name,
+#                         gc_params={'max_iter': np.array([5000])})
+# # fit
+#
+# ann.fit_ann(tuned_clf, features_train, labels_train)
+#
+# # predict testing set
+# pred = ann.predict_ann(tuned_clf, features_test)
+#
+# ann_score, ann_precision, ann_recall, ann_f1 = ann.get_performance_ann(tuned_clf, pred, features_test, labels_test)
+#
+# write_performance(ds_name, clf_name, ann_score, ann_precision, ann_recall, ann_f1)
 
-# set up a tuned clf
-tuned_clf = dt.setup_dt(features_train, labels_train, gc_best_params)
+print('##################### Boosting ######################')
+scoring = {'f1': make_scorer(f1_score, average='macro'), 'balanced_accuracy': 'balanced_accuracy'}
+refit = 'balanced_accuracy'
 
-# plot learning curve
-
-plot_learning_curve(tuned_clf, features_train, labels_train, clf_name, ds_name, np.linspace(.01, 1., 10), 8)
-
-# plot validation curve
-
-# n_neighbors_arr = np.arange(1, 100, 5)
-max_depth_arr = np.arange(1, 100, 5)
-max_leaf_nodes_arr = np.arange(2, 100, 5)
-min_samples_leaf_arr = np.arange(1, 100, 5)
-criterion_arr = np.array(['gini', 'entropy'])
-
-plot_validation_curve(clf, features_train, labels_train, clf_name, ds_name, 'max_depth', max_depth_arr)
-plot_validation_curve(clf, features_train, labels_train, clf_name, ds_name, 'min_samples_leaf',
-                      min_samples_leaf_arr)
-
-# fit
-
-dt.fit_dt(tuned_clf, features_train, labels_train)
-
-# predict testing set
-pred = dt.predict_dt(tuned_clf, features_test)
-
-dt_score, dt_precision, dt_recall, dt_f1 = dt.get_performance_dt(tuned_clf, pred, features_test, labels_test)
-
-write_performance(ds_name, clf_name, dt_score, dt_precision, dt_recall, dt_f1)
-
-
-
-
-
-print('##################### Neural Network ######################')
-
-clf_name = 'Neural Network'
-clf = ann.setup_ann(features_train, labels_train)
+clf_name = 'Boosted DT'
+clf = bst.setup_bst(features_train, labels_train)
 
 # find optimal parameters
 activation_arr = np.array(['identity', 'logistic', 'tanh', 'relu'])
-solver = np.array(['lbfgs', 'sgd', 'adam'])
-hidden_layer_size_arr_ax = np.arange(32, 52, 4)
-hidden_layer_size_arr = np.array([(i, i, i) for i in hidden_layer_size_arr_ax])
+solver_arr = np.array(['lbfgs', 'sgd', 'adam'])
 
-num_hidden_layers_arr = np.array([(40, 40), (40, 40, 40), (40, 40, 40, 40), (40, 40, 40, 40, 40), (40, 40, 40, 40, 40, 40)])
-num_hidden_layers_arr_ax = np.arange(2, 7, 1)
 
-parameters = {'activation': activation_arr}
-gc_clf = GridSearchCV(clf, parameters, cv=5)
+
+# parameters:
+#   1. n_estimators
+n_estimators_arr = np.arange(1, 200, 20)
+
+#   2. learning_rate
+learning_rate_arr = np.arange(.1, 2, .2)
+
+#   3. estimator
+max_depth = np.arange(1, 20, 2)
+base = []
+for i in max_depth:
+    base.append(DecisionTreeClassifier(max_depth=i))
+
+parameters = {'n_estimators': n_estimators_arr, 'learning_rate': learning_rate_arr, 'base_estimator': base}
+#
+# grid search
+
+gc_clf = GridSearchCV(clf, parameters, cv=5, scoring=scoring, refit= refit)
 gc_clf.fit(features_train, labels_train)
 gc_best_params = gc_clf.best_params_
 write_gridsearch_results(ds_name, clf_name, gc_best_params)
 #
 
 # set up a tuned clf
-tuned_clf = ann.setup_ann(features_train, labels_train, gc_best_params)
+tuned_clf = bst.setup_bst(features_train, labels_train, gc_best_params)
 
 # plot learning curve
 
-plot_learning_curve(tuned_clf, features_train, labels_train, clf_name, ds_name, np.linspace(.01, 1., 10), 8)
-
-# plot validation curve
-
-
-learning_rate = 0
-momentum = 0
-
-if ds_name == 'Wine Quality':
-    hidden_layer_size_arr_ax = np.arange(1, 20, 4)
-    hidden_layer_size_arr = np.array([(i, i, i) for i in hidden_layer_size_arr_ax])
-
-    num_hidden_layers_arr = np.array([(6), (6, 6), (6, 6, 6), (6, 6, 6, 6), (6, 6, 6, 6, 6)])
-    num_hidden_layers_arr_ax = np.arange(1, 6, 1)
-
-    learning_rate = 0
-    momentum = 0
-
-# # set up a classifier for the validation curve
-# clf = ann.setup_ann(features_train, labels_train)
-
-plot_validation_curve(tuned_clf, features_train, labels_train, clf_name, ds_name, 'hidden_layer_sizes',
-                      hidden_layer_size_arr)
-plot_validation_curve(tuned_clf, features_train, labels_train, clf_name, ds_name, 'num_hidden_layers',
-                      num_hidden_layers_arr)
+# plot_learning_curve(tuned_clf, features_train, labels_train, clf_name, ds_name, np.linspace(.01, 1., 10), 8)
+#
+# # plot validation curve
+#
+# # # set up a classifier for the validation curve
+# # clf = bst.setup_bst(features_train, labels_train)
+#
+#
+# plot_validation_curve(tuned_clf, features_train, labels_train, clf_name, ds_name, 'n_estimators',
+#                       n_estimators_arr)
+# plot_validation_curve(tuned_clf, features_train, labels_train, clf_name, ds_name, 'learning_rate',
+#                       learning_rate_arr)
 
 
 # fit
 
-ann.fit_ann(tuned_clf, features_train, labels_train)
+bst.fit_bst(tuned_clf, features_train, labels_train)
 
 # predict testing set
-pred = ann.predict_ann(tuned_clf, features_test)
+pred = bst.predict_bst(tuned_clf, features_test)
 
-ann_score, ann_precision, ann_recall, ann_f1 = ann.get_performance_ann(tuned_clf, pred, features_test, labels_test)
+bst_score, bst_precision, bst_recall, bst_f1 = bst.get_performance_bst(tuned_clf, pred, features_test, labels_test)
 
-write_performance(ds_name, clf_name, ann_score, ann_precision, ann_recall, ann_f1)
+write_performance(ds_name, clf_name, bst_score, bst_precision, bst_recall, bst_f1)
 
-
-clf = ann.setup_ann(features_train, labels_train, features_test, labels_test)
-#plot_learning_curve(clf, features_train, labels_train, 'Neural-Network', np.linspace(0.01, 1.0, 10), 8)
-plot_validation_curve(clf, features_train, labels_train, 'Neural-Network', 'hidden_layer_sizes',
-                      hidden_layer_size_arr, hidden_layer_size_arr_ax)
-plot_validation_curve(clf, features_train, labels_train, 'Neural-Network', 'hidden_layer_sizes',
-                      num_hidden_layers_arr, num_hidden_layers_arr_ax)
-ann.fit_ann(clf, features_train, labels_train)
-pred = ann.predict_ann(clf, features_test)
-ann_precision, ann_recall, ann_f1 = ann.get_performance_ann(clf, pred, features_test, labels_test)
-
-
-print('##################### Boosting ######################')
 
 # print('##################### SVM ######################')
 # from sklearn.svm import SVC
@@ -288,41 +356,41 @@ print('##################### Boosting ######################')
 # print('recall for SVM: ', SVM_recall)
 # plot_learning_curve(clf, features_train, labels_train, 'SVM', np.linspace(0.01, 1.0, 10), 8)
 
-print('##################### kNN ######################')
-clf_name = 'kNN'
-
-n_neighbors_arr = np.arange(1, 50, 5)
-distance_metric_arr = np.array(['euclidean', 'manhattan', 'chebyshev'])
-
-# set up a simple knn with no hyper paramaters
-clf = knn.setup_knn(features_train, labels_train)
-
-# find optimal parameters
-parameters = {'n_neighbors': np.arange(1, 100, 5), 'metric': distance_metric_arr}
-gc_clf = GridSearchCV(clf, parameters, cv=5)
-gc_clf.fit(features_train, labels_train)
-gc_best_params = gc_clf.best_params_
-write_gridsearch_results(ds_name, clf_name, gc_best_params)
+# print('##################### kNN ######################')
+# clf_name = 'kNN'
 #
-
-# set up a tuned clf
-tuned_clf = knn.setup_knn(features_train, labels_train, gc_best_params)
-
-# plot learning curve
-plot_learning_curve(tuned_clf, features_train, labels_train, clf_name, ds_name, np.linspace(.1, 1., 10), 8)
-
-# plot validation curve
-
-plot_validation_curve(clf, features_train, labels_train, 'kNN', ds_name, 'n_neighbors', n_neighbors_arr)
-plot_validation_curve(clf, features_train, labels_train, 'kNN', ds_name, 'metric', distance_metric_arr)
-
-# fit
-
-knn.fit_knn(tuned_clf, features_train, labels_train)
-
-# predict testing set
-pred = knn.predict_knn(tuned_clf, features_test)
-
-knn_score, knn_precision, knn_recall, knn_f1 = knn.get_performance_knn(tuned_clf, pred, features_test, labels_test)
-
-write_performance(ds_name, clf_name, knn_score, knn_precision, knn_recall, knn_f1)
+# n_neighbors_arr = np.arange(1, 50, 5)
+# distance_metric_arr = np.array(['euclidean', 'manhattan', 'chebyshev'])
+#
+# # set up a simple knn with no hyper paramaters
+# clf = knn.setup_knn(features_train, labels_train)
+#
+# # find optimal parameters
+# parameters = {'n_neighbors': np.arange(1, 100, 5), 'metric': distance_metric_arr}
+# gc_clf = GridSearchCV(clf, parameters, cv=5)
+# gc_clf.fit(features_train, labels_train)
+# gc_best_params = gc_clf.best_params_
+# write_gridsearch_results(ds_name, clf_name, gc_best_params)
+# #
+#
+# # set up a tuned clf
+# tuned_clf = knn.setup_knn(features_train, labels_train, gc_best_params)
+#
+# # plot learning curve
+# plot_learning_curve(tuned_clf, features_train, labels_train, clf_name, ds_name, np.linspace(.1, 1., 10), 8)
+#
+# # plot validation curve
+#
+# plot_validation_curve(clf, features_train, labels_train, 'kNN', ds_name, 'n_neighbors', n_neighbors_arr)
+# plot_validation_curve(clf, features_train, labels_train, 'kNN', ds_name, 'metric', distance_metric_arr)
+#
+# # fit
+#
+# knn.fit_knn(tuned_clf, features_train, labels_train)
+#
+# # predict testing set
+# pred = knn.predict_knn(tuned_clf, features_test)
+#
+# knn_score, knn_precision, knn_recall, knn_f1 = knn.get_performance_knn(tuned_clf, pred, features_test, labels_test)
+#
+# write_performance(ds_name, clf_name, knn_score, knn_precision, knn_recall, knn_f1)

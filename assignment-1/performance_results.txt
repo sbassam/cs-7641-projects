@@ -1,0 +1,260 @@
+
+----------Performance Summary----------
+   Dataset: Abalone Ternary
+   Learner: Base Line Decision Tree
+Balanced Accuracy Score: 0.4528239919405325
+Precision: 0.7086991221069433
+Recall: 0.7086991221069433
+F1: 0.7086991221069433
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: Abalone Ternary
+   Learner: Base Line Boosting
+Balanced Accuracy Score: 0.49890757039031786
+Precision: 0.7438148443735035
+Recall: 0.7438148443735035
+F1: 0.7438148443735035
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: Abalone Ternary
+   Learner: Boosted DT
+Balanced Accuracy Score: 0.5211009629368514
+Precision: 0.7334397446129289
+Recall: 0.7334397446129289
+F1: 0.7334397446129288
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: Wine Quality
+   Learner: Base Line Decision Tree
+Balanced Accuracy Score: 0.3364110271805744
+Precision: 0.5692307692307692
+Recall: 0.5692307692307692
+F1: 0.5692307692307692
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: Wine Quality
+   Learner: Base Line Boosting
+Balanced Accuracy Score: 0.1791608263726033
+Precision: 0.4794871794871795
+Recall: 0.4794871794871795
+F1: 0.4794871794871795
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: Wine Quality
+   Learner: Boosted DT
+Balanced Accuracy Score: 0.29810897089707966
+Precision: 0.5728205128205128
+Recall: 0.5728205128205128
+F1: 0.5728205128205128
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: Abalone Ternary
+   Learner: Base Line Decision Tree
+Balanced Accuracy Score: 0.47248599872174024
+Precision: 0.6839584996009577
+Recall: 0.6839584996009577
+F1: 0.6839584996009577
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: Abalone Ternary
+   Learner: Base Line Boosting
+Balanced Accuracy Score: 0.4722312752731003
+Precision: 0.7549880287310455
+Recall: 0.7549880287310455
+F1: 0.7549880287310455
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: Abalone Ternary
+   Learner: Boosted DT
+Balanced Accuracy Score: 0.47771510281015983
+Precision: 0.727853152434158
+Recall: 0.727853152434158
+F1: 0.727853152434158
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: Abalone Ternary
+   Learner: Base Line Decision Tree
+Balanced Accuracy Score: 0.4449305145787128
+Precision: 0.7015163607342378
+Recall: 0.7015163607342378
+F1: 0.7015163607342378
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: Abalone Ternary
+   Learner: Base Line Boosting
+Balanced Accuracy Score: 0.38628332689007805
+Precision: 0.5634477254588987
+Recall: 0.5634477254588987
+F1: 0.5634477254588987
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: Abalone Ternary
+   Learner: Boosted DT
+Balanced Accuracy Score: 0.46231373905494405
+Precision: 0.7629688747007183
+Recall: 0.7629688747007183
+F1: 0.7629688747007183
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: Abalone Ternary
+   Learner: Base Line Decision Tree
+Balanced Accuracy Score: 0.44825512132465645
+Precision: 0.7071029529130087
+Recall: 0.7071029529130087
+F1: 0.7071029529130087
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: Abalone Ternary
+   Learner: Base Line Boosting
+Balanced Accuracy Score: 0.4507134347702923
+Precision: 0.690343176376696
+Recall: 0.690343176376696
+F1: 0.690343176376696
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: Abalone Ternary
+   Learner: Boosted DT
+Balanced Accuracy Score: 0.3333333333333333
+Precision: 0.656025538707103
+Recall: 0.656025538707103
+F1: 0.656025538707103
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: Abalone Ternary
+   Learner: Base Line Decision Tree
+Balanced Accuracy Score: 0.4268929479154812
+Precision: 0.6711891460494812
+Recall: 0.6711891460494812
+F1: 0.6711891460494812
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: Abalone Ternary
+   Learner: Base Line Boosting
+Balanced Accuracy Score: 0.3866459921854255
+Precision: 0.5666400638467678
+Recall: 0.5666400638467678
+F1: 0.5666400638467678
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: Abalone Ternary
+   Learner: Boosted DT
+Balanced Accuracy Score: 0.2927582413413755
+Precision: 0.41101356743814843
+Recall: 0.41101356743814843
+F1: 0.41101356743814843
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: Abalone Ternary
+   Learner: Base Line SVM
+Balanced Accuracy Score: 0.4810845733092292
+Precision: 0.7589784517158819
+Recall: 0.7589784517158819
+F1: 0.758978451715882
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: Abalone Ternary
+   Learner: SVM
+Balanced Accuracy Score: 0.4900164557548788
+Precision: 0.7645650438946529
+Recall: 0.7645650438946529
+F1: 0.7645650438946529
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: Wine Quality
+   Learner: Base Line SVM
+Balanced Accuracy Score: 0.23133500400866064
+Precision: 0.5738461538461539
+Recall: 0.5738461538461539
+F1: 0.5738461538461539
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: Wine Quality
+   Learner: SVM
+Balanced Accuracy Score: 0.3011634115534742
+Precision: 0.5953846153846154
+Recall: 0.5953846153846154
+F1: 0.5953846153846154
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: Abalone Ternary
+   Learner: Base Line kNN
+Balanced Accuracy Score: 0.47173776600961065
+Precision: 0.7501995211492418
+Recall: 0.7501995211492418
+F1: 0.7501995211492418
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: Abalone Ternary
+   Learner: kNN
+Balanced Accuracy Score: 0.47173776600961065
+Precision: 0.7501995211492418
+Recall: 0.7501995211492418
+F1: 0.7501995211492418
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: Wine Quality
+   Learner: Base Line kNN
+Balanced Accuracy Score: 0.26477534109643386
+Precision: 0.5579487179487179
+Recall: 0.5579487179487179
+F1: 0.5579487179487179
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: Wine Quality
+   Learner: kNN
+Balanced Accuracy Score: 0.36896452391083007
+Precision: 0.6112820512820513
+Recall: 0.6112820512820513
+F1: 0.6112820512820513
+
+--------------------------------------------

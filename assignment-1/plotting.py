@@ -108,6 +108,7 @@ def plot_validation_curve(clf, features_train, labels_train, clf_name, dataset_n
 
     # plt.plot(train_sizes_abs, train_scores.mean(axis = 1), label = 'Training error')
     # plt.plot(train_sizes_abs, validation_scores.mean(axis = 1), label = 'Validation error')
+    plt.xticks(x_arr)
     plt.ylabel('Balanced Accuracy Score', fontsize=14)
     plt.xlabel(param_name, fontsize=14)
     plt.title(dataset_name + '- ' + 'Validation Curve for ' + clf_name + ' classifier, parameter: ' + param_name,

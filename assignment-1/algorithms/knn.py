@@ -1,4 +1,4 @@
-from sklearn.metrics import precision_score, recall_score, f1_score
+from sklearn.metrics import precision_score, recall_score, f1_score, balanced_accuracy_score
 from sklearn.neighbors import KNeighborsClassifier
 
 
@@ -33,28 +33,13 @@ def predict_knn(clf, features_test):
 
 
 def get_performance_knn(clf, pred, features_test, labels_test):
-    # f = open("performance_results.txt", "a")
-    # score:
-    knn_score = clf.score(features_test, labels_test)
-
-    # statement = "\nDecision Tree Score: " + str(knn_score)
-    # f.write(statement)
+    knn_score = balanced_accuracy_score(labels_test, pred)
 
     knn_precision = precision_score(labels_test, pred, average='micro')
-    #
-    # statement = "\nDecision Tree Precision: " + str(knn_precision)
-    # f.write(statement)
 
     knn_recall = recall_score(labels_test, pred, average='weighted')
-    #
-    # statement = "\nDecision Tree Recall: " + str(knn_recall) + "\n"
-    # f.write(statement)
 
-    knn_f1 = f1_score(labels_test, pred, average='weighted')
-
-    # statement = "\nDecision Tree F1: " + str(knn_f1) + "\n-------------------\n"
-    # f.write(statement)
-    # f.close()
+    knn_f1 = f1_score(labels_test, pred, average='micro')
 
     return knn_score, knn_precision, knn_recall, knn_f1
 

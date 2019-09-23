@@ -19,7 +19,7 @@ def setup_bst(features_train, labels_train, param=None):
     if param:
         clf = AdaBoostClassifier(**param)
     else:
-        clf = AdaBoostClassifier(base_estimator = DecisionTreeClassifier(max_depth=7, min_samples_leaf = 2))
+        clf = AdaBoostClassifier()
 
     return clf
 

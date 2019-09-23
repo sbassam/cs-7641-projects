@@ -17,7 +17,7 @@ import seaborn as sns
 
 import seaborn as sns
 
-from algorithms import ann, knn, dt, bst
+from algorithms import ann, knn, dt, bst, svm
 from plotting import plot_learning_curve, plot_validation_curve, plot_time_vs_iterations, plot_accuracy_vs_iterations
 from sklearn.model_selection import GridSearchCV
 
@@ -101,41 +101,41 @@ features_test = scaler.transform(features_test)
 ###########baseline stats##############
 # determine the baseline performance (out of the box performance)
 # initialize
-dt_baseline = dt.setup_dt(features_train, labels_train)
-#ann_baseline = ann.setup_ann(features_train, labels_train)
-bst_baseline = bst.setup_bst(features_train, labels_train)
+# dt_baseline = dt.setup_dt(features_train, labels_train)
+# ann_baseline = ann.setup_ann(features_train, labels_train)
+# bst_baseline = bst.setup_bst(features_train, labels_train)
 # svm_baseline = svm.setup_svm(features_train, labels_train)
-# knn_baseline = knn.setup_knn(features_train, labels_train)
+knn_baseline = knn.setup_knn(features_train, labels_train)
 # fit
-dt.fit_dt(dt_baseline, features_train, labels_train)
-#ann.fit_ann(ann_baseline, features_train, labels_train)
-bst.fit_bst(bst_baseline, features_train, labels_train)
+# dt.fit_dt(dt_baseline, features_train, labels_train)
+# ann.fit_ann(ann_baseline, features_train, labels_train)
+# bst.fit_bst(bst_baseline, features_train, labels_train)
 # svm.fit_svm(svm_baseline, features_train, labels_train)
-# knn.fit_knn(knn_baseline, features_train, labels_train)
+knn.fit_knn(knn_baseline, features_train, labels_train)
 # predict
-bl_dt_pred = dt.predict_dt(dt_baseline, features_test)
-#bl_ann_pred = ann.predict_ann(ann_baseline, features_test)
-bl_bst_pred = bst.predict_bst(bst_baseline, features_test)
+# bl_dt_pred = dt.predict_dt(dt_baseline, features_test)
+# bl_ann_pred = ann.predict_ann(ann_baseline, features_test)
+# bl_bst_pred = bst.predict_bst(bst_baseline, features_test)
 # bl_svm_pred = svm.predict_svm(svm_baseline, features_test)
-# bl_knn_pred = knn.predict_knn(knn_baseline, features_test)
+bl_knn_pred = knn.predict_knn(knn_baseline, features_test)
 
 # performance
-bl_dt_score, bl_dt_precision, bl_dt_recall, bl_dt_f1 = dt.get_performance_dt(dt_baseline, bl_dt_pred, features_test,
-                                                                             labels_test)
+# bl_dt_score, bl_dt_precision, bl_dt_recall, bl_dt_f1 = dt.get_performance_dt(dt_baseline, bl_dt_pred, features_test,
+#                                                                              labels_test)
 # bl_ann_score, bl_ann_precision, bl_ann_recall, bl_ann_f1 = ann.get_performance_ann(ann_baseline, bl_ann_pred,
 #                                                                                    features_test, labels_test)
-bl_bst_score, bl_bst_precision, bl_bst_recall, bl_bst_f1 = bst.get_performance_bst(bst_baseline, bl_bst_pred,
-                                                                                   features_test, labels_test)
+# bl_bst_score, bl_bst_precision, bl_bst_recall, bl_bst_f1 = bst.get_performance_bst(bst_baseline, bl_bst_pred,
+#                                                                                    features_test, labels_test)
 # bl_svm_score, bl_svm_precision, bl_svm_recall, bl_svm_f1 = svm.get_performance_svm(svm_baseline, bl_svm_pred,
 #                                                                                    features_test, labels_test)
-# bl_knn_score, bl_knn_precision, bl_knn_recall, bl_knn_f1 = knn.get_performance_knn(knn_baseline, bl_knn_pred,
-#                                                                                   features_test, labels_test)
+bl_knn_score, bl_knn_precision, bl_knn_recall, bl_knn_f1 = knn.get_performance_knn(knn_baseline, bl_knn_pred,
+                                                                                  features_test, labels_test)
 # write
-write_performance(ds_name, 'Base Line Decision Tree', bl_dt_score, bl_dt_precision, bl_dt_recall, bl_dt_f1)
+# write_performance(ds_name, 'Base Line Decision Tree', bl_dt_score, bl_dt_precision, bl_dt_recall, bl_dt_f1)
 # write_performance(ds_name, 'Base Line Neural Network', bl_ann_score, bl_ann_precision, bl_ann_recall, bl_ann_f1)
-write_performance(ds_name, 'Base Line Boosting', bl_bst_score, bl_bst_precision, bl_bst_recall, bl_bst_f1)
+# write_performance(ds_name, 'Base Line Boosting', bl_bst_score, bl_bst_precision, bl_bst_recall, bl_bst_f1)
 # write_performance(ds_name, 'Base Line SVM', bl_svm_score, bl_svm_precision, bl_svm_recall, bl_svm_f1)
-# write_performance(ds_name, 'Base Line kNN', bl_knn_score, bl_knn_precision, bl_knn_recall, bl_knn_f1)
+write_performance(ds_name, 'Base Line kNN', bl_knn_score, bl_knn_precision, bl_knn_recall, bl_knn_f1)
 #################################################
 
 #
@@ -270,104 +270,135 @@ write_performance(ds_name, 'Base Line Boosting', bl_bst_score, bl_bst_precision,
 #
 # write_performance(ds_name, clf_name, ann_score, ann_precision, ann_recall, ann_f1)
 
-print('##################### Boosting ######################')
-scoring = {'f1': make_scorer(f1_score, average='macro'), 'balanced_accuracy': 'balanced_accuracy'}
-refit = 'balanced_accuracy'
+# print('##################### Boosting ######################')
+# scoring = {'f1': make_scorer(f1_score, average='macro'), 'balanced_accuracy': 'balanced_accuracy'}
+# refit = 'balanced_accuracy'
+#
+# clf_name = 'Boosted DT'
+# clf = bst.setup_bst(features_train, labels_train)
+#
+# # parameters:
+# #   1. n_estimators
+# n_estimators_arr = np.arange(50, 200, 50)
+#
+# #   2. learning_rate
+# learning_rate_arr = np.arange(.1, 5, .5)
+#
+# #   3. estimator
+# max_depth = np.arange(1, 20, 1)
+# base = []
+# for i in max_depth:
+#     base.append(DecisionTreeClassifier(max_depth=i))
+#
+# parameters = {'n_estimators': n_estimators_arr, 'learning_rate': learning_rate_arr, 'base_estimator': base}
+# # #
+# # # grid search
+# #
+# # gc_clf = GridSearchCV(clf, parameters, cv=5, scoring=scoring, refit=refit)
+# # gc_clf.fit(features_train, labels_train)
+# # gc_best_params = gc_clf.best_params_
+# # write_gridsearch_results(ds_name, clf_name, gc_best_params)
+# #
+# if ds_name =='Wine Quality':
+#     gc_best_params = {'base_estimator' : DecisionTreeClassifier(max_depth=7, min_samples_leaf = 2)}
+# if ds_name =='Abalone Ternary':
+#     gc_best_params = {'base_estimator' : DecisionTreeClassifier(max_depth=1), 'learning_rate':.1}
+# # set up a tuned clf
+# tuned_clf = bst.setup_bst(features_train, labels_train, gc_best_params)
+#
+# # plot learning curve
+#
+# plot_learning_curve(tuned_clf, features_train, labels_train, clf_name, ds_name, np.linspace(.01, 1., 10), 8)
+# #
+# # # plot validation curve
+# #
+# # # # set up a classifier for the validation curve
+# # # clf = bst.setup_bst(features_train, labels_train)
+# #
+# #
+#
+# # plot_validation_curve(tuned_clf, features_train, labels_train, clf_name, ds_name, 'learning_rate',
+# #                       learning_rate_arr)
+# # plot_validation_curve(tuned_clf, features_train, labels_train, clf_name, ds_name, 'base_estimator',
+# #                       base, range(len(base)))
+#
+#
+# # fit
+#
+# bst.fit_bst(tuned_clf, features_train, labels_train)
+#
+# # predict testing set
+# pred = bst.predict_bst(tuned_clf, features_test)
+#
+# bst_score, bst_precision, bst_recall, bst_f1 = bst.get_performance_bst(tuned_clf, pred, features_test, labels_test)
+#
+# write_performance(ds_name, clf_name, bst_score, bst_precision, bst_recall, bst_f1)
 
-clf_name = 'Boosted DT'
-clf = bst.setup_bst(features_train, labels_train)
+# # print('##################### SVM ######################')
+scoring = 'balanced_accuracy'
+# refit = 'balanced_accuracy'
 
-# find optimal parameters
-activation_arr = np.array(['identity', 'logistic', 'tanh', 'relu'])
-solver_arr = np.array(['lbfgs', 'sgd', 'adam'])
-
-
+clf_name = 'SVM'
+clf = svm.setup_svm(features_train, labels_train)
 
 # parameters:
-#   1. n_estimators
-n_estimators_arr = np.arange(1, 200, 20)
+#   1. C
+C_arr = np.arange(1, 50, 5)
 
-#   2. learning_rate
-learning_rate_arr = np.arange(.1, 2, .2)
+#   2. kernel
+kernel_arr = np.array(['linear', 'poly', 'rbf', 'sigmoid'])
 
-#   3. estimator
-max_depth = np.arange(1, 20, 2)
-base = []
-for i in max_depth:
-    base.append(DecisionTreeClassifier(max_depth=i))
-
-parameters = {'n_estimators': n_estimators_arr, 'learning_rate': learning_rate_arr, 'base_estimator': base}
+parameters = {'C': C_arr, 'kernel': kernel_arr}
 #
 # grid search
 
-gc_clf = GridSearchCV(clf, parameters, cv=5, scoring=scoring, refit= refit)
+gc_clf = GridSearchCV(clf, parameters, cv=5, scoring=scoring)  # refit
 gc_clf.fit(features_train, labels_train)
 gc_best_params = gc_clf.best_params_
 write_gridsearch_results(ds_name, clf_name, gc_best_params)
 #
 
 # set up a tuned clf
-tuned_clf = bst.setup_bst(features_train, labels_train, gc_best_params)
+tuned_clf = svm.setup_svm(features_train, labels_train, gc_best_params)
 
 # plot learning curve
 
-# plot_learning_curve(tuned_clf, features_train, labels_train, clf_name, ds_name, np.linspace(.01, 1., 10), 8)
+plot_learning_curve(tuned_clf, features_train, labels_train, clf_name, ds_name, np.linspace(.01, 1., 10), 8)
 #
 # # plot validation curve
 #
 # # # set up a classifier for the validation curve
-# # clf = bst.setup_bst(features_train, labels_train)
+# # clf = svm.setup_svm(features_train, labels_train)
 #
-#
-# plot_validation_curve(tuned_clf, features_train, labels_train, clf_name, ds_name, 'n_estimators',
-#                       n_estimators_arr)
-# plot_validation_curve(tuned_clf, features_train, labels_train, clf_name, ds_name, 'learning_rate',
-#                       learning_rate_arr)
-
+plot_validation_curve(tuned_clf, features_train, labels_train, clf_name, ds_name, 'C', C_arr, cv=5)
+plot_validation_curve(tuned_clf, features_train, labels_train, clf_name, ds_name, 'kernel',
+                      kernel_arr, cv=5)
 
 # fit
 
-bst.fit_bst(tuned_clf, features_train, labels_train)
+svm.fit_svm(tuned_clf, features_train, labels_train)
 
 # predict testing set
-pred = bst.predict_bst(tuned_clf, features_test)
+pred = svm.predict_svm(tuned_clf, features_test)
 
-bst_score, bst_precision, bst_recall, bst_f1 = bst.get_performance_bst(tuned_clf, pred, features_test, labels_test)
+svm_score, svm_precision, svm_recall, svm_f1 = svm.get_performance_svm(tuned_clf, pred, features_test, labels_test)
 
-write_performance(ds_name, clf_name, bst_score, bst_precision, bst_recall, bst_f1)
+write_performance(ds_name, clf_name, svm_score, svm_precision, svm_recall, svm_f1)
 
-
-# print('##################### SVM ######################')
-# from sklearn.svm import SVC
-# clf = SVC()
-#
-# # fit:
-# clf.fit(features_train, labels_train)
-#
-# # predict:
-# pred = clf.predict(features_test)
-#
-# # score:
-# svm_score = clf.score(features_test, labels_test)
-# print(svm_score)
-# SVM_precision = precision_score(labels_test, pred, average='macro')
-# print('precision for SVM: ', SVM_precision)
-# SVM_recall = recall_score(labels_test, pred, average='weighted')
-# print('recall for SVM: ', SVM_recall)
-# plot_learning_curve(clf, features_train, labels_train, 'SVM', np.linspace(0.01, 1.0, 10), 8)
-
-# print('##################### kNN ######################')
+# # print('##################### kNN ######################')
 # clf_name = 'kNN'
+# scoring = 'balanced_accuracy'
 #
-# n_neighbors_arr = np.arange(1, 50, 5)
+#
+# n_neighbors_arr = np.arange(1, 20, 2)
 # distance_metric_arr = np.array(['euclidean', 'manhattan', 'chebyshev'])
 #
 # # set up a simple knn with no hyper paramaters
 # clf = knn.setup_knn(features_train, labels_train)
 #
 # # find optimal parameters
-# parameters = {'n_neighbors': np.arange(1, 100, 5), 'metric': distance_metric_arr}
-# gc_clf = GridSearchCV(clf, parameters, cv=5)
+# parameters = {'n_neighbors': n_neighbors_arr, 'metric': distance_metric_arr}
+# gc_clf = GridSearchCV(clf, parameters, cv=5, scoring=scoring)
 # gc_clf.fit(features_train, labels_train)
 # gc_best_params = gc_clf.best_params_
 # write_gridsearch_results(ds_name, clf_name, gc_best_params)
@@ -394,3 +425,55 @@ write_performance(ds_name, clf_name, bst_score, bst_precision, bst_recall, bst_f
 # knn_score, knn_precision, knn_recall, knn_f1 = knn.get_performance_knn(tuned_clf, pred, features_test, labels_test)
 #
 # write_performance(ds_name, clf_name, knn_score, knn_precision, knn_recall, knn_f1)
+
+
+# grid search results for boosted tree
+
+# 1. wine quality
+# performance under tuned parameter from grid search
+#
+# ----------Performance Summary----------
+#    Dataset: Wine Quality
+#    Learner: Boosted DT
+# Balanced Accuracy Score: 0.34703128196671457
+# Precision: 0.6784615384615384
+# Recall: 0.6784615384615384
+# F1: 0.6784615384615384
+#
+# --------------------------------------------
+
+# ----------Grid Search Results----------
+#    Dataset: Wine Quality
+#    Learner: Boosted DT
+# Best Parameters: {'base_estimator': DecisionTreeClassifier(class_weight=None, criterion='gini', max_depth=19,
+#                        max_features=None, max_leaf_nodes=None,
+#                        min_impurity_decrease=0.0, min_impurity_split=None,
+#                        min_samples_leaf=1, min_samples_split=2,
+#                        min_weight_fraction_leaf=0.0, presort=False,
+#                        random_state=None, splitter='best'), 'learning_rate': 0.5000000000000001, 'n_estimators': 161}
+#
+# --------------------------------------------
+
+
+# 2. abalone ternary
+# ----------Grid Search Results----------
+#    Dataset: Abalone Ternary
+#    Learner: Boosted DT
+# Best Parameters: {'base_estimator': DecisionTreeClassifier(class_weight=None, criterion='gini', max_depth=1,
+#                        max_features=None, max_leaf_nodes=None,
+#                        min_impurity_decrease=0.0, min_impurity_split=None,
+#                        min_samples_leaf=1, min_samples_split=2,
+#                        min_weight_fraction_leaf=0.0, presort=False,
+#                        random_state=None, splitter='best'), 'learning_rate': 1.1, 'n_estimators': 50}
+#
+# --------------------------------------------
+
+# ----------Performance Summary----------
+#    Dataset: Abalone Ternary
+#    Learner: Boosted DT
+# Balanced Accuracy Score: 0.3801261188474505
+# Precision: 0.4868316041500399
+# Recall: 0.4868316041500399
+# F1: 0.4868316041500399
+#
+# --------------------------------------------

@@ -3,16 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="b7300c0b-46a0-40bb-a859-acae35183c9c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/algorithms/bst.py" beforeDir="false" afterPath="$PROJECT_DIR$/algorithms/bst.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/algorithms/dt.py" beforeDir="false" afterPath="$PROJECT_DIR$/algorithms/dt.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/algorithms/knn.py" beforeDir="false" afterPath="$PROJECT_DIR$/algorithms/knn.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/algorithms/svm.py" beforeDir="false" afterPath="$PROJECT_DIR$/algorithms/svm.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/base.py" beforeDir="false" afterPath="$PROJECT_DIR$/base.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gridsearch_results.txt" beforeDir="false" afterPath="$PROJECT_DIR$/gridsearch_results.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/Wine Qualityvalidation-curve-Boosted DT-n_estimators2019-09-22 12:24:49.837733.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/performance_results.txt" beforeDir="false" afterPath="$PROJECT_DIR$/performance_results.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/plotting.py" beforeDir="false" afterPath="$PROJECT_DIR$/plotting.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wine-quality-data-analysis.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/wine-quality-data-analysis.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/pip-selfcheck.json" beforeDir="false" afterPath="$PROJECT_DIR$/venv/pip-selfcheck.json" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -21,16 +16,16 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/assignment_1$base.coverage" NAME="base Coverage Results" MODIFIED="1569200074379" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/assignment_1$base.coverage" NAME="base Coverage Results" MODIFIED="1569209999548" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/assignment_1$loader.coverage" NAME="loader Coverage Results" MODIFIED="1567956943774" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/base.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="100">
-              <caret line="39" column="23" selection-start-line="39" selection-start-column="23" selection-end-line="39" selection-end-column="23" />
+            <state relative-caret-position="4335">
+              <caret line="310" column="18" selection-start-line="310" selection-start-column="4" selection-end-line="310" selection-end-column="18" />
               <folding>
                 <element signature="e#0#47#0" expanded="true" />
               </folding>
@@ -39,10 +34,28 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/gridsearch_results.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="945">
+              <caret line="63" column="17" selection-start-line="63" selection-start-column="17" selection-end-line="63" selection-end-column="56" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/performance_results.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="21">
+              <caret line="50" lean-forward="true" selection-start-line="50" selection-end-line="50" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/plotting.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="688">
-              <caret line="55" column="93" selection-start-line="55" selection-start-column="93" selection-end-line="55" selection-end-column="93" />
+            <state relative-caret-position="1695">
+              <caret line="122" column="4" selection-start-line="122" selection-start-column="4" selection-end-line="122" selection-end-column="4" />
               <folding>
                 <element signature="e#0#86#0" expanded="true" />
               </folding>
@@ -51,13 +64,14 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/images/Abalone Ternaryvalidation-curve-kNN-metric2019-09-22 20:53:16.046511.png">
-          <provider selected="true" editor-type-id="images" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/images/Abalone Ternaryvalidation-curve-kNN-n_neighbors2019-09-22 20:53:14.332625.png">
-          <provider selected="true" editor-type-id="images" />
+        <entry file="file://$PROJECT_DIR$/loader.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <folding>
+                <element signature="e#0#19#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
         </entry>
       </file>
     </leaf>
@@ -71,7 +85,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>clf_name</find>
       <find>_fit_X</find>
       <find>,</find>
       <find>nn</find>
@@ -101,6 +114,7 @@
       <find>mean_fit_score</find>
       <find>bst</find>
       <find>scoring</find>
+      <find>iris</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -130,14 +144,14 @@
         <option value="$PROJECT_DIR$/algorithms/svm.py" />
         <option value="$PROJECT_DIR$/algorithms/dt.py" />
         <option value="$PROJECT_DIR$/algorithms/knn.py" />
+        <option value="$PROJECT_DIR$/algorithms/bst.py" />
         <option value="$PROJECT_DIR$/plotting.py" />
         <option value="$PROJECT_DIR$/performance_results.txt" />
-        <option value="$PROJECT_DIR$/algorithms/bst.py" />
         <option value="$PROJECT_DIR$/base.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" fullScreen="true">
+  <component name="ProjectFrameBounds" extendedState="6" fullScreen="true">
     <option name="width" value="1440" />
     <option name="height" value="900" />
   </component>
@@ -154,11 +168,6 @@
             <path>
               <item name="assignment-1" type="b2602c69:ProjectViewProjectNode" />
               <item name="assignment-1" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="assignment-1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="assignment-1" type="462c0819:PsiDirectoryNode" />
-              <item name="algorithms" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="assignment-1" type="b2602c69:ProjectViewProjectNode" />
@@ -279,12 +288,13 @@
       <option name="presentableId" value="Default" />
       <updated>1567449197739</updated>
       <workItem from="1567449199786" duration="37855000" />
-      <workItem from="1568299488207" duration="74950000" />
+      <workItem from="1568299488207" duration="80134000" />
+      <workItem from="1569617156755" duration="356000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="112805000" />
+    <option name="totallyTimeSpent" value="118345000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -299,12 +309,12 @@
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.43633762" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.21030043" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32891566" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.23373494" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.23373494" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -313,7 +323,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.32891566" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="11" weight="0.32891566" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" visible="true" weight="0.32891566" />
       <window_info anchor="bottom" id="Python Console" order="12" weight="0.32891566" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -359,17 +369,17 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/base.py</url>
-          <line>415</line>
+          <line>435</line>
           <option name="timeStamp" value="21" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/base.py</url>
-          <line>410</line>
+          <line>430</line>
           <option name="timeStamp" value="26" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/plotting.py</url>
-          <line>126</line>
+          <line>130</line>
           <option name="timeStamp" value="29" />
         </line-breakpoint>
       </breakpoints>
@@ -385,15 +395,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/images/Wine Qualityvalidation-curve-Neural Network-hidden_layer_sizes2019-09-22 03:44:22.592195.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/images/Wine Qualityaccuracy-vs-iteration-Neural Network-2019-09-22 11:27:29.280398.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/images/Wine Quality-learning-curve-Neural Network-2019-09-22 02:14:17.639910.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/images/Wine Qualitytime-vs-iteration-Neural Network-2019-09-22 10:49:06.276847.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
@@ -406,19 +407,7 @@
     <entry file="file://$PROJECT_DIR$/images/Wine Qualityaccuracy-vs-iteration-Neural Network-2019-09-22 01:42:59.125641.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/images/Wine Qualityvalidation-curve-Boosted DT-learning_rate2019-09-22 12:25:13.176459.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/algorithms/svm.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="20" column="18" selection-start-line="20" selection-start-column="18" selection-end-line="20" selection-end-column="18" />
-          <folding>
-            <element signature="e#0#92#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/images/Wine Qualityvalidation-curve-Boosted DT-learning_rate2019-09-22 12:25:13.176459.png" />
     <entry file="file://$PROJECT_DIR$/algorithms/dt.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="601">
@@ -458,27 +447,13 @@
     <entry file="file://$PROJECT_DIR$/iris">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/images/Abalone Ternaryvalidation-curve-Boosted DT-base_estimator2019-09-22 17:05:31.631322.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/images/Abalone Ternaryvalidation-curve-Boosted DT-n_estimators2019-09-22 17:02:49.457216.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/images/Abalone Ternaryvalidation-curve-Boosted DT-learning_rate2019-09-22 17:11:42.902048.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/images/Abalone Ternaryvalidation-curve-Boosted DT-base_estimator2019-09-22 17:12:23.310269.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/images/Abalone Ternaryvalidation-curve-Boosted DT-learning_rate2019-09-22 17:02:58.041284.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/images/Abalone Ternaryvalidation-curve-Boosted DT-base_estimator2019-09-22 17:10:21.093526.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/images/Abalone Ternaryvalidation-curve-Boosted DT-base_estimator2019-09-22 17:06:19.215670.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/images/Abalone Ternaryvalidation-curve-Boosted DT-base_estimator2019-09-22 17:05:31.631322.png" />
+    <entry file="file://$PROJECT_DIR$/images/Abalone Ternaryvalidation-curve-Boosted DT-n_estimators2019-09-22 17:02:49.457216.png" />
+    <entry file="file://$PROJECT_DIR$/images/Abalone Ternaryvalidation-curve-Boosted DT-learning_rate2019-09-22 17:11:42.902048.png" />
+    <entry file="file://$PROJECT_DIR$/images/Abalone Ternaryvalidation-curve-Boosted DT-base_estimator2019-09-22 17:12:23.310269.png" />
+    <entry file="file://$PROJECT_DIR$/images/Abalone Ternaryvalidation-curve-Boosted DT-learning_rate2019-09-22 17:02:58.041284.png" />
+    <entry file="file://$PROJECT_DIR$/images/Abalone Ternaryvalidation-curve-Boosted DT-base_estimator2019-09-22 17:10:21.093526.png" />
+    <entry file="file://$PROJECT_DIR$/images/Abalone Ternaryvalidation-curve-Boosted DT-base_estimator2019-09-22 17:06:19.215670.png" />
     <entry file="file://$PROJECT_DIR$/images/Abalone Ternaryvalidation-curve-Boosted DT-learning_rate2019-09-22 17:14:11.981667.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
@@ -494,18 +469,14 @@
     <entry file="file://$PROJECT_DIR$/images/Abalone Ternaryvalidation-curve-Boosted DT-base_estimator2019-09-22 17:17:44.328259.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/images/Abalone Ternary-learning-curve-Boosted DT-2019-09-22 18:56:32.683148.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/images/Abalone Ternary-learning-curve-Boosted DT-2019-09-22 18:56:32.683148.png" />
     <entry file="file://$PROJECT_DIR$/images/Abalone Ternary-learning-curve-Boosted DT-2019-09-22 19:04:04.368938.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
     <entry file="file://$PROJECT_DIR$/images/Abalone Ternary-learning-curve-Boosted DT-2019-09-22 17:33:03.783140.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/images/Wine Qualityvalidation-curve-Boosted DT-n_estimators2019-09-22 12:24:49.837733.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/images/Wine Qualityvalidation-curve-Boosted DT-n_estimators2019-09-22 12:24:49.837733.png" />
     <entry file="file://$PROJECT_DIR$/images/Abalone Ternary-learning-curve-SVM-2019-09-22 20:11:55.684542.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
@@ -528,32 +499,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/performance_results.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2152">
-          <caret line="15" column="18" selection-start-line="15" selection-start-column="18" selection-end-line="15" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/images/Abalone Ternary-learning-curve-kNN-2019-09-22 20:53:08.520558.png">
       <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gridsearch_results.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" selection-start-line="13" selection-end-line="23" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/plotting.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="688">
-          <caret line="55" column="93" selection-start-line="55" selection-start-column="93" selection-end-line="55" selection-end-column="93" />
-          <folding>
-            <element signature="e#0#86#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/images/Abalone Ternaryvalidation-curve-kNN-metric2019-09-22 20:53:16.046511.png">
       <provider selected="true" editor-type-id="images" />
@@ -579,13 +526,62 @@
     <entry file="file://$PROJECT_DIR$/images/Abalone Ternaryvalidation-curve-SVM-C2019-09-22 20:12:05.313219.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/algorithms/svm.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="203">
+          <caret line="18" selection-start-line="18" selection-end-line="18" />
+          <folding>
+            <element signature="e#0#92#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/images/Abalone Ternaryvalidation-curve-Neural Network-hidden_layer_sizes2019-09-22 23:29:25.517715.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/images/Abalone Ternaryvalidation-curve-Neural Network-hidden_layer_sizes2019-09-22 23:34:21.458967.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/base.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="39" column="23" selection-start-line="39" selection-start-column="23" selection-end-line="39" selection-end-column="23" />
+        <state relative-caret-position="4335">
+          <caret line="310" column="18" selection-start-line="310" selection-start-column="4" selection-end-line="310" selection-end-column="18" />
           <folding>
             <element signature="e#0#47#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gridsearch_results.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="945">
+          <caret line="63" column="17" selection-start-line="63" selection-start-column="17" selection-end-line="63" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plotting.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1695">
+          <caret line="122" column="4" selection-start-line="122" selection-start-column="4" selection-end-line="122" selection-end-column="4" />
+          <folding>
+            <element signature="e#0#86#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/loader.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/performance_results.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="21">
+          <caret line="50" lean-forward="true" selection-start-line="50" selection-end-line="50" />
         </state>
       </provider>
     </entry>

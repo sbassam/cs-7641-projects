@@ -22,14 +22,3 @@ for i in range(5):
     df_str, rhc_run_curves = rhc.run()
     df_str['run_number'] = i
     rhc_tuning = rhc_tuning.append(df_str)
-
-# ma = MIMICRunner(problem=problem,
-#                  experiment_name='tsp_10',
-#                  output_directory='out/',
-#                  seed=123,
-#                  iteration_list=2 ** np.arange(14),
-#                  max_attempts=5000,
-#                  keep_percent_list=[0.20, 0.40, 0.60, 0.80, 1.0],
-#                  population_sizes=[200])
-# the two data frames will contain the results
-df_run_stats, df_run_curves = ma.run()

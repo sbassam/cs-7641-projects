@@ -2,20 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f484eed2-55a0-463a-8353-4387ab78c560" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/soroush.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/knapsack.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/plotting.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fourpeaks.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../assignment-1/venv/lib/python3.7/site-packages/easy-install.pth" beforeDir="false" afterPath="$PROJECT_DIR$/../assignment-1/venv/lib/python3.7/site-packages/easy-install.pth" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../assignment-1/venv/pip-selfcheck.json" beforeDir="false" afterPath="$PROJECT_DIR$/../assignment-1/venv/pip-selfcheck.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FlipFlop - Hyperparameter Tuning.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/FlipFlop - Hyperparameter Tuning.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Four Peaks - Hyperparameter Tuning.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Four Peaks - Hyperparameter Tuning.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TSP - Hyperparameter Tuning.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/TSP - Hyperparameter Tuning.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TSP.py" beforeDir="false" afterPath="$PROJECT_DIR$/TSP.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FourPeaks.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TSP.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/base.py" beforeDir="false" afterPath="$PROJECT_DIR$/base.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fourpeaks_tuning.py" beforeDir="false" afterPath="$PROJECT_DIR$/fourpeaks_tuning.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knapsack_tuning.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mlrose.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/mlrose.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flipflop_tuning.py" beforeDir="false" afterPath="$PROJECT_DIR$/flipflop.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fourpeaks_tuning.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tsp_tuning.py" beforeDir="false" afterPath="$PROJECT_DIR$/tsp.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -34,23 +30,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/knapsack.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-733">
-              <caret line="95" column="45" lean-forward="true" selection-start-line="95" selection-start-column="45" selection-end-line="95" selection-end-column="45" />
-              <folding>
-                <element signature="e#0#18#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/base.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="44" column="17" selection-start-line="44" selection-start-column="17" selection-end-line="44" selection-end-column="17" />
+            <state relative-caret-position="1286">
+              <caret line="109" column="49" lean-forward="true" selection-start-line="109" selection-start-column="49" selection-end-line="109" selection-end-column="49" />
               <folding>
                 <element signature="e#47#57#0" expanded="true" />
               </folding>
@@ -59,10 +43,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/plotting.py">
+        <entry file="file://$PROJECT_DIR$/fourpeaks.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="444">
-              <caret line="96" selection-start-line="96" selection-end-line="96" />
+            <state relative-caret-position="2295">
+              <caret line="153" column="28" lean-forward="true" selection-start-line="153" selection-start-column="28" selection-end-line="153" selection-end-column="28" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -71,10 +55,22 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/venv/src/mlrose-hiive/mlrose/generators/generators.py">
+        <entry file="file://$PROJECT_DIR$/knapsack.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="24" column="33" selection-start-line="24" selection-start-column="33" selection-end-line="24" selection-end-column="33" />
+            <state relative-caret-position="390">
+              <caret line="166" column="21" lean-forward="true" selection-start-line="81" selection-end-line="166" selection-end-column="21" />
+              <folding>
+                <element signature="e#0#18#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/flipflop.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1148">
+              <caret line="2" column="32" selection-start-line="2" selection-start-column="30" selection-end-line="2" selection-end-column="32" />
             </state>
           </provider>
         </entry>
@@ -105,19 +101,26 @@
       <find>item_coun</find>
       <find>max_val</find>
       <find>FlipFlop</find>
-      <find>knapsack</find>
-      <find>tsp</find>
       <find>sa</find>
       <find>ga</find>
+      <find>plot_hp_rhc</find>
+      <find>Knapsack</find>
+      <find>adjust</find>
+      <find>knapsack</find>
+      <find>fourpeaks</find>
+      <find>tsp</find>
+      <find>sack</find>
     </findStrings>
     <replaceStrings>
       <replace>KnapSack</replace>
-      <replace>flipflop</replace>
       <replace>FourPeaks</replace>
-      <replace>tsp</replace>
       <replace>Knapsack</replace>
       <replace>ga</replace>
       <replace>mimic</replace>
+      <replace>fourpeak</replace>
+      <replace>tsp</replace>
+      <replace>fourpeaks</replace>
+      <replace>flipflop</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -130,9 +133,12 @@
         <option value="$PROJECT_DIR$/tsp_tuning.py" />
         <option value="$PROJECT_DIR$/flipflop_tuning.py" />
         <option value="$PROJECT_DIR$/TSP.py" />
-        <option value="$PROJECT_DIR$/fourpeaks_tuning.py" />
         <option value="$PROJECT_DIR$/knapsack_tuning.py" />
         <option value="$PROJECT_DIR$/plotting.py" />
+        <option value="$PROJECT_DIR$/fourpeaks_tuning.py" />
+        <option value="$PROJECT_DIR$/tsp.py" />
+        <option value="$PROJECT_DIR$/fourpeaks.py" />
+        <option value="$PROJECT_DIR$/flipflop.py" />
         <option value="$PROJECT_DIR$/base.py" />
       </list>
     </option>
@@ -158,7 +164,7 @@
             <path>
               <item name="assignment-2" type="b2602c69:ProjectViewProjectNode" />
               <item name="assignment-2" type="462c0819:PsiDirectoryNode" />
-              <item name="images" type="462c0819:PsiDirectoryNode" />
+              <item name="out" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="assignment-2" type="b2602c69:ProjectViewProjectNode" />
@@ -269,7 +275,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/flipflop_tuning.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/flipflop.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="true" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -288,7 +294,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/fourpeaks_tuning.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/fourpeaks.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="true" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -326,7 +332,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/tsp_tuning.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/tsp.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="true" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -355,12 +361,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1570199052063</updated>
-      <workItem from="1570199053311" duration="31813000" />
+      <workItem from="1570199053311" duration="36752000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="31813000" />
+    <option name="totallyTimeSpent" value="36752000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -373,6 +379,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="Favorites" sideWeight="0.5010571" side_tool="true" weight="0.24964234" />
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4989429" visible="true" weight="0.24964234" />
@@ -405,27 +412,14 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/FourPeaks.py</url>
-          <line>6</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/TSP.py</url>
-          <line>23</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/base.py</url>
-          <line>46</line>
+          <line>103</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/venv/src/mlrose-hiive/mlrose/opt_probs/MaxKColorOpt.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/venv/src/mlrose-hiive/mlrose/algorithms/mimic.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1320">
@@ -512,16 +506,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/FourPeaks.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" selection-start-line="6" selection-end-line="6" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/venv/src/mlrose-hiive/mlrose/opt_probs/TSPOpt.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="243">
@@ -563,7 +547,7 @@
         <state relative-caret-position="-26000" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/fourpeaks_tuning.py">
+    <entry file="file://$PROJECT_DIR$/fourpeaks.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
           <caret line="4" selection-start-line="4" selection-end-line="4" />
@@ -576,26 +560,6 @@
     <entry file="file://$PROJECT_DIR$/out/sa_flipflop.csv">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/flipflop_tuning.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="864">
-          <caret line="66" column="49" selection-start-line="66" selection-start-column="49" selection-end-line="66" selection-end-column="49" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tsp_tuning.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="227">
-          <caret line="69" column="55" selection-start-line="69" selection-start-column="55" selection-end-line="69" selection-end-column="55" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/images/TSP-hp-sa-2019-10-09 00:20:15.812720.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
@@ -603,12 +567,6 @@
       <provider selected="true" editor-type-id="images" />
     </entry>
     <entry file="file://$PROJECT_DIR$/images/TSP-hp-ga-2019-10-09 00:20:16.157667.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/images/TSP-hp-ga-2019-10-09 00:24:03.959976.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/images/TSP-hp-rhc-2019-10-09 00:24:03.096380.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
     <entry file="file://$PROJECT_DIR$/images/Flipflop-hp-ga-2019-10-09 00:10:11.049584.png">
@@ -620,7 +578,7 @@
     <entry file="file://$PROJECT_DIR$/images/Flipflop-hp-rhc-2019-10-08 23:54:45.946346.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/TSP.py">
+    <entry file="file://$PROJECT_DIR$/tsp.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="330">
           <caret line="22" column="28" selection-start-line="22" selection-start-column="28" selection-end-line="22" selection-end-column="28" />
@@ -652,9 +610,6 @@
     <entry file="file://$PROJECT_DIR$/images/Flipflop-hp-sa-2019-10-08 23:49:26.442503.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/images/TSP-hp-sa-2019-10-09 00:24:03.599315.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
     <entry file="file:///Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/posixpath.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="157">
@@ -674,10 +629,49 @@
     <entry file="file://$PROJECT_DIR$/images/Knapsack-hp-mimic-2019-10-09 00:24:05.447683.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/images/TSP-hp-rhc-2019-10-09 00:24:03.096380.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/images/TSP-hp-sa-2019-10-09 00:24:03.599315.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/images/TSP-hp-ga-2019-10-09 00:24:03.959976.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fourpeaks.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="61" lean-forward="true" selection-start-line="61" selection-end-line="61" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/plotting.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="444">
-          <caret line="96" selection-start-line="96" selection-end-line="96" />
+        <state relative-caret-position="177">
+          <caret line="32" column="64" lean-forward="true" selection-start-line="31" selection-start-column="8" selection-end-line="32" selection-end-column="64" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tsp.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-999">
+          <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fourpeaks.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2295">
+          <caret line="153" column="28" lean-forward="true" selection-start-line="153" selection-start-column="28" selection-end-line="153" selection-end-column="28" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
           </folding>
@@ -686,18 +680,25 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/knapsack.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-733">
-          <caret line="95" column="45" lean-forward="true" selection-start-line="95" selection-start-column="45" selection-end-line="95" selection-end-column="45" />
+        <state relative-caret-position="390">
+          <caret line="166" column="21" lean-forward="true" selection-start-line="81" selection-end-line="166" selection-end-column="21" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/flipflop.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1148">
+          <caret line="2" column="32" selection-start-line="2" selection-start-column="30" selection-end-line="2" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/base.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="44" column="17" selection-start-line="44" selection-start-column="17" selection-end-line="44" selection-end-column="17" />
+        <state relative-caret-position="1286">
+          <caret line="109" column="49" lean-forward="true" selection-start-line="109" selection-start-column="49" selection-end-line="109" selection-end-column="49" />
           <folding>
             <element signature="e#47#57#0" expanded="true" />
           </folding>

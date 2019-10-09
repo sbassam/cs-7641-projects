@@ -1,7 +1,10 @@
 # 1) plot the result of hyperparameter tuning:
 import sys
 
+import flipflop
 import knapsack
+import tsp
+import fourpeaks
 from plotting import plot_hp_sa, plot_hp_rhc, plot_hp_ga, plot_hp_mimic
 
 
@@ -27,24 +30,81 @@ from plotting import plot_hp_sa, plot_hp_rhc, plot_hp_ga, plot_hp_mimic
 # plot_hp_ga('Knapsack', 'ga_Knapsack.csv')
 # plot_hp_mimic('Knapsack', 'mimic_Knapsack.csv')
 
-def optimize_knapsack():
+def optimize_knapsack(input_size=50):
     restart = 1
     temperature = 10
     ga_pop_size = 2500
     mut_rate = 0.2
     mimic_pop_size = 3000
     keep_pct = 0.2
+    knapsack_csv_list = []
 
     # use default value for other params
-    knapsack.run_rhc_knapsack(restart=restart)
-    knapsack.run_sa_knapsack(temperature=10)
-    knapsack.run_ga_knapsack(mut_rate=mut_rate, pop_size=ga_pop_size)
-    knapsack.run_mimic_knapsack(keep_pct=keep_pct, pop_size=mimic_pop_size)
+    knapsack_csv_list.append(knapsack.run_rhc_knapsack(input_size=input_size, restart=restart))
+    knapsack_csv_list.append(knapsack.run_sa_knapsack(input_size=input_size, temperature=temperature))
+    knapsack_csv_list.append(knapsack.run_ga_knapsack(input_size=input_size, mut_rate=mut_rate, pop_size=ga_pop_size))
+    knapsack_csv_list.append(
+        knapsack.run_mimic_knapsack(input_size=input_size, keep_pct=keep_pct, pop_size=mimic_pop_size))
 
 
-if __name__== '__main__':
-    print ('test')
+def optimize_tsp(input_size=10):
+    restart = 1
+    temperature = 10
+    ga_pop_size = 2500
+    mut_rate = 0.2
+    mimic_pop_size = 3000
+    keep_pct = 0.2
+    tsp_csv_list = []
+
+    # use default value for other params
+    tsp_csv_list.append(tsp.run_rhc_tsp(input_size=input_size, restart=restart))
+    tsp_csv_list.append(tsp.run_sa_tsp(input_size=input_size, temperature=temperature))
+    tsp_csv_list.append(tsp.run_ga_tsp(input_size=input_size, mut_rate=mut_rate, pop_size=ga_pop_size))
+    tsp_csv_list.append(tsp.run_mimic_tsp(input_size=input_size, keep_pct=keep_pct, pop_size=mimic_pop_size))
+
+
+def optimize_fourpeaks(input_size=50):
+    restart = 1
+    temperature = 10
+    ga_pop_size = 2500
+    mut_rate = 0.2
+    mimic_pop_size = 3000
+    keep_pct = 0.2
+    fourpeaks_csv_list = []
+
+    # use default value for other params
+    fourpeaks_csv_list.append(fourpeaks.run_rhc_fourpeaks(input_size=input_size, restart=restart))
+    fourpeaks_csv_list.append(fourpeaks.run_sa_fourpeaks(input_size=input_size, temperature=temperature))
+    fourpeaks_csv_list.append(
+        fourpeaks.run_ga_fourpeaks(input_size=input_size, mut_rate=mut_rate, pop_size=ga_pop_size))
+    fourpeaks_csv_list.append(
+        fourpeaks.run_mimic_fourpeaks(input_size=input_size, keep_pct=keep_pct, pop_size=mimic_pop_size))
+
+
+def optimize_flipflop(input_size=50):
+    restart = 1
+    temperature = 10
+    ga_pop_size = 2500
+    mut_rate = 0.2
+    mimic_pop_size = 3000
+    keep_pct = 0.2
+    flipflop_csv_list = []
+
+    # use default value for other params
+    flipflop_csv_list.append(flipflop.run_rhc_flipflop(input_size=input_size, restart=restart))
+    flipflop_csv_list.append(flipflop.run_sa_flipflop(input_size=input_size, temperature=temperature))
+    flipflop_csv_list.append(flipflop.run_ga_flipflop(input_size=input_size, mut_rate=mut_rate, pop_size=ga_pop_size))
+    flipflop_csv_list.append(
+        flipflop.run_mimic_flipflop(input_size=input_size, keep_pct=keep_pct, pop_size=mimic_pop_size))
+
+
+if __name__ == '__main__':
+    print('test')
     if sys.argv[1] == 'knapsack':
-        optimize_knapsack()
-    else:
-        print('wrong!')
+        optimize_knapsack(input_size=sys.argv[2])
+    if sys.argv[1] == 'tsp':
+        optimize_tsp(input_size=sys.argv[2])
+    if sys.argv[1] == 'fourpeaks':
+        optimize_fourpeaks(input_size=sys.argv[2])
+    if sys.argv[1] == 'flipflop':
+        optimize_flipflop(input_size=sys.argv[2])

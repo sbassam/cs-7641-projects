@@ -149,7 +149,7 @@ def run_ga_fourpeaks(mut_rate, pop_size, max_attempts=5000, iters_exp=14, num_ru
     return ga_path
 
 
-def run_mimic_fourpeaks(keep_pct, pop_size, max_attempts=5000, iters_exp=14, num_runs=1, input_size=25):
+def run_mimic_fourpeaks(keep_pct, pop_size, max_attempts=5000, iters_exp=14, num_runs=5, input_size=25):
     fitness = FourPeaks()
     problem = DiscreteOpt(length=input_size, fitness_fn=fitness, maximize=True, max_val=2)
     mimic_stats = pd.DataFrame()

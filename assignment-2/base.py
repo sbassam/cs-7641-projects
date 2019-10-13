@@ -5,7 +5,8 @@ import flipflop
 import knapsack
 import tsp
 import fourpeaks
-from plotting import plot_hp_sa, plot_hp_rhc, plot_hp_ga, plot_hp_mimic
+from plotting import plot_hp_sa, plot_hp_rhc, plot_hp_ga, plot_hp_mimic, plot_fitness_iter, plot_time_iter, \
+    plot_fitness_time
 
 
 # Hyper parameter Tuning
@@ -45,6 +46,13 @@ def optimize_knapsack(input_size=50):
     knapsack_csv_list.append(knapsack.run_ga_knapsack(input_size=input_size, mut_rate=mut_rate, pop_size=ga_pop_size))
     knapsack_csv_list.append(
         knapsack.run_mimic_knapsack(input_size=input_size, keep_pct=keep_pct, pop_size=mimic_pop_size))
+    # plot
+    plot_fitness_iter(csv_path_list=knapsack_csv_list, method_names=['rhc', 'sa', 'ga', 'mimic'],
+                      problem_name='Knapsack', input_size=input_size)
+    plot_time_iter(csv_path_list=knapsack_csv_list, method_names=['rhc', 'sa', 'ga', 'mimic'], problem_name='Knapsack',
+                      input_size=input_size)
+    plot_fitness_time(csv_path_list=knapsack_csv_list, method_names=['rhc', 'sa', 'ga', 'mimic'],
+                      problem_name='Knapsack', input_size=input_size)
 
 
 def optimize_tsp(input_size=10):
@@ -61,6 +69,13 @@ def optimize_tsp(input_size=10):
     tsp_csv_list.append(tsp.run_sa_tsp(input_size=input_size, temperature=temperature))
     tsp_csv_list.append(tsp.run_ga_tsp(input_size=input_size, mut_rate=mut_rate, pop_size=ga_pop_size))
     tsp_csv_list.append(tsp.run_mimic_tsp(input_size=input_size, keep_pct=keep_pct, pop_size=mimic_pop_size))
+    # plot
+    plot_fitness_iter(csv_path_list=tsp_csv_list, method_names=['rhc', 'sa', 'ga', 'mimic'],
+                      problem_name='TSP', input_size=input_size)
+    plot_time_iter(csv_path_list=tsp_csv_list, method_names=['rhc', 'sa', 'ga', 'mimic'], problem_name='TSP',
+                   input_size=input_size)
+    plot_fitness_time(csv_path_list=tsp_csv_list, method_names=['rhc', 'sa', 'ga', 'mimic'],
+                      problem_name='TSP', input_size=input_size)
 
 
 def optimize_fourpeaks(input_size=50):
@@ -79,6 +94,15 @@ def optimize_fourpeaks(input_size=50):
         fourpeaks.run_ga_fourpeaks(input_size=input_size, mut_rate=mut_rate, pop_size=ga_pop_size))
     fourpeaks_csv_list.append(
         fourpeaks.run_mimic_fourpeaks(input_size=input_size, keep_pct=keep_pct, pop_size=mimic_pop_size))
+    # plot
+    plot_fitness_iter(csv_path_list=fourpeaks_csv_list, method_names=['rhc', 'sa', 'ga', 'mimic'],
+                      problem_name='Four Peaks', input_size=input_size)
+    plot_time_iter(csv_path_list=fourpeaks_csv_list, method_names=['rhc', 'sa', 'ga', 'mimic'],
+                   problem_name='Four Peaks',
+                   input_size=input_size)
+    plot_fitness_time(csv_path_list=fourpeaks_csv_list, method_names=['rhc', 'sa', 'ga', 'mimic'],
+                      problem_name='Four Peaks', input_size=input_size)
+
 
 
 def optimize_flipflop(input_size=50):
@@ -96,15 +120,22 @@ def optimize_flipflop(input_size=50):
     flipflop_csv_list.append(flipflop.run_ga_flipflop(input_size=input_size, mut_rate=mut_rate, pop_size=ga_pop_size))
     flipflop_csv_list.append(
         flipflop.run_mimic_flipflop(input_size=input_size, keep_pct=keep_pct, pop_size=mimic_pop_size))
+    # plot
+    plot_fitness_iter(csv_path_list=flipflop_csv_list, method_names=['rhc', 'sa', 'ga', 'mimic'],
+                      problem_name='Flip Flop', input_size=input_size)
+    plot_time_iter(csv_path_list=flipflop_csv_list, method_names=['rhc', 'sa', 'ga', 'mimic'], problem_name='Flip Flop',
+                   input_size=input_size)
+    plot_fitness_time(csv_path_list=flipflop_csv_list, method_names=['rhc', 'sa', 'ga', 'mimic'],
+                      problem_name='Flip Flop', input_size=input_size)
 
 
 if __name__ == '__main__':
-    print('test')
+    input_size = int(sys.argv[2])
     if sys.argv[1] == 'knapsack':
-        optimize_knapsack(input_size=sys.argv[2])
+        optimize_knapsack(input_size=input_size)
     if sys.argv[1] == 'tsp':
-        optimize_tsp(input_size=sys.argv[2])
+        optimize_tsp(input_size=input_size)
     if sys.argv[1] == 'fourpeaks':
-        optimize_fourpeaks(input_size=sys.argv[2])
+        optimize_fourpeaks(input_size=input_size)
     if sys.argv[1] == 'flipflop':
-        optimize_flipflop(input_size=sys.argv[2])
+        optimize_flipflop(input_size=input_size)

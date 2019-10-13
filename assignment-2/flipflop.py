@@ -79,7 +79,7 @@ def tune_flipflop():
     
     
 def run_rhc_flipflop(restart, max_attempts=5000, iters_exp=14, num_runs=5, input_size=50):
-    problem = FlipFlopGenerator.generate(seed=123, number_of_items_types=input_size)
+    problem = FlipFlopGenerator.generate(seed=123, size=input_size)
     rhc_stats = pd.DataFrame()
     rhc_path = 'out/rhc_flipflop_n' + str(input_size) + '.csv'
 
@@ -102,7 +102,7 @@ def run_rhc_flipflop(restart, max_attempts=5000, iters_exp=14, num_runs=5, input
 
 
 def run_sa_flipflop(temperature, max_attempts=5000, iters_exp=14, num_runs=5, input_size=50):
-    problem = FlipFlopGenerator.generate(seed=123, number_of_items_types=input_size)
+    problem = FlipFlopGenerator.generate(seed=123, size=input_size)
     sa_stats = pd.DataFrame()
     sa_path = 'out/sa_flipflop_n' + str(input_size) + '.csv'
 
@@ -123,7 +123,7 @@ def run_sa_flipflop(temperature, max_attempts=5000, iters_exp=14, num_runs=5, in
 
 
 def run_ga_flipflop(mut_rate, pop_size, max_attempts=5000, iters_exp=14, num_runs=5, input_size=50):
-    problem = FlipFlopGenerator.generate(seed=123, number_of_items_types=input_size)
+    problem = FlipFlopGenerator.generate(seed=123, size=input_size)
     ga_stats = pd.DataFrame()
     ga_path = 'out/ga_flipflop_n' + str(input_size) + '.csv'
 
@@ -145,7 +145,7 @@ def run_ga_flipflop(mut_rate, pop_size, max_attempts=5000, iters_exp=14, num_run
 
 
 def run_mimic_flipflop(keep_pct, pop_size, max_attempts=5000, iters_exp=14, num_runs=1, input_size=50):
-    problem = FlipFlopGenerator.generate(seed=123, number_of_items_types=input_size)
+    problem = FlipFlopGenerator.generate(seed=123, size=input_size)
     mimic_stats = pd.DataFrame()
     mimic_path = 'out/mimic_flipflop_n' + str(input_size) + '.csv'
 

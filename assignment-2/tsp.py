@@ -80,8 +80,8 @@ def tune_tsp():
     mimic_tuning.to_csv(r'out/mimic_tsp.csv', index=None)
 
 
-def run_rhc_tsp(restart, max_attempts=5000, iters_exp=14, num_runs=5, input_size=25):
-    problem = TSPGenerator.generate(seed=123, number_of_items_types=input_size)
+def run_rhc_tsp(restart, max_attempts=5000, iters_exp=13, num_runs=5, input_size=25):
+    problem = TSPGenerator.generate(seed=123, number_of_cities=input_size)
     rhc_stats = pd.DataFrame()
     rhc_path = 'out/rhc_tsp_n' + str(input_size) + '.csv'
 
@@ -105,8 +105,8 @@ def run_rhc_tsp(restart, max_attempts=5000, iters_exp=14, num_runs=5, input_size
     return rhc_path
 
 
-def run_sa_tsp(temperature, max_attempts=5000, iters_exp=14, num_runs=5, input_size=25):
-    problem = TSPGenerator.generate(seed=123, number_of_items_types=input_size)
+def run_sa_tsp(temperature, max_attempts=5000, iters_exp=13, num_runs=5, input_size=25):
+    problem = TSPGenerator.generate(seed=123, number_of_cities=input_size)
     sa_stats = pd.DataFrame()
     sa_path = 'out/sa_tsp_n' + str(input_size) + '.csv'
 
@@ -128,8 +128,8 @@ def run_sa_tsp(temperature, max_attempts=5000, iters_exp=14, num_runs=5, input_s
     return sa_path
 
 
-def run_ga_tsp(mut_rate, pop_size, max_attempts=5000, iters_exp=14, num_runs=5, input_size=25):
-    problem = TSPGenerator.generate(seed=123, number_of_items_types=input_size)
+def run_ga_tsp(mut_rate, pop_size, max_attempts=5000, iters_exp=13, num_runs=5, input_size=25):
+    problem = TSPGenerator.generate(seed=123, number_of_cities=input_size)
     ga_stats = pd.DataFrame()
     ga_path = 'out/ga_tsp_n' + str(input_size) + '.csv'
 
@@ -152,8 +152,8 @@ def run_ga_tsp(mut_rate, pop_size, max_attempts=5000, iters_exp=14, num_runs=5, 
     return ga_path
 
 
-def run_mimic_tsp(keep_pct, pop_size, max_attempts=5000, iters_exp=14, num_runs=1, input_size=25):
-    problem = TSPGenerator.generate(seed=123, number_of_items_types=input_size)
+def run_mimic_tsp(keep_pct, pop_size, max_attempts=5000, iters_exp=13, num_runs=5, input_size=20):
+    problem = TSPGenerator.generate(seed=123, number_of_cities=input_size)
     mimic_stats = pd.DataFrame()
     mimic_path = 'out/mimic_tsp_n' + str(input_size) + '.csv'
 

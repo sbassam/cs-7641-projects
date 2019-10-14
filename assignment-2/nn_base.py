@@ -1,14 +1,16 @@
+import time
+
 import mlrose
 import pandas as pd
 import traitlets.utils.bunch
 from mlrose import NNGSRunner
 from sklearn.datasets import load_iris
 from sklearn.metrics import make_scorer, f1_score, accuracy_score
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.neural_network import MLPClassifier
-from sklearn.preprocessing import StandardScaler, OneHotEncoder
+from sklearn.preprocessing import StandardScaler, OneHotEncoder, MinMaxScaler
 import numpy as np
-from plotting import plot_learning_curve
+from plotting import plot_nn_score_vs_iters, plot_nn_fit_time_vs_iter, plot_nn_loss_vs_iter
 
 
 def process_abalone_ternary():
@@ -87,15 +89,12 @@ def write_gridsearch_results(dataset_name, learner, best_params):
     return
 
 
-abalone_ternary = load_iris()#process_abalone_ternary()
-# ds_name = 'Abalone Ternary'
-#
-#
+abalone_ternary = process_abalone_ternary()
+ds_name = 'Abalone Ternary'
 features_train, features_test, labels_train, labels_test = train_test_split(abalone_ternary.data,
                                                                             abalone_ternary.target, test_size=0.2,
-                                                                            random_state=123)
-#
-# # scaling used https://www.springboard.com/blog/beginners-guide-neural-network-in-python-scikit-learn-0-18/
+                                                                            random_state=3)
+# scaling used https://www.springboard.com/blog/beginners-guide-neural-network-in-python-scikit-learn-0-18/
 scaler = StandardScaler()
 scaler.fit(features_train)
 StandardScaler(copy=True, with_mean=True, with_std=True)
@@ -109,182 +108,130 @@ labels_train_hot = one_hot.fit_transform(labels_train.reshape(-1, 1)).todense()
 labels_test_hot = one_hot.transform(labels_test.reshape(-1, 1)).todense()
 
 
-############################################################
-# from sklearn.model_selection import train_test_split
-# from sklearn.preprocessing import MinMaxScaler, OneHotEncoder
+# def run_nn_gc(alg_name, features_train, labels_train_hot, features_test, labels_test_hot):
+#     x_arr = [1, 50, 100, 200, 400, 800]
+#     iter_data = pd.DataFrame()
+#     csv_path = 'out/nn_' + str(alg_name) + '.csv'
 #
-# data = load_iris()
-# # Split data into training and test sets
-# X_train, X_test, y_train, y_test = train_test_split(abalo.data, data.target,
-#                                                     test_size = 0.2, random_state = 3)
+#     for i in range(len(x_arr)):
+#         start = time.time()
 #
-# # Normalize feature data
-# scaler = MinMaxScaler()
+#         if alg_name == 'random_hill_climb':
+#             clf = mlrose.NeuralNetwork(hidden_nodes=[2], activation='relu', algorithm=alg_name,
+#                                        bias=True, is_classifier=True, learning_rate=0.001,
+#                                        early_stopping=True, clip_max=5, max_attempts=100, restarts=1
+#                                        )
+#         if alg_name == 'simulated_annealing':
+#             clf = mlrose.NeuralNetwork(hidden_nodes=[2], activation='relu',
+#                                        algorithm=alg_name,
+#                                        bias=True, is_classifier=True, learning_rate=0.001,
+#                                        early_stopping=True, clip_max=5, max_attempts=100,
+#                                        schedule=mlrose.GeomDecay(init_temp=1))
+#         if alg_name == 'genetic_alg':
+#             clf = mlrose.NeuralNetwork(hidden_nodes=[2], activation='relu',
+#                                        algorithm=alg_name,
+#                                        bias=True, is_classifier=True, learning_rate=0.001,
+#                                        early_stopping=True, clip_max=5, max_attempts=100, pop_size=500)
+#         if alg_name == 'gradient_descent':
+#             clf = mlrose.NeuralNetwork(hidden_nodes=[2], activation='relu',
+#                                        algorithm=alg_name,
+#                                        bias=True, is_classifier=True, learning_rate=0.001,
+#                                        early_stopping=True, clip_max=5, max_attempts=100)
 #
-# X_train_scaled = scaler.fit_transform(X_train)
-# X_test_scaled = scaler.transform(X_test)
+#         parameters = {'max_iters': [x_arr[i]]}
+#         gc_clf = GridSearchCV(clf, parameters, cv=3, scoring='accuracy', return_train_score=True)
+#         gc_clf.fit(features_train, labels_train_hot)
+#         finish = time.time()
+#         df = gc_clf.cv_results_
+#         df['loss'] = gc_clf.best_estimator_.loss
+#         print('max iter: ', x_arr[i], '\n', 'algorithm: ', alg_name, '\n', 'time: ', finish - start)
+#         iter_data = pd.concat([iter_data, pd.DataFrame(df)])
+#     iter_data.to_csv(csv_path, index=None)
 #
-# # # One hot encode target values
-# one_hot = OneHotEncoder()
+#     # use testing set on the last iteration (1600)
+#     y_test_pred = gc_clf.predict(features_test)
 #
-# y_train_hot = one_hot.fit_transform(y_train.reshape(-1, 1)).toarray()
-# y_test_hot = one_hot.transform(y_test.reshape(-1, 1)).toarray()
-############################################################
+#     y_test_accuracy = accuracy_score(labels_test_hot, y_test_pred)
+#     y_test_f1 = f1_score(labels_test_hot, y_test_pred, average='macro')
+#
+#     print('accuracy: ', y_test_accuracy)
+#     print('f1: ', y_test_f1)
+#     return
 
-def run_nn_experiment(runner, output_directory, experiment_name, experiment_parameters, seed, grid_search_parameters,
-                      **kwargs):
-    all_args = {**experiment_parameters, **kwargs, }
-    results = runner(seed=seed,
-                     experiment_name=experiment_name,
-                     grid_search_parameters=grid_search_parameters,
-                     output_directory=output_directory,
-                     **all_args).run()
+def run_nn(alg_name):
 
-    print(results)
+    # start pre processing
+    data = process_abalone_ternary()
+    # snippet from http://localhost:8888/notebooks/Documents/omscs/cs-7641-ml/cs-7641-assignments/assignment-2/nn.ipynb
+    X_train, X_test, y_train, y_test = train_test_split(data.data, data.target, \
+                                                        test_size=0.2, random_state=3)
 
-    return results
+    # Normalize feature data
+    scaler = MinMaxScaler()
 
-#
-experiment_parameters = {
-    'x_train': features_train,
-    'y_train': labels_train_hot,
-    'x_test': features_test,
-    'y_test': labels_test_hot,
-    'max_attempts': 100,
-    'early_stopping': True
-}
+    X_train_scaled = scaler.fit_transform(X_train)
+    X_test_scaled = scaler.transform(X_test)
 
-sa_hp_params = {
-    'temperature': [10],
-    'max_iters': [2**i for i in range(8, 15)],
-    'learning_rate_init': [0.001],
-    'hidden_layer_sizes': [[3, 3]],
-    'activation': [mlrose.neural.activation.relu],
-}
+    # One hot encode target values
+    one_hot = OneHotEncoder()
 
-run_nn_experiment(runner=NNGSRunner,
-                  algorithm=mlrose.algorithms.ga.genetic_alg,
-                  output_directory='out/sa',
-                  experiment_name='iters',
-                  experiment_parameters=experiment_parameters,
-                  grid_search_parameters=sa_hp_params,
-                  iteration_list= 2 ** np.arange(8, 15),
-                  seed=90)
+    y_train_hot = one_hot.fit_transform(y_train.reshape(-1, 1)).todense()
+    y_test_hot = one_hot.transform(y_test.reshape(-1, 1)).todense()
+
+    csv_path = 'out/nn_' + str(alg_name) + '.csv'
+    x_arr = [1, 50, 100, 200, 400, 800, 1600, 3200]
+    cols = ['iter', 'train_accuracy', 'test_accuracy', 'test_f1', 'fit_time', 'loss']
+    data = []
+    for i in range(len(x_arr)):
+
+        # TODO: for the life of me I CAN'T FIGURE OUT WHY THIS COMMENTED PART KEPT GIVING 0.65209987 ACCURACY!!!!
+        # TODO: FIGURE OUT HOW COMMENTED IS DIFFERENT FROM BELOW IT.
+        # start = time.time()
+        # clf = mlrose.NeuralNetwork(hidden_nodes=[2], activation='relu', algorithm=alg_name,
+        #                            bias=True, is_classifier=True, learning_rate=0.001,
+        #                            early_stopping=True, clip_max=5, max_attempts=100,
+        #                            restarts=1, schedule=mlrose.GeomDecay(init_temp=1),
+        #                            pop_size=250, max_iters=x_arr[i], random_state=i)
+        # clf.fit(features_train, labels_train_hot)
+        # finish = time.time()
+        # pred_train = clf.predict(features_train)
+        # train_accuracy = accuracy_score(labels_train_hot, pred_train)
+        # pred_test = clf.predict(features_test)
+        # test_accuracy = accuracy_score(labels_test_hot, pred_test)
+        # y_test_f1 = f1_score(labels_test_hot, pred_test, average='macro')
+        # fit_time = finish - start
+        # row = [x_arr[i], train_accuracy, test_accuracy, y_test_f1, fit_time, clf.loss]
+
+        start = time.time()
+        # http://localhost:8888/notebooks/Documents/omscs/cs-7641-ml/cs-7641-assignments/assignment-2/nn.ipynb
+        nn_model1 = mlrose.NeuralNetwork(hidden_nodes=[10], activation='relu', \
+                                         algorithm=alg_name, max_iters=x_arr[i], \
+                                         bias=True, is_classifier=True, learning_rate=0.1, \
+                                         early_stopping=True, clip_max=5, max_attempts=100, \
+                                         random_state=3)
+
+        nn_model1.fit(X_train_scaled, y_train_hot)
+        finish = time.time()
+        fit_time = finish - start
+        y_train_pred = nn_model1.predict(X_train_scaled)
+        y_train_accuracy = accuracy_score(y_train_hot, y_train_pred)
+        y_test_pred = nn_model1.predict(X_test_scaled)
+        y_test_accuracy = accuracy_score(y_test_hot, y_test_pred)
+        y_test_f1 = f1_score(y_test_hot, y_test_pred, average='macro')
+        row = [x_arr[i], y_train_accuracy, y_test_accuracy, y_test_f1, fit_time, nn_model1.loss]
+        print(row)
+        data.append(row)
+        nn_model1 = []
+    result = pd.DataFrame(data, columns=cols)
+    result.to_csv(csv_path, index=None)
+    return
+
+alg_names = ['random_hill_climb', 'simulated_annealing', 'gradient_descent', 'genetic_alg']
+for i in alg_names:
+
+    run_nn(i)
+    plot_nn_score_vs_iters(i)
+    plot_nn_fit_time_vs_iter(i)
+    plot_nn_loss_vs_iter(i)
 
 
-# nn_model1 = mlrose.NeuralNetwork(hidden_nodes = [2], activation = 'relu', \
-#                                  algorithm = 'gradient_descent', max_iters = 1000, \
-#                                  bias = True, is_classifier = True, learning_rate = 0.0001, \
-#                                  early_stopping = True, clip_max = 5, max_attempts = 100, \
-#                                  random_state = 3)
-# #
-# nn_model1.fit(features_train, labels_train_hot)
-# y_test_pred = nn_model1.predict(features_test)
-#
-# y_test_accuracy = accuracy_score(labels_test_hot, y_test_pred)
-#
-# print(y_test_accuracy)
-
-# rhc_hp_params = {
-#     'restart': [1, 5, 10],
-#     'max_iters': [1000],  # [2**i for i in range(8, 16)],
-#     'learning_rate_init': [0.001],
-#     'hidden_layer_sizes': [[5, 5, 5, 5]],
-#     'activation': [mlrose.neural.activation.relu],
-# }
-#
-# run_nn_experiment(runner=NNGSRunner,
-#                   algorithm=mlrose.algorithms.rhc.random_hill_climb,
-#                   output_directory='out/rhc',
-#                   experiment_name='tuning',
-#                   experiment_parameters=experiment_parameters,
-#                   grid_search_parameters=rhc_hp_params,
-#                   iteration_list=[1000],  # 2 ** np.arange(8, 16),
-#                   seed=90)
-#
-# ga_hp_params = {
-#     'pop_size': [200, 500, 1000],
-#     'max_iters': [1000],  # [2**i for i in range(8, 16)],
-#     'learning_rate_init': [0.001],
-#     'hidden_layer_sizes': [[5, 5, 5, 5]],
-#     'activation': [mlrose.neural.activation.relu],
-# }
-#
-# run_nn_experiment(runner=NNGSRunner,
-#                   algorithm=mlrose.algorithms.ga.genetic_alg,
-#                   output_directory='out/ga',
-#                   experiment_name='tuning',
-#                   experiment_parameters=experiment_parameters,
-#                   grid_search_parameters=ga_hp_params,
-#                   iteration_list=[1000],  # 2 ** np.arange(8, 16),
-#                   seed=90)
-
-#
-# # print('##################### Neural Network ######################')
-# scoring = {'f1': make_scorer(f1_score, average='macro'), 'balanced_accuracy': 'balanced_accuracy'}
-# refit = 'balanced_accuracy'
-#
-# clf_name = 'Neural Network'
-# clf = MLPClassifier()
-# clf = ann.setup_ann(features_train, labels_train)
-#
-# # find optimal parameters
-# activation_arr = np.array(['identity', 'logistic', 'tanh', 'relu'])
-# solver_arr = np.array(['lbfgs', 'sgd', 'adam'])
-#
-# # parameters = {'activation': activation_arr, 'solver': solver_arr,
-# #               'hidden_layer_sizes': [(10, 10), (50, 50, 50), (100,)]}
-# # ---------Grid Search Results----------
-# #    Dataset: Wine Quality
-# #    Learner: Neural Network
-# # Best Paramters: {'activation': 'tanh', 'hidden_layer_sizes': (50, 50, 50), 'solver': 'lbfgs'}
-# #
-# # --------------------------------------------
-#
-# # parameters:
-# #   1. the size of hidden layers
-# hidden_layer_size_arr_ax = np.arange(50, 200, 50)
-# hidden_layer_size_arr = np.array([(i, i, i, i, i) for i in hidden_layer_size_arr_ax])
-#
-# #   2. number of layers
-# num_hidden_layers_arr = []
-# for i in range(4, 8):
-#     temp = (200,) * i
-#     num_hidden_layers_arr.append(temp)
-# num_hidden_layers_arr = np.array(num_hidden_layers_arr)
-# num_hidden_layers_arr_ax = np.arange(4, 8, 1)
-#
-# #   3. alpha
-# alpha_arr = np.arange(.00001, .01, .0005)
-#
-# # grid search
-# # parameters = {'hidden_layer_sizes' : [(200), (200, 200), (200, 200, 200), (200, 200, 200, 200)]}
-# # gc_clf = GridSearchCV(clf, parameters, cv=5, scoring=scoring, refit= refit)
-# # gc_clf.fit(features_train, labels_train)
-# # gc_best_params = gc_clf.best_params_
-# # write_gridsearch_results(ds_name, clf_name, gc_best_params)
-# #
-#
-# # set up a tuned clf
-# # since grid search takes forever:
-# tuned_clf = ann.setup_ann(features_train, labels_train, {'hidden_layer_sizes': (300, 300, 300, 300)})
-# # for grid search use: tuned_clf = ann.setup_ann(features_train, labels_train, gc_best_params)
-#
-# # plot learning curve
-#
-# plot_learning_curve(tuned_clf, features_train, labels_train, clf_name, ds_name, np.linspace(.01, 1., 10), 8)
-#
-#
-#
-# # fit
-#
-# ann.fit_ann(tuned_clf, features_train, labels_train)
-#
-# # predict testing set
-# pred = ann.predict_ann(tuned_clf, features_test)
-#
-# ann_score, ann_precision, ann_recall, ann_f1 = ann.get_performance_ann(tuned_clf, pred, features_test, labels_test)
-#
-# write_performance(ds_name, clf_name, ann_score, ann_precision, ann_recall, ann_f1)
-#
-# # print('##################### Boosting ######################')

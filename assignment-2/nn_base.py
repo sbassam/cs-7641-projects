@@ -159,10 +159,9 @@ labels_test_hot = one_hot.transform(labels_test.reshape(-1, 1)).todense()
 #     return
 
 def run_nn(alg_name):
-
     # start pre processing
     data = process_abalone_ternary()
-    # snippet from http://localhost:8888/notebooks/Documents/omscs/cs-7641-ml/cs-7641-assignments/assignment-2/nn.ipynb
+    # snippet from https://mlrose.readthedocs.io/en/stable/source/tutorial3.html
     X_train, X_test, y_train, y_test = train_test_split(data.data, data.target, \
                                                         test_size=0.2, random_state=3)
 
@@ -183,7 +182,6 @@ def run_nn(alg_name):
     cols = ['iter', 'train_accuracy', 'test_accuracy', 'test_f1', 'fit_time', 'loss']
     data = []
     for i in range(len(x_arr)):
-
         # TODO: for the life of me I CAN'T FIGURE OUT WHY THIS COMMENTED PART KEPT GIVING 0.65209987 ACCURACY!!!!
         # TODO: FIGURE OUT HOW COMMENTED IS DIFFERENT FROM BELOW IT.
         # start = time.time()
@@ -203,10 +201,10 @@ def run_nn(alg_name):
         # row = [x_arr[i], train_accuracy, test_accuracy, y_test_f1, fit_time, clf.loss]
 
         start = time.time()
-        # http://localhost:8888/notebooks/Documents/omscs/cs-7641-ml/cs-7641-assignments/assignment-2/nn.ipynb
+        # https://mlrose.readthedocs.io/en/stable/source/tutorial3.html
         nn_model1 = mlrose.NeuralNetwork(hidden_nodes=[10], activation='relu', \
-                                         algorithm=alg_name, max_iters=x_arr[i], \
-                                         bias=True, is_classifier=True, learning_rate=0.1, \
+                                         algorithm=alg_name, max_iters=400, \
+                                         bias=True, is_classifier=True, learning_rate=0.001, \
                                          early_stopping=True, clip_max=5, max_attempts=100, \
                                          random_state=3)
 
@@ -226,12 +224,10 @@ def run_nn(alg_name):
     result.to_csv(csv_path, index=None)
     return
 
+
 alg_names = ['random_hill_climb', 'simulated_annealing', 'gradient_descent', 'genetic_alg']
 for i in alg_names:
-
     run_nn(i)
     plot_nn_score_vs_iters(i)
     plot_nn_fit_time_vs_iter(i)
     plot_nn_loss_vs_iter(i)
-
-

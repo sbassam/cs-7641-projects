@@ -150,7 +150,7 @@ def plot_time_vs_iterations(features_train, labels_train, clf, clf_name, dataset
 
     plt.ylabel('Mean Fit time (sec)', fontsize=14)
     plt.xlabel('Iteration', fontsize=14)
-    plt.title(dataset_name + '- ' + 'Validation Curve for ' + clf_name + ' classifier, parameter: ',
+    plt.title(dataset_name + '- ' + 'iter Curve for ' + clf_name + ' classifier, parameter: ',
               fontsize=14)
     plt.legend()
     plt.savefig(
@@ -183,7 +183,7 @@ def plot_accuracy_vs_iterations(features_train, labels_train, clf, clf_name, dat
 
     plt.ylabel('Balanced Accuracy Score', fontsize=14)
     plt.xlabel('Training Size', fontsize=14)
-    plt.title(dataset_name + '- ' + 'Validation Curve for ' + clf_name + ' classifier, parameter: ',
+    plt.title(dataset_name + '- ' + 'iter Curve for ' + clf_name + ' classifier, parameter: ',
               fontsize=14)
     plt.legend()
     plt.savefig(

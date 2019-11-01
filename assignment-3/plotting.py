@@ -66,3 +66,22 @@ def plot_ica(ds_name, ica):
         'images/' + ds_name + '-ica-kurtosis' + str(datetime.now()) + '.png')
     plt.close()
     return plt
+
+
+def plot_ica_avg_kurtosis(ds_name, kurtosis_list):
+    x = range(1, len(kurtosis_list)+1)
+    y = kurtosis_list
+    fig, ax = plt.subplots()
+    ax.bar(x, y, color="b")
+    for i, j in zip(x, y):
+        ax.annotate(str("%.4f" % j), xy=(i - .2, j + .001), fontsize=8)
+    plt.xticks(x)
+    plt.ylabel('Average Kurtosis', fontsize=14)
+    plt.xlabel('Component', fontsize=14)
+    plt.title('Average Kurtosis vs # of components - dataset: ' + ds_name,
+              fontsize=14)
+    plt.legend()
+    plt.savefig(
+        'images/' + ds_name + '-ica-avgkurtosis-n-components' + str(datetime.now()) + '.png')
+    plt.close()
+    return plt

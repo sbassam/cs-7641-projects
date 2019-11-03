@@ -20,10 +20,10 @@ from yellowbrick.cluster import KElbowVisualizer
 from dr import run_pca, run_ica
 from clustering import run_gm, run_km
 from gs import run_gs
-from plotting import plot_elbow, plot_pca, plot_ica, plot_ica_avg_kurtosis
+from plotting import plot_elbow, plot_pca, plot_ica, plot_ica_avg_kurtosis, plot_sil_score, plot_BIC
 
 ds_name = 'wine-quality'
-ds_name = 'abalone-ternary'
+#ds_name = 'abalone-ternary'
 #ds_name = 'iris'
 run_grid = False
 run_grid_p4 = False
@@ -74,11 +74,10 @@ def write_performance(dataset_name, learner, score, f1):
 
 # plot elbow
 # n_clusters = plot_elbow(ds_name, 'KMeans', X_train)
-# TODO: SILHOUTTE METHOD
-# plot silhoutte find the best k
-
+# # plot silhoutte find the best k
+# best_k = plot_sil_score(X_train, 10)
 # TODO: run Gaussian Mixture
-# run_gm(X_train, n_clusters)
+plot_BIC(X_train)
 
 
 # Dimensionality Reduction
@@ -98,6 +97,8 @@ plot_ica(ds_name, ica)
 #n_clusters = plot_elbow(ds_name, 'KMeans', X_train_pca)
 #n_clusters = plot_elbow(ds_name, 'KMeans', X_train_ica)
 
+# set ds_name for part 4 and 5
+ds_name = 'abalone-ternary'
 # NN baseline from assignment 1
 if run_grid:
     clf = run_gs(X_train, y_train, ds_name)
@@ -153,7 +154,15 @@ write_performance(ds_name, 'ann-ica', balanced_accuracy_score(y_test, pred), f1_
 # # # NN + dimensionality reduction + clustering
 #  TODO: kmeans
 n_clusters = 5
-run_km(X_train, y_train, n_clusters)
+result, X_train_km, X_test_km = run_km(ds_name, X_train, y_train, n_clusters, X_test)
+
+if run_grid_p5:
+    clf = run_gs(X_train_km, y_train, ds_name, cluster_type='KMeans')
+else:
+    clf = MLPClassifier(random_state=69, hidden_layer_sizes=(250, 250, 250), alpha=0.01)
+clf.fit(X_train_km, y_train)
+pred = clf.predict(X_test_km)
+write_performance(ds_name, 'ann-km', balanced_accuracy_score(y_test, pred), f1_score(y_test, pred, average='micro'))
 # # TODO: expectation maximization
 # run_gm(X_train_pca)
 

@@ -18,14 +18,16 @@ from yellowbrick.cluster import KElbowVisualizer
 
 #ds_name = 'abalone-ternary'
 from dr import run_pca, run_ica
-from gm import run_gm
+from clustering import run_gm, run_km
 from gs import run_gs
 from plotting import plot_elbow, plot_pca, plot_ica, plot_ica_avg_kurtosis
 
 ds_name = 'wine-quality'
-#ds_name = 'abalone-ternary'
+ds_name = 'abalone-ternary'
 #ds_name = 'iris'
-run_grid = True
+run_grid = False
+run_grid_p4 = False
+run_grid_p5 = False
 
 if ds_name == 'abalone-ternary':
     # get the data
@@ -56,7 +58,7 @@ def write_performance(dataset_name, learner, score, f1):
     :param f1: learner f1 on the testing set
     :return:
     """
-    f = open("performance_results.txt", "a")
+    f = open("out/performance_results.txt", "a")
 
     statement = "\n----------Performance Summary----------\n" \
                 "   Dataset: %s\n" \
@@ -72,39 +74,89 @@ def write_performance(dataset_name, learner, score, f1):
 
 # plot elbow
 # n_clusters = plot_elbow(ds_name, 'KMeans', X_train)
+# TODO: SILHOUTTE METHOD
+# plot silhoutte find the best k
 
-# run Gaussian Mixture
-#run_gm(X_train, n_clusters)
+# TODO: run Gaussian Mixture
+# run_gm(X_train, n_clusters)
 
 
 # Dimensionality Reduction
 # PCA
-# X_train_pca = X_train.copy()
-# pca, X_train_pca = run_pca(X_train_pca)
+X_train_pca = X_train.copy()
+pca, X_train_pca = run_pca(X_train_pca)
 # plot_pca(ds_name, pca)
 #
-# # ICA
-# X_train_ica = X_train.copy()
-# ica, X_train_ica, kurtosis_list = run_ica(X_train_ica)
-# plot_ica_avg_kurtosis(ds_name, kurtosis_list)
-# plot_ica(ds_name, ica)
+# ICA
+X_train_ica = X_train.copy()
+# X_test_ica will be used in the last part
+X_test_ica = X_test.copy()
+ica, X_train_ica, X_test_ica, kurtosis_list = run_ica(X_train_ica, X_test_ica)
+plot_ica_avg_kurtosis(ds_name, kurtosis_list)
+plot_ica(ds_name, ica)
 
 #n_clusters = plot_elbow(ds_name, 'KMeans', X_train_pca)
 #n_clusters = plot_elbow(ds_name, 'KMeans', X_train_ica)
 
-# NN part
-# grid search
+# NN baseline from assignment 1
 if run_grid:
-    clf = run_gs
+    clf = run_gs(X_train, y_train, ds_name)
 else:
-    clf = MLPClassifier(random_state=69)
+    clf = MLPClassifier(random_state=69, hidden_layer_sizes=(100, 100, 100), alpha=0.01)
 clf.fit(X_train, y_train)
 pred = clf.predict(X_test)
 write_performance(ds_name, 'ann', balanced_accuracy_score(y_test, pred), f1_score(y_test, pred, average='micro'))
 
+# # NN + dimensionality reduction
+# # NN + pca
+# X_test_pca = X_test.copy()
+# pca, X_test_pca = run_pca(X_test_pca)
+#
+#
+# if run_grid_p4:
+#     clf = run_gs(X_train_pca, y_train, ds_name, dr_type='pca')
+# else:
+#     clf = MLPClassifier(random_state=69, hidden_layer_sizes=(250, 250, 250), alpha=0.001)
+# clf.fit(X_train_pca, y_train)
+# pred = clf.predict(X_test_pca)
+# write_performance(ds_name, 'ann-pca', balanced_accuracy_score(y_test, pred), f1_score(y_test, pred, average='micro'))
+
+# NN + ica
+
+if run_grid_p4:
+    clf = run_gs(X_train_ica, y_train, ds_name, dr_type='ica')
+else:
+    clf = MLPClassifier(random_state=69, hidden_layer_sizes=(250, 250, 250), alpha=0.01)
+clf.fit(X_train_ica, y_train)
+pred = clf.predict(X_test_ica)
+write_performance(ds_name, 'ann-ica', balanced_accuracy_score(y_test, pred), f1_score(y_test, pred, average='micro'))
+
+# TODO: NN + rp
+# if run_grid_p4:
+#     clf = run_gs(X_train_rp, y_train, ds_name, dr_type='rp')
+# else:
+#     clf = MLPClassifier(random_state=69, hidden_layer_sizes=(100, 100, 100), alpha=0.01)
+# clf.fit(X_train_rp, y_train)
+# pred = clf.predict(X_test)
+# write_performance(ds_name, 'ann-rp', balanced_accuracy_score(y_test, pred), f1_score(y_test, pred, average='micro'))
+
+# TODO: NN + ig
+# if run_grid_p4:
+#     clf = run_gs(X_train_ig, y_train, ds_name, dr_type='ig')
+# else:
+#     clf = MLPClassifier(random_state=69, hidden_layer_sizes=(100, 100, 100), alpha=0.01)
+# clf.fit(X_train_ig, y_train)
+# pred = clf.predict(X_test)
+# write_performance(ds_name, 'ann-ig', balanced_accuracy_score(y_test, pred), f1_score(y_test, pred, average='micro'))
 
 
-# fit, and predict with tuned params
+# # # NN + dimensionality reduction + clustering
+#  TODO: kmeans
+n_clusters = 5
+run_km(X_train, y_train, n_clusters)
+# # TODO: expectation maximization
+# run_gm(X_train_pca)
+
 
 
 

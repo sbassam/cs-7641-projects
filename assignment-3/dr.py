@@ -8,7 +8,7 @@ def run_pca(X_train):
     return pca, X_train_transformed
 
 
-def run_ica(X_train):
+def run_ica(X_train, X_test=None):
     kurtosis_list =  []
     for i in range(1, X_train.shape[1]+1):
         ica = FastICA(random_state=69, n_components=i)
@@ -21,6 +21,10 @@ def run_ica(X_train):
 
     ica = FastICA(random_state=69, n_components=max_index+1)
     X_train_transformed = ica.fit_transform(X_train)
+
+    if X_test is not None:
+        X_test_transformed = ica.transform(X_test)
+        return ica, X_train_transformed, X_test_transformed, kurtosis_list
 
 
     return ica, X_train_transformed, kurtosis_list

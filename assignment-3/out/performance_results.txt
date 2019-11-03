@@ -1,0 +1,208 @@
+
+----------Performance Summary----------
+   Dataset: abalone-ternary
+   Learner: ann
+Balanced Accuracy Score: 0.5126839826839827
+F1: 0.7844311377245508
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: abalone-ternary
+   Learner: ann-ica
+Balanced Accuracy Score: 0.3281168831168831
+F1: 0.4994011976047904
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: abalone-ternary
+   Learner: ann
+Balanced Accuracy Score: 0.5126839826839827
+F1: 0.7844311377245508
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: abalone-ternary
+   Learner: ann-ica
+Balanced Accuracy Score: 0.47508658008658006
+F1: 0.7736526946107786
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: abalone-ternary
+   Learner: ann
+Balanced Accuracy Score: 0.5126839826839827
+F1: 0.7844311377245508
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: abalone-ternary
+   Learner: ann-ica
+Balanced Accuracy Score: 0.47508658008658006
+F1: 0.7736526946107786
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: abalone-ternary
+   Learner: ann
+Balanced Accuracy Score: 0.5126839826839827
+F1: 0.7844311377245508
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: abalone-ternary
+   Learner: ann-ica
+Balanced Accuracy Score: 0.47508658008658006
+F1: 0.7736526946107786
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: abalone-ternary
+   Learner: ann
+Balanced Accuracy Score: 0.5126839826839827
+F1: 0.7844311377245508
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: abalone-ternary
+   Learner: ann-ica
+Balanced Accuracy Score: 0.47508658008658006
+F1: 0.7736526946107786
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: abalone-ternary
+   Learner: ann
+Balanced Accuracy Score: 0.5126839826839827
+F1: 0.7844311377245508
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: abalone-ternary
+   Learner: ann-ica
+Balanced Accuracy Score: 0.47508658008658006
+F1: 0.7736526946107786
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: abalone-ternary
+   Learner: ann
+Balanced Accuracy Score: 0.5126839826839827
+F1: 0.7844311377245508
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: abalone-ternary
+   Learner: ann-ica
+Balanced Accuracy Score: 0.47508658008658006
+F1: 0.7736526946107786
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: abalone-ternary
+   Learner: ann
+Balanced Accuracy Score: 0.5126839826839827
+F1: 0.7844311377245508
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: abalone-ternary
+   Learner: ann-ica
+Balanced Accuracy Score: 0.47508658008658006
+F1: 0.7736526946107786
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: abalone-ternary
+   Learner: ann
+Balanced Accuracy Score: 0.5126839826839827
+F1: 0.7844311377245508
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: abalone-ternary
+   Learner: ann-ica
+Balanced Accuracy Score: 0.47508658008658006
+F1: 0.7736526946107786
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: abalone-ternary
+   Learner: ann
+Balanced Accuracy Score: 0.5126839826839827
+F1: 0.7844311377245508
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: abalone-ternary
+   Learner: ann-ica
+Balanced Accuracy Score: 0.47508658008658006
+F1: 0.7736526946107786
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: iris
+   Learner: ann
+Balanced Accuracy Score: 1.0
+F1: 1.0
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: iris
+   Learner: ann-ica
+Balanced Accuracy Score: 0.9333333333333332
+F1: 0.9333333333333333
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: wine-quality
+   Learner: ann
+Balanced Accuracy Score: 0.27082993753127255
+F1: 0.5815384615384616
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: wine-quality
+   Learner: ann-ica
+Balanced Accuracy Score: 0.24954848230929905
+F1: 0.5807692307692308
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: abalone-ternary
+   Learner: ann
+Balanced Accuracy Score: 0.5126839826839827
+F1: 0.7844311377245508
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: abalone-ternary
+   Learner: ann-ica
+Balanced Accuracy Score: 0.47508658008658006
+F1: 0.7736526946107786
+
+--------------------------------------------

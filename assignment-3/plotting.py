@@ -48,7 +48,7 @@ def plot_sil_score(X_train, ds_name, alg_name, kmax=13):
 
 
 
-def plot_BIC(X_train, max_n_components=10):
+def plot_BIC(ds_name, X_train, max_n_components=10):
     """source: https://scikit-learn.org/stable/auto_examples/mixture/plot_gmm_selection.html#sphx-glr-auto-examples-mixture-plot-gmm-selection-py"""
 
 
@@ -63,19 +63,23 @@ def plot_BIC(X_train, max_n_components=10):
 
     lowest_bic = np.infty
     bic = []
-    n_components_range = range(1, 7)
+    n_components_range = range(1, max_n_components)
+    best_n_component = 0
+    best_cv_type = None
     cv_types = ['spherical', 'tied', 'diag', 'full']
     for cv_type in cv_types:
         for n_components in n_components_range:
             # Fit a Gaussian mixture with EM
             gmm = mixture.GaussianMixture(n_components=n_components,
-                                          covariance_type=cv_type)
+                                          covariance_type=cv_type, random_state=69)
             gmm.fit(X)
-            qq = gmm.score(X)
+            qq = gmm.bic(X)
             bic.append(qq)
             if bic[-1] < lowest_bic:
                 lowest_bic = bic[-1]
                 best_gmm = gmm
+                best_n_component = n_components
+                best_cv_type = cv_type
 
     bic = np.array(bic)
     color_iter = itertools.cycle(['navy', 'turquoise', 'cornflowerblue',
@@ -93,37 +97,17 @@ def plot_BIC(X_train, max_n_components=10):
                             width=.2, color=color))
     plt.xticks(n_components_range)
     plt.ylim([bic.min() * 1.01 - .01 * bic.max(), bic.max()])
-    plt.title('BIC score per model')
+    plt.title(ds_name + ' Gaussian Mixture Model Selection: BIC score')
     xpos = np.mod(bic.argmin(), len(n_components_range)) + .65 + \
            .2 * np.floor(bic.argmin() / len(n_components_range))
     plt.text(xpos, bic.min() * 0.97 + .03 * bic.max(), '*', fontsize=14)
     spl.set_xlabel('Number of components')
     spl.legend([b[0] for b in bars], cv_types)
-
-    # Plot the winner
-    splot = plt.subplot(2, 1, 2)
-    Y_ = clf.predict(X)
-    for i, (mean, cov, color) in enumerate(zip(clf.means_, clf.covariances_,
-                                               color_iter)):
-        v, w = linalg.eigh(cov)
-        if not np.any(Y_ == i):
-            continue
-        plt.scatter(X[Y_ == i, 0], X[Y_ == i, 1], .8, color=color)
-
-        # Plot an ellipse to show the Gaussian component
-        angle = np.arctan2(w[0][1], w[0][0])
-        angle = 180. * angle / np.pi  # convert to degrees
-        v = 2. * np.sqrt(2.) * np.sqrt(v)
-        ell = mpl.patches.Ellipse(mean, v[0], v[1], 180. + angle, color=color)
-        ell.set_clip_box(splot.bbox)
-        ell.set_alpha(.5)
-        splot.add_artist(ell)
-
-    plt.xticks(())
-    plt.yticks(())
-    plt.title('Selected GMM: full model, 2 components')
-    plt.subplots_adjust(hspace=.35, bottom=.02)
     plt.show()
+    plt.savefig(
+        'images/' + ds_name + '-gm-bic-score' + str(datetime.now()) + '.png')
+    plt.close()
+    return best_cv_type, best_n_component
 
 def plot_pca(ds_name, pca):
     x = np.arange(1, pca.n_components_+1)
@@ -166,16 +150,17 @@ def plot_ica(ds_name, ica):
     return plt
 
 
-def plot_ica_avg_kurtosis(ds_name, kurtosis_list):
-    x = range(1, len(kurtosis_list)+1)
-    y = kurtosis_list
+def plot_ica_avg_kurtosis(ds_name, kurtosis_means, kurtosis_stds):
+    x = range(1, len(kurtosis_means)+1)
+    y = kurtosis_means
+
     fig, ax = plt.subplots()
-    ax.bar(x, y, color="b")
+    ax.bar(x, y, yerr=kurtosis_stds, color="b")
     for i, j in zip(x, y):
         ax.annotate(str("%.4f" % j), xy=(i - .2, j + .001), fontsize=8)
     plt.xticks(x)
     plt.ylabel('Average Kurtosis', fontsize=14)
-    plt.xlabel('Component', fontsize=14)
+    plt.xlabel('Number of Components', fontsize=14)
     plt.title('Average Kurtosis vs # of components - dataset: ' + ds_name,
               fontsize=14)
     plt.legend()

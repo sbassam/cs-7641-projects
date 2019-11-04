@@ -1,7 +1,7 @@
 from sklearn.mixture import GaussianMixture
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler, OneHotEncoder
-import time
+from datetime import datetime
 import pandas as pd
 from sklearn.datasets import load_iris
 from sklearn.metrics import make_scorer, f1_score, accuracy_score, balanced_accuracy_score
@@ -17,7 +17,7 @@ import loader
 from yellowbrick.cluster import KElbowVisualizer
 
 #ds_name = 'abalone-ternary'
-from dr import run_pca, run_ica
+from dr import run_pca, run_ica, run_rp
 from clustering import run_gm, run_km
 from gs import run_gs
 from plotting import plot_elbow, plot_pca, plot_ica, plot_ica_avg_kurtosis, plot_sil_score, plot_BIC
@@ -28,7 +28,9 @@ ds_name = 'wine-quality'
 run_grid = False
 run_grid_p4 = False
 run_grid_p5 = False
-
+performance_stat_path = 'out/performance-stat'+str(datetime.now()) +'.csv'
+performance_stat_col = ['ds_name', 'alg_name', 'n_clusters', 'v_measure_score', 'adjusted_rand_score', 'AMI_score', 'fit_time']
+performance_stat_data = []
 if ds_name == 'abalone-ternary':
     # get the data
     data = loader.process_abalone_ternary()
@@ -71,28 +73,49 @@ def write_performance(dataset_name, learner, score, f1):
 
     return
 
-
-# plot elbow
+###################  PART I.  ###################
+# 1.1 K-Means
+#       a) Find the best K using only training data
+#           1) plot elbow
 # n_clusters = plot_elbow(ds_name, 'KMeans', X_train)
-# # plot silhoutte find the best k
+#           2) plot Silhouette
 # best_k = plot_sil_score(X_train, 10)
-# TODO: run Gaussian Mixture
-plot_BIC(X_train)
+#       b) run KMeans and validate results
+# performance_stat, X_train_km = run_km(ds_name, X_train, y_train, best_k)
+# performance_stat_data.append(performance_stat)
+# 1.2 Expectation Maximization
+#       a) Find the best n_components
+gm_best_cv_type, gm_best_n_components = plot_BIC(ds_name, X_train, max_n_components=15)
+#       b) run GM and validate results
+run_gm(ds_name, X_train, y_train, gm_best_n_components, cv_type=gm_best_cv_type)
+#################################################
 
-
-# Dimensionality Reduction
-# PCA
+###################  PART II.  ###################
+# 2.1 PCA
+#       a) run PCA and transform training and testing data (test set will be used in part 4)
 X_train_pca = X_train.copy()
-pca, X_train_pca = run_pca(X_train_pca)
-# plot_pca(ds_name, pca)
-#
-# ICA
+X_test_pca = X_test.copy()
+pca, X_train_pca, X_test_pca = run_pca(X_train_pca, X_test_pca)
+#       B) plot eigenvalues
+plot_pca(ds_name, pca)
+# 2.2 ICA
+#       a) run ICA and transform training and testing data (test set will be used in part 4)
 X_train_ica = X_train.copy()
-# X_test_ica will be used in the last part
 X_test_ica = X_test.copy()
-ica, X_train_ica, X_test_ica, kurtosis_list = run_ica(X_train_ica, X_test_ica)
-plot_ica_avg_kurtosis(ds_name, kurtosis_list)
+ica, X_train_ica, X_test_ica, kurtosis_means, kurtosis_stds = run_ica(X_train_ica, X_test_ica)
+#       b) plot average kurtosis to show which n_component has the highest kurtosis on average
+plot_ica_avg_kurtosis(ds_name, kurtosis_means, kurtosis_stds)
+#       c) plot kurtosis for the best n_components.
 plot_ica(ds_name, ica)
+# 2.3 RP
+#       a) run rp and transform training and testing data (test set will be used in part 4)
+X_train_rp = X_train.copy()
+X_test_rp = X_test.copy()
+rp, X_train_rp, X_test_rp, loss_means, loss_stds = run_rp(X_train_rp, X_test_rp)
+#       b) plot reconstruction error
+#plot_rp_reconstruction_error
+
+# 2.4 IG
 
 #n_clusters = plot_elbow(ds_name, 'KMeans', X_train_pca)
 #n_clusters = plot_elbow(ds_name, 'KMeans', X_train_ica)
@@ -110,8 +133,7 @@ write_performance(ds_name, 'ann', balanced_accuracy_score(y_test, pred), f1_scor
 
 # # NN + dimensionality reduction
 # # NN + pca
-# X_test_pca = X_test.copy()
-# pca, X_test_pca = run_pca(X_test_pca)
+
 #
 #
 # if run_grid_p4:
@@ -167,8 +189,8 @@ write_performance(ds_name, 'ann-km', balanced_accuracy_score(y_test, pred), f1_s
 # run_gm(X_train_pca)
 
 
-
-
+performance_stat_data = pd.DataFrame(performance_stat_data, columns=performance_stat_col)
+performance_stat_data.to_csv(path=performance_stat_path, index=None)
 
 
 

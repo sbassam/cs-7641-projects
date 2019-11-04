@@ -310,3 +310,139 @@ Balanced Accuracy Score: 0.23701333014620096
 F1: 0.5623076923076923
 
 --------------------------------------------
+
+----------Performance Summary----------
+   Dataset: abalone-ternary
+   Learner: ann
+Balanced Accuracy Score: 0.5126839826839827
+F1: 0.7844311377245508
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: abalone-ternary
+   Learner: ann-pca
+Balanced Accuracy Score: 0.5591991341991341
+F1: 0.770059880239521
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: abalone-ternary
+   Learner: ann-ica
+Balanced Accuracy Score: 0.47508658008658006
+F1: 0.7736526946107786
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: abalone-ternary
+   Learner: ann
+Balanced Accuracy Score: 0.5126839826839827
+F1: 0.7844311377245508
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: abalone-ternary
+   Learner: ann-pca
+Balanced Accuracy Score: 0.5591991341991341
+F1: 0.770059880239521
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: abalone-ternary
+   Learner: ann-ica
+Balanced Accuracy Score: 0.47508658008658006
+F1: 0.7736526946107786
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: abalone-ternary
+   Learner: ann-rp
+Balanced Accuracy Score: 0.5043290043290044
+F1: 0.7748502994011978
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: abalone-ternary
+   Learner: ann-ig
+Balanced Accuracy Score: 0.5098484848484849
+F1: 0.7892215568862276
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: abalone-ternary
+   Learner: KMeans-ANN
+Balanced Accuracy Score: 0.3333333333333333
+F1: 0.6586826347305389
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: abalone-ternary
+   Learner: GM-ANN
+Balanced Accuracy Score: 0.4294155844155844
+F1: 0.704191616766467
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: abalone-ternary
+   Learner: ann
+Balanced Accuracy Score: 0.5126839826839827
+F1: 0.7844311377245508
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: abalone-ternary
+   Learner: ann-pca
+Balanced Accuracy Score: 0.5591991341991341
+F1: 0.770059880239521
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: abalone-ternary
+   Learner: ann-ica
+Balanced Accuracy Score: 0.47508658008658006
+F1: 0.7736526946107786
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: abalone-ternary
+   Learner: ann-rp
+Balanced Accuracy Score: 0.5043290043290044
+F1: 0.7748502994011978
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: abalone-ternary
+   Learner: ann-ig
+Balanced Accuracy Score: 0.5098484848484849
+F1: 0.7892215568862276
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: abalone-ternary
+   Learner: KMeans-ANN
+Balanced Accuracy Score: 0.3333333333333333
+F1: 0.6586826347305389
+
+--------------------------------------------
+
+----------Performance Summary----------
+   Dataset: abalone-ternary
+   Learner: GM-ANN
+Balanced Accuracy Score: 0.4294155844155844
+F1: 0.704191616766467
+
+--------------------------------------------

@@ -103,7 +103,6 @@ def plot_BIC(ds_name, X_train, max_n_components=10):
     plt.text(xpos, bic.min() * 0.97 + .03 * bic.max(), '*', fontsize=14)
     spl.set_xlabel('Number of components')
     spl.legend([b[0] for b in bars], cv_types)
-    plt.show()
     plt.savefig(
         'images/' + ds_name + '-gm-bic-score' + str(datetime.now()) + '.png')
     plt.close()
@@ -166,5 +165,43 @@ def plot_ica_avg_kurtosis(ds_name, kurtosis_means, kurtosis_stds):
     plt.legend()
     plt.savefig(
         'images/' + ds_name + '-ica-avgkurtosis-n-components' + str(datetime.now()) + '.png')
+    plt.close()
+    return plt
+
+def plot_rp_reconstruction_error(ds_name, rp_loss_means, rp_loss_stds):
+    x = range(2, len(rp_loss_means)+2)
+    y = rp_loss_means
+
+    fig, ax = plt.subplots()
+    ax.bar(x, y, yerr=rp_loss_stds, color="r")
+    for i, j in zip(x, y):
+        ax.annotate(str("%.4f" % j), xy=(i - .2, j + .001), fontsize=8)
+    plt.xticks(x)
+    plt.ylabel('Reconstruction Error', fontsize=14)
+    plt.xlabel('Number of Components', fontsize=14)
+    plt.title('Random Projections on ' + ds_name + ' - Average Reconstruction Error vs. Number of Components',
+              fontsize=12)
+    plt.legend()
+    plt.savefig(
+        'images/' + ds_name + '-rp-avgerror-n-components' + str(datetime.now()) + '.png')
+    plt.close()
+    return plt
+
+def plot_svd_reconstruction_error(ds_name, svd_loss_means, svd_loss_stds):
+    x = range(2, len(svd_loss_means)+2)
+    y = svd_loss_means
+
+    fig, ax = plt.subplots()
+    ax.bar(x, y, yerr=svd_loss_stds, color="r")
+    for i, j in zip(x, y):
+        ax.annotate(str("%.4f" % j), xy=(i - .2, j + .001), fontsize=8)
+    plt.xticks(x)
+    plt.ylabel('Reconstruction Error', fontsize=14)
+    plt.xlabel('Number of Components', fontsize=14)
+    plt.title('Truncated SVD on ' + ds_name + ' - Average Reconstruction Error vs. Number of Components',
+              fontsize=12)
+    plt.legend()
+    plt.savefig(
+        'images/' + ds_name + '-svd-avgerror-n-components' + str(datetime.now()) + '.png')
     plt.close()
     return plt

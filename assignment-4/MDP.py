@@ -11,7 +11,7 @@ class MDP(object):
         self.desc = desc
 
     def value_iteration(mdp, gamma, nIt):
-        csv_path = 'out/value-iteration-nIt-'+str(nIt)+'-gamma-'+str(gamma)+'.csv'
+        csv_path = 'out/value-iteration-'+str(mdp.desc.shape)+'-nIt-'+str(nIt)+'-gamma-'+str(gamma)+'.csv'
         data = []
         cols = ['algname', 'Iteration', 'max|V-Vprev|', '# chg actions', 'V[0]', 'clock_time']
         Vs = [np.zeros(mdp.nS)]
@@ -48,7 +48,7 @@ class MDP(object):
 
 
     def policy_iteration(mdp, gamma, nIt):
-        csv_path = 'out/policy-iteration-nIt-' + str(nIt) + '-gamma-' + str(gamma) + '.csv'
+        csv_path = 'out/policy-iteration-'+str(mdp.desc.shape)+'-nIt-' + str(nIt) + '-gamma-' + str(gamma) + '.csv'
         data = []
         cols = ['algname', 'Iteration', '# chg actions',  'V[0]', 'clock_time']
         Vs = []

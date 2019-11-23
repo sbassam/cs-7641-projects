@@ -10,25 +10,25 @@ import misc
 from plotting import plot_gw, plot_state_values_vs_iteration
 
 env = gym.make('FrozenLake8x8-v0')
-env = gym.make('FrozenLake-v0')
+#env = gym.make('FrozenLake-v0')
 # from misc import  FrozenLakeEnv
-env = FrozenLakeEnv()
+#env = FrozenLakeEnv()
 
 # instantiate the mdp
 mdp = MDP({s: {a: [tup[:3] for tup in tups] for (a, tups) in a2d.items()} for (s, a2d) in env.P.items()}, env.nS,
           env.nA, env.desc)
-GAMMA = 0.95
+GAMMA = 0.98
 # perform greedy value iteration
-Vs_VI, pis_VI = mdp.value_iteration(gamma=GAMMA, nIt=20)
+Vs_VI, pis_VI = mdp.value_iteration(gamma=GAMMA, nIt=2000)
 print (Vs_VI, pis_VI)
 # #
 # plot_gw(env, GAMMA, Vs_VI, pis_VI, 'value-iteration')
-# plot_state_values_vs_iteration(GAMMA, Vs_VI, 'value-iteration')
+plot_state_values_vs_iteration(GAMMA, Vs_VI, 'value-iteration')
 #
 # # perform policy iteration
-# Vs_PI, pis_PI = mdp.policy_iteration(gamma=GAMMA, nIt=20)
+Vs_PI, pis_PI = mdp.policy_iteration(gamma=GAMMA, nIt=2000)
 # plot_gw(env, GAMMA, Vs_PI, pis_PI, 'policy-iteration')
-# plot_state_values_vs_iteration(GAMMA, Vs_PI, 'policy-iteration')
+plot_state_values_vs_iteration(GAMMA, Vs_PI, 'policy-iteration')
 
 # perform Q-Learning
 

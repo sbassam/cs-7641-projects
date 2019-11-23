@@ -17,16 +17,16 @@ env = gym.make('FrozenLake8x8-v0')
 # instantiate the mdp
 mdp = MDP({s: {a: [tup[:3] for tup in tups] for (a, tups) in a2d.items()} for (s, a2d) in env.P.items()}, env.nS,
           env.nA, env.desc)
-GAMMA = 0.98
+GAMMA = 0.95
 # perform greedy value iteration
-Vs_VI, pis_VI = mdp.value_iteration(gamma=GAMMA, nIt=2000)
-print (Vs_VI, pis_VI)
+# Vs_VI, pis_VI = mdp.value_iteration(gamma=GAMMA, nIt=200)
+# print (Vs_VI, pis_VI)
 # #
 # plot_gw(env, GAMMA, Vs_VI, pis_VI, 'value-iteration')
-plot_state_values_vs_iteration(GAMMA, Vs_VI, 'value-iteration')
+# plot_state_values_vs_iteration(GAMMA, Vs_VI, 'value-iteration')
 #
 # # perform policy iteration
-Vs_PI, pis_PI = mdp.policy_iteration(gamma=GAMMA, nIt=2000)
+Vs_PI, pis_PI = mdp.policy_iteration(gamma=GAMMA, epsilon=0.01, max_iter=200)
 # plot_gw(env, GAMMA, Vs_PI, pis_PI, 'policy-iteration')
 plot_state_values_vs_iteration(GAMMA, Vs_PI, 'policy-iteration')
 

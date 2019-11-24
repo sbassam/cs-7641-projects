@@ -2,6 +2,8 @@ from collections import defaultdict
 
 from gym.envs.toy_text.frozen_lake import FrozenLakeEnv
 import numpy as np
+
+import frozen_qlearning
 from MDP import MDP
 import gym
 import misc
@@ -31,19 +33,18 @@ mdp = MDP({s: {a: [tup[:3] for tup in tups] for (a, tups) in a2d.items()} for (s
 GAMMA = 0.99
 
 # perform greedy value iteration
-Vs_VI, pis_VI, csv_VI = mdp.value_iteration(gamma=GAMMA, epsilon=0.001, max_iter=200)
+# Vs_VI, pis_VI, csv_VI = mdp.value_iteration(gamma=GAMMA, epsilon=0.001, max_iter=200)
 
-
-# print (Vs_VI, pis_VI)
-# #
-# plot_gw(env, GAMMA, Vs_VI, pis_VI, 'value-iteration')
-# plot_state_values_vs_iteration(GAMMA, Vs_VI, 'value-iteration')
-#
 # # perform policy iteration
-Vs_PI, pis_PI = mdp.policy_iteration(gamma=GAMMA, epsilon=0.001, max_iter=200)
-# plot_gw(env, GAMMA, Vs_PI, pis_PI, 'policy-iteration')
-# plot_state_values_vs_iteration(GAMMA, Vs_PI, 'policy-iteration')
+# Vs_PI, pis_PI = mdp.policy_iteration(gamma=GAMMA, epsilon=0.001, max_iter=200)
+
 
 # perform Q-Learning
+# gamma = 0.999
+# epsilon = .5
+# decay_rate = .999
+# decay_type = 1
+frozen_qlearning.run_frozen_ql(epsilon=.999, decay_type=1, decay_rate=.999, gamma=.999, total_episodes=20000)
+frozen_qlearning.run_frozen_ql(epsilon=.999, decay_type=1, decay_rate=.999, gamma=.999, total_episodes=20000)
 
 

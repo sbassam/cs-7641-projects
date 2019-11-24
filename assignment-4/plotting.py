@@ -62,4 +62,6 @@ def plot_state_values_vs_iteration(gamma, Vs_VI, algname):
     plt.close()
 
 def plot_frozen_VI(csv):
+    pass
+
 

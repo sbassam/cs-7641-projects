@@ -72,13 +72,13 @@ def decay_eps(epsilon, episode=None, decay_rate=0.9, decaytype=1):
         epsilon = epsilon * decay_rate
     elif decaytype == 2:
         decay = 'non-linear - epsilon: ' + str(epsilon)
-        epsilon = epsilon * decay_rate
+        epsilon = epsilon * decay_rate #change later
     elif decaytype == 3:
         decay = 'linear - epsilon: ' + str(epsilon)
         epsilon = epsilon - .000025
     elif decaytype == 4:
         decay = 'linear - epsilon: ' + str(epsilon)
-        epsilon = epsilon - .0
+        epsilon = epsilon - .0000425
     elif decaytype == 5:
         epsilon = 0.01 + (.99) * np.exp(-.005 * episode)
 

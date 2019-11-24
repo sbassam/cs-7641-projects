@@ -44,7 +44,10 @@ GAMMA = 0.99
 # epsilon = .5
 # decay_rate = .999
 # decay_type = 1
-frozen_qlearning.run_frozen_ql(epsilon=.999, decay_type=1, decay_rate=.999, gamma=.999, total_episodes=20000)
-frozen_qlearning.run_frozen_ql(epsilon=.999, decay_type=1, decay_rate=.999, gamma=.999, total_episodes=20000)
+# frozen_qlearning.run_frozen_ql(epsilon=.5, decay_type=1, decay_rate=.999, gamma=.999, total_episodes=20000)
+# frozen_qlearning.run_frozen_ql(epsilon=.85, decay_type=1, decay_rate=.999, gamma=.999, total_episodes=20000)
+
+frozen_qlearning.run_frozen_ql(epsilon=.5, decay_type=3, decay_rate=.999, gamma=.999, total_episodes=20000)
+frozen_qlearning.run_frozen_ql(epsilon=.85, decay_type=4, decay_rate=.999, gamma=.999, total_episodes=20000)
 
 

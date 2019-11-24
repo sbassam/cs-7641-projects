@@ -1,9 +1,28 @@
 "https://github.com/simoninithomas/Deep_reinforcement_learning_Course"
+from gym.envs.toy_text.frozen_lake import generate_random_map
+
 "https://github.com/simoninithomas/Deep_reinforcement_learning_Course.git"
 import numpy as np
 import gym
 import random
 env = gym.make("FrozenLake-v0")
+
+# env = gym.make('FrozenLake8x8-v0')
+random_map = generate_random_map(size=15, p=0.95)
+#
+env = gym.make("FrozenLake-v0", desc=random_map, is_slippery=False)
+from gym.envs.registration import register
+
+# register(
+#     id='FrozenLake15x15-v1',
+#     entry_point='frozen_lake_custom:FrozenLakeCustom',
+#     max_episode_steps=10000,
+#     reward_threshold=0.99,  # optimum = 1
+#     kwargs={'desc': random_map, 'goalr': 5.0, 'fallr': -1.0, 'stepr': -0.04}
+# )
+# env = gym.make("FrozenLake15x15-v1")
+
+
 action_size = env.action_space.n
 state_size = env.observation_space.n
 
@@ -14,10 +33,10 @@ qtable = np.zeros((state_size, action_size))
 total_episodes = 5000        # Total episodes
 learning_rate = 0.8           # Learning rate
 max_steps = 99                # Max steps per episode
-gamma = 0.95                  # Discounting rate
+gamma = 0.999                # Discounting rate
 
 # Exploration parameters
-epsilon = .6                 # Exploration rate
+epsilon = .5                # Exploration rate
 max_epsilon = 1.0             # Exploration probability at start
 min_epsilon = 0.01            # Minimum exploration probability
 decay_rate = 0.005             # Exponential decay rate for exploration prob
@@ -33,7 +52,12 @@ for episode in range(total_episodes):
     total_rewards = 0
     counter +=1
     print(counter)
+    num_explore = 0
+    num_exploit=0
+
+    #epsilon = .8
     for step in range(max_steps):
+
         # 3. Choose an action a in the current world state (s)
         ## First we randomize a number
         exp_exp_tradeoff = random.uniform(0, 1)
@@ -41,10 +65,12 @@ for episode in range(total_episodes):
         ## If this number > greater than epsilon --> exploitation (taking the biggest Q value for this state)
         if exp_exp_tradeoff > epsilon:
             action = np.argmax(qtable[state, :])
+            num_exploit += 1
 
         # Else doing a random choice --> exploration
         else:
             action = env.action_space.sample()
+            num_explore += 1
 
         # Take the action (a) and observe the outcome state(s') and reward (r)
         new_state, reward, done, info = env.step(action)
@@ -62,6 +88,8 @@ for episode in range(total_episodes):
         if done == True:
             break
 
+    print('heres the explore: ', num_explore)
+    print('heres the exploit: ', num_exploit)
     # Reduce epsilon (because we need less and less exploration)
     epsilon = min_epsilon + (max_epsilon - min_epsilon) * np.exp(-decay_rate * episode)
     rewards.append(total_rewards)

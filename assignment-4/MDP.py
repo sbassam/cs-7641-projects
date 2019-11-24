@@ -16,8 +16,8 @@ class MDP(object):
         csv_path = 'out/value-iteration-' + str(mdp.desc.shape) + '-epsilon-' + str(epsilon) + '-gamma-' + str(
             gamma) + '.csv'
         data = []
-        cols = ['env_name', 'algname', 'gamma', 'epsilon', 'threshold', 'Iteration', 'variation',
-                'V_max_diff', 'clock_time', '# chg action at iter', '# chg actions']
+        cols = ['env_name', 'algname', 'gamma', 'epsilon', 'threshold', 'Iteration', 'V_variation',
+                'V_max_diff', 'V_average', 'V_sum', 'clock_time', '# chg action at iter', '# chg actions']
         env_name = 'frozen-lake-' + str(mdp.desc.shape)
         threshold = epsilon * (1 - gamma) / gamma
 
@@ -40,27 +40,26 @@ class MDP(object):
                         pi[state] = action
                 V[state] = maxv
             end = time.time()
-            ####
             t += end - start
-            nChgActions += (pi != pi_prev).sum()
-            diff = vpi if len(Vs) == 0 else vpi - Vs[-1]
-            variation = diff.max() - diff.min()
-            max_diff = diff.max()
-            row = [env_name, 'PI', gamma, epsilon, threshold, it, variation, max_diff, t, (pi != pi_prev).sum(),
-                   nChgActions]
-            Vs.append(vpi)
-            pis.append(pi)
-            pi_prev = pi
-            data.append(row)
-            if variation < threshold:
-                break
-                ####
-            max_diff = np.abs(V - Vprev).max()
-            #nChgActions = "N/A" if oldpi is None else (pi != oldpi).sum()
+            if it == 0: #skip adding the first iteration to the csv
+                Vs.append(V)
+                pis.append(pi)
+                continue
+            V_average = V.mean()
+            V_sum = V.sum()
+            nChgActions += (pi != oldpi).sum()
+            diff = np.abs(V-Vprev)
+            V_variation = diff.max() - diff.min()
+            V_max_diff = diff.max()
+            row = [env_name, 'PI', gamma, epsilon, threshold, it, V_variation, V_max_diff, V_average, V_sum,
+                   t, (pi != oldpi).sum(), nChgActions]
             Vs.append(V)
             pis.append(pi)
-            row = ['value-iteration', it, max_diff, nChgActions, V[0], end-start]
             data.append(row)
+            if V_variation < threshold:
+                break
+            #V_max_diff = np.abs(V - Vprev).max()
+            #nChgActions = "N/A" if oldpi is None else (pi != oldpi).sum()
         result = pd.DataFrame(data, columns=cols)
         result.to_csv(csv_path, index=None)
 
@@ -71,8 +70,8 @@ class MDP(object):
     def policy_iteration(mdp, gamma, epsilon, max_iter=1000):
         csv_path = 'out/policy-iteration-'+str(mdp.desc.shape)+'-epsilon-' + str(epsilon) + '-gamma-' + str(gamma) + '.csv'
         data = []
-        cols = ['env_name', 'algname', 'gamma', 'epsilon', 'threshold', 'Iteration', 'variation',
-                'V_max_diff', 'clock_time', '# chg action at iter', '# chg actions']
+        cols = ['env_name', 'algname', 'gamma', 'epsilon', 'threshold', 'Iteration', 'V_variation',
+                'V_max_diff', 'V_average', 'V_sum', 'clock_time', '# chg action at iter', '# chg actions']
         env_name = 'frozen-lake-'+str(mdp.desc.shape)
         threshold = epsilon*(1-gamma)/gamma
 
@@ -94,16 +93,19 @@ class MDP(object):
                 pi_prev = pi
                 continue
             t += end-start
+            V_average = vpi.mean()
+            V_sum = vpi.sum()
             nChgActions += (pi != pi_prev).sum()
-            diff = vpi if len(Vs)==0 else vpi - Vs[-1]
-            variation = diff.max() - diff.min()
-            max_diff = diff.max()
-            row = [env_name, 'PI', gamma, epsilon, threshold, it, variation, max_diff, t, (pi != pi_prev).sum(), nChgActions]
+            diff = np.abs(vpi - Vs[-1])
+            V_variation = diff.max() - diff.min()
+            V_max_diff = diff.max()
+            row = [env_name, 'PI', gamma, epsilon, threshold, it, V_variation, V_max_diff, V_average, V_sum, t,
+                   (pi != pi_prev).sum(), nChgActions]
             Vs.append(vpi)
             pis.append(pi)
             pi_prev = pi
             data.append(row)
-            if variation < threshold:
+            if V_variation < threshold:
                 break
 
         result = pd.DataFrame(data, columns=cols)

@@ -11,8 +11,8 @@ import time
 
 env = gym.make("FrozenLake-v0")
 
-env = gym.make('FrozenLakeModified8x8-v0')
-# env = gym.make('FrozenLakeModified30x30-v0', is_slippery=False)
+#env = gym.make('FrozenLakeModified8x8-v0')
+env = gym.make('FrozenLakeModified30x30-v0', is_slippery=False)
 # random_map = generate_random_map(size=30, p=0.8)
 # env = gym.make("FrozenLakeModified30x30-v0", desc=random_map, is_slippery=False)
 
@@ -66,7 +66,7 @@ state_size = env.observation_space.n
 ####################
 
 max_steps = 500
-gamma = 0.98
+gamma = 0.999
 epsilon = .5
 decay_rate = .999
 decay_type = 1
@@ -74,7 +74,7 @@ decay_type = 1
 reward_tracker = []  # taken from https://learning.oreilly.com/videos/reinforcement-learning-and/9781491995006/9781491995006-video312886
 reward_diffs = []
 qtable = np.zeros((state_size, action_size))
-total_episodes = 5000
+total_episodes = 20000
 alpha = .8
 
 counter = 0
@@ -129,24 +129,45 @@ for episode in range(total_episodes):
     row = [episode, epsilon, reward, cumu_r, total_rewards, np.mean(episode_rewards), np.mean(episode_deltas), gamma,
            alpha, episode_time,
            cum_time, num_exploit, num_explore, done, step, state_size, decay_rate, decay_type]
-    data.append(row)
+    # too many datapoints!
+    if episode%100==0:
+        data.append(row)
     # update epsilon
     epsilon = decay_eps(epsilon, episode, decay_rate=decay_rate, decaytype=decay_type)
 
 result = pd.DataFrame(data, columns=cols)
 result.to_csv(csv_path, index=None)
 
-plt.plot(range(total_episodes), result['terminal_reward'])
-plt.show()
+plt.plot(result['episode'], result['terminal_reward'])
+plt.xlabel('Episode')
+plt.ylabel('Terminal reward')
+plt.savefig('images/ql-size-'+str(state_size)+'-terminal-reward-eps-'+str(epsilon)+'-gamma'+str(gamma)+'-decayrate-'+str(decay_rate)+ '.png')
 plt.close()
-plt.plot(range(total_episodes), result['cum_discounted_rewards'])
-plt.show()   
+plt.plot(result['episode'], result['cum_discounted_rewards'])
+plt.xlabel('Episode')
+plt.ylabel('Accumulated discounted rewards')
+plt.savefig('images/ql-size-'+str(state_size)+'-accumulated-discounted-rewards-eps-'+str(epsilon)+'-gamma'+str(gamma)+'-decayrate-'+str(decay_rate)+ '.png')
 plt.close()
-plt.plot(range(total_episodes), result['episode_tot_rewards'])
-
-plt.plot(range(total_episodes), result['avg_reward'])
-plt.plot(range(total_episodes), result['avg_delta_reward'])
-plt.show()
+plt.plot(result['episode'], result['episode_tot_rewards'])
+plt.xlabel('Episode')
+plt.ylabel('Total rewards')
+plt.savefig('images/ql-size-'+str(state_size)+'total-reward-eps-'+str(epsilon)+'-gamma'+str(gamma)+'-decayrate-'+str(decay_rate)+ '.png')
+plt.close()
+plt.plot(result['episode'], result['avg_reward'])
+plt.xlabel('Episode')
+plt.ylabel('Average reward')
+plt.savefig('images/ql-size-' +str(state_size)+'-avg-reward-eps-'+str(epsilon)+'-gamma'+str(gamma)+'-decayrate-'+str(decay_rate)+ '.png')
+plt.close()
+plt.plot(result['episode'], result['avg_delta_reward'])
+plt.xlabel('Episode')
+plt.ylabel('Average delta reward')
+plt.savefig('images/ql-size-'+str(state_size)+'-avg-delta-reward-eps-'+str(epsilon)+'-gamma'+str(gamma)+'-decayrate-'+str(decay_rate)+ '.png')
+plt.close()
+plt.plot(result['episode'], result['epsilon'])
+plt.xlabel('Episode')
+plt.ylabel('Epsilon')
+plt.savefig('images/ql-size-'+str(state_size)+'-epsilon-eps-'+str(epsilon)+'-gamma'+str(gamma)+'-decayrate-'+str(decay_rate)+ '.png')
+plt.close()
 
 
 print("Score over time: " + str(sum(reward_tracker) / total_episodes))

@@ -60,3 +60,6 @@ def plot_state_values_vs_iteration(gamma, Vs_VI, algname):
     plt.savefig(
         'images/'+ algname+'-state-values-vs-iteration-' + str(len(Vs_VI)) + '-gamma-' + str(gamma) + str(datetime.now()) + '.png')
     plt.close()
+
+def plot_frozen_VI(csv):
+

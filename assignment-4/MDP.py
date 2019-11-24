@@ -16,7 +16,7 @@ class MDP(object):
         csv_path = 'out/value-iteration-' + str(mdp.desc.shape) + '-epsilon-' + str(epsilon) + '-gamma-' + str(
             gamma) + '.csv'
         data = []
-        cols = ['env_name', 'algname', 'gamma', 'epsilon', 'threshold', 'Iteration', 'V_variation',
+        cols = ['env_name', 'algname', 'gamma', 'epsilon', 'threshold', 'Iteration', 'V_variation', 'V_delta',
                 'V_max_diff', 'V_average', 'V_sum', 'clock_time', '# chg action at iter', '# chg actions']
         env_name = 'frozen-lake-' + str(mdp.desc.shape)
         threshold = epsilon * (1 - gamma) / gamma
@@ -49,9 +49,10 @@ class MDP(object):
             V_sum = V.sum()
             nChgActions += (pi != oldpi).sum()
             diff = np.abs(V-Vprev)
+            delta = V.sum()-Vprev.sum()
             V_variation = diff.max() - diff.min()
             V_max_diff = diff.max()
-            row = [env_name, 'PI', gamma, epsilon, threshold, it, V_variation, V_max_diff, V_average, V_sum,
+            row = [env_name, 'VI', gamma, epsilon, threshold, it, V_variation, delta, V_max_diff, V_average, V_sum,
                    t, (pi != oldpi).sum(), nChgActions]
             Vs.append(V)
             pis.append(pi)
@@ -63,14 +64,14 @@ class MDP(object):
         result = pd.DataFrame(data, columns=cols)
         result.to_csv(csv_path, index=None)
 
-        return Vs, pis
+        return Vs, pis, csv_path
 
 
 
     def policy_iteration(mdp, gamma, epsilon, max_iter=1000):
         csv_path = 'out/policy-iteration-'+str(mdp.desc.shape)+'-epsilon-' + str(epsilon) + '-gamma-' + str(gamma) + '.csv'
         data = []
-        cols = ['env_name', 'algname', 'gamma', 'epsilon', 'threshold', 'Iteration', 'V_variation',
+        cols = ['env_name', 'algname', 'gamma', 'epsilon', 'threshold', 'Iteration', 'V_variation', 'V_delta',
                 'V_max_diff', 'V_average', 'V_sum', 'clock_time', '# chg action at iter', '# chg actions']
         env_name = 'frozen-lake-'+str(mdp.desc.shape)
         threshold = epsilon*(1-gamma)/gamma
@@ -97,9 +98,10 @@ class MDP(object):
             V_sum = vpi.sum()
             nChgActions += (pi != pi_prev).sum()
             diff = np.abs(vpi - Vs[-1])
+            delta = diff.sum()
             V_variation = diff.max() - diff.min()
             V_max_diff = diff.max()
-            row = [env_name, 'PI', gamma, epsilon, threshold, it, V_variation, V_max_diff, V_average, V_sum, t,
+            row = [env_name, 'PI', gamma, epsilon, threshold, it, V_variation, delta, V_max_diff, V_average, V_sum, t,
                    (pi != pi_prev).sum(), nChgActions]
             Vs.append(vpi)
             pis.append(pi)

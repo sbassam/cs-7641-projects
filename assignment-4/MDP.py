@@ -112,7 +112,7 @@ class MDP(object):
 
         result = pd.DataFrame(data, columns=cols)
         result.to_csv(csv_path, index=None)
-        return Vs, pis
+        return Vs, pis, csv_path
 
     def compute_vpi(mdp, pi, gamma):
         a = np.identity(mdp.nS)

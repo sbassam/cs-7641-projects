@@ -2,6 +2,7 @@ from datetime import datetime
 
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
 from matplotlib import colors
 import matplotlib.cm as mplcm
 
@@ -61,7 +62,41 @@ def plot_state_values_vs_iteration(gamma, Vs_VI, algname):
         'images/'+ algname+'-state-values-vs-iteration-' + str(len(Vs_VI)) + '-gamma-' + str(gamma) + str(datetime.now()) + '.png')
     plt.close()
 
-def plot_frozen_VI(csv):
-    pass
+
+def plot_results(problem_name, alg_name, csv_list, x_col_name, y_col_name, x_label, y_label, label_col=None,
+                 show_convergence=True, logx=False, logy=False, vertical_x=False, vertical_y=False):
+    plt.style.use('seaborn')
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    num_x_ticks = 0
+    for csv in csv_list:
+        df = pd.read_csv(csv)
+        if label_col:
+            label = label_col + ": " + str(df[label_col][0])
+        plt.plot(df[x_col_name], df[y_col_name], label=label)
+        if logx:
+            plt.xscale('log')
+        if logy:
+            plt.yscale('log')
+        if show_convergence:
+            plt.plot(df[x_col_name].iat[-1], df[y_col_name].iat[-1], 'g*')
+        if df.shape[0] > num_x_ticks:
+            num_x_ticks = df.shape[0]
+            if num_x_ticks > 22:
+                ax.set_xticks(df[x_col_name][::int(num_x_ticks / 20)])
+            else:
+                ax.set_xticks(df[x_col_name])
+        if vertical_x:
+            plt.xticks(rotation='vertical')
+
+        plt.legend()
+        plt.xlabel(x_label)
+        plt.ylabel(y_label)
+        plt.title(problem_name + ": " + alg_name + '-' + y_label + ' vs ' + x_label)
+    plt.savefig(
+        'images/' + problem_name + '-' + alg_name + '--' + y_col_name + '-vs-' + x_col_name + str(datetime.now()) +
+        '.png')
+    plt.close()
+
 
 
